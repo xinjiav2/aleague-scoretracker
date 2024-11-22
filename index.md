@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Flocker Social Media Site 
+title: Travel Planner 
 search_exclude: true
 description: Login and explore our social media hub for everything DNHS 
 hide: true
