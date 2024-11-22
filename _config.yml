@@ -17,3 +17,4 @@ plugins:
   - jekyll-remote-theme
 header_pages:
   - navigation/travel/destination_imagination/destination_main.md
+  - navigation/travel/cuisine_chronicles/cuisine_main.md
