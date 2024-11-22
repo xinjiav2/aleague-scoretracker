@@ -18,3 +18,4 @@ plugins:
 header_pages:
   - navigation/travel/destination_imagination/destination_main.md
   - navigation/travel/cuisine_chronicles/cuisine_main.md
+  - navigation/travel/budget_brilliance/budget_main.md
