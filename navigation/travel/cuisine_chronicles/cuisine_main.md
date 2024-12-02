@@ -1,8 +1,8 @@
 ---
 layout: post 
-title: Cuisine Chronicles
+title: New York
 search_exclude: true
-permalink: /travel/cuisine_chronicles
+permalink: /travel/New_York
 menu: nav/cuisine_hotbar.html
 ---
 
