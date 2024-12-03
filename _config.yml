@@ -16,9 +16,8 @@ minima:
 plugins:
   - jekyll-remote-theme
 header_pages:
-  - navigation/travel/destination_imagination/destination_main.md
-  - navigation/travel/cuisine_chronicles/cuisine_main.md
+  - navigation/travel/Hong_Kong/hong_kong.md
+  - navigation/travel/New_York/new_york.md
   - navigation/travel/mumbai/mumbai.md
-  - navigation/travel/lodging_listings/lodging_main.md
-  - navigation/travel/packing_portal/packing_main.md
-  - navigation/travel/wellness_waypoints/wellness_main.md
+  - navigation/travel/Paris/paris.md
+  - navigation/travel/London/london.md
