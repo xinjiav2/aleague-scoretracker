@@ -2,7 +2,7 @@
 layout: post 
 title: Mumbai
 search_exclude: true
-permalink: /travel/mumbai
+permalink: /travel/Mumbai
 menu: nav/mumbai_hotbar.html
 ---
 Hello

@@ -18,6 +18,6 @@ plugins:
 header_pages:
   - navigation/travel/Hong_Kong/hong_kong.md
   - navigation/travel/New_York/new_york.md
-  - navigation/travel/mumbai/mumbai.md
+  - navigation/travel/Mumbai/mumbai.md
   - navigation/travel/Paris/paris.md
   - navigation/travel/London/london.md
