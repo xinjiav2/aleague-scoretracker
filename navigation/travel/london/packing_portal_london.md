@@ -2,7 +2,7 @@
 layout: post 
 title: Packing Portal
 search_exclude: true
-permalink: /travel/packing_portal
+permalink: /travel/London/packing_portal
 ---
 
 
