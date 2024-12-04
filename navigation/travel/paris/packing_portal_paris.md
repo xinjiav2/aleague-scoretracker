@@ -2,7 +2,7 @@
 layout: post 
 title: Packing Portal
 search_exclude: true
-permalink: /travel/packing_portal_paris
+permalink: /travel/paris/packing_portal_paris
 ---
 
-Welcome to Packing Portal!
+Welcome to Packing Portal Paris!
