@@ -215,6 +215,15 @@ menu: nav/paris_hotbar.html
             if (budget > 0) {
                 document.getElementById('budgetStatus').textContent = `Total Budget: $${budget}`;
                 document.getElementById('totalAmount').textContent = `$${budget}`;
+                const activities = budget * 0.30;
+                const hotels = budget * 0.40; 
+                const transportation = budget * 0.30; 
+                document.getElementById('activitiesAmount').textContent = `$${activities}`;
+                document.getElementById('activitiesPercentage').textContent = `${(activities / budget * 100)}%`;
+                document.getElementById('hotelsAmount').textContent = `$${hotels.toFixed(2)}`;
+                document.getElementById('hotelsPercentage').textContent = `${(hotels / budget * 100)}%`;
+                document.getElementById('transportationAmount').textContent = `$${transportation}`;
+                document.getElementById('transportationPercentage').textContent = `${(transportation / budget * 100)}%`;
                 document.getElementById('budgetTable').style.display = 'table';
             } else {
                 alert("Please enter a valid positive number.");

@@ -33,7 +33,7 @@ menu: nav/paris_hotbar.html
         margin-bottom: 20px;
         color: white;
         display: flex;
-        flex-direction: column; /* Align messages vertically */
+        flex-direction: column;
     }
     .message {
         max-width: 80%;
