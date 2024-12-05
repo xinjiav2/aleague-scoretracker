@@ -5,7 +5,9 @@ search_exclude: true
 permalink: /travel/paris/lodging_listings_paris
 menu: nav/paris_hotbar.html
 ---
-
+<head>
+  <link rel="stylesheet" href="../../assets/css/travel/lodging.css">
+</head>
 <body>
   <div class="container">
     <main class="main-content">
@@ -78,110 +80,5 @@ menu: nav/paris_hotbar.html
     </main>
   </div>
 </body>
-<style>
-  @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
-  body {
-    font-family: "Poppins", sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    background-color: #f9f9f9;
-  }
-  .container {
-    width: 80vw;
-    padding: 20px;
-  }
-  .main-content {
-    text-align: center;
-  }
-  header {
-    margin-bottom: 10px;
-  }
-  .search-bar {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-  }
-  .search-bar input {
-    width: 60%;
-    padding: 8px;
-    margin-right: 5px;
-    border: 1px solid #767676;
-  }
-  .search-bar button {
-    padding: 8px 15px;
-    border: 1px solid #767676;
-  }
-  .vertical-line {
-    border-left: solid;
-    border-right: none;
-    border-top: none;
-    border-bottom: none;
-    border-width: 1px;
-    border-style: dashed;
-    border-color:#444;
-  }
-  .filters {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 10px 0;
-    padding: 10px 0;
-    background-color: #222;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  .filter, .apply {
-    padding: 10px 15px;
-    background-color: #121212;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .filter:hover, .apply:hover{
-    background-color: #e7e7e7;
-  }
-  .listings {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-  }
-  .listing {
-    padding: 15px;
-    background-color: #222;
-    color: #fff;
-    border-radius: 5px;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform .2s;
-  }
-  .listing:hover {
-    transform: scale(1.02);
-  }
-  .listing img {
-    max-width: 100%;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  .hidden {
-    display: none;
-  }
-  .filter-options {
-    margin-top: 20px;
-  }
-  .filter-input {
-    margin: 10px 0;
-  }
-</style>
-<script>
-  document.querySelectorAll('.filter').forEach(filter => {
-    filter.addEventListener('click', () => {
-      document.querySelectorAll('.filter-input').forEach(input => {
-        input.classList.add('hidden');
-      });
-      const filterId = filter.dataset.filter + '-filter';
-      document.getElementById(filterId).classList.remove('hidden');
-    });
-  });
-</script>
+
+<script src="../../assets/js/travel/lodging.js"></script>
