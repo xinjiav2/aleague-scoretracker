@@ -139,6 +139,16 @@ menu: nav/hong_hotbar.html
     <div class="container">
         <div class="budget-summary" id="budgetSummary">
             <h3>Your Budget Summary</h3>
+            
+                const activities = budget * 0.30;
+                const hotels = budget * 0.40; 
+                const transportation = budget * 0.30; 
+                document.getElementById('activitiesAmount').textContent = `$${activities.toFixed(2)}`;
+                document.getElementById('activitiesPercentage').textContent = `${(activities / budget * 100).toFixed(2)}%`;
+                document.getElementById('hotelsAmount').textContent = `$${hotels.toFixed(2)}`;
+                document.getElementById('hotelsPercentage').textContent = `${(hotels / budget * 100).toFixed(2)}%`;
+                document.getElementById('transportationAmount').textContent = `$${transportation.toFixed(2)}`;
+                document.getElementById('transportationPercentage').textContent = `${(transportation / budget * 100).toFixed(2)}%`;
             <p id="budgetStatus">Set your budget to see the summary.</p>
         </div>
     </div>

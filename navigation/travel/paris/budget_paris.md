@@ -1,5 +1,5 @@
 ---
-layout: post 
+layout: post
 title: Paris-Budget
 search_exclude: true
 permalink: /travel/Paris/budget
@@ -103,12 +103,30 @@ menu: nav/paris_hotbar.html
             margin: 10px 0;
             color: #E6E6FA;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #add8e6;
+        }
+        th {
+            background-color: #add8e6;
+            color: black;
+        }
+        td {
+            background-color: #073461;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Trip Budget Planner</h1>
-        <p>Plan your budget plan for Hong Kong!</p>
+        <p>Plan your budget plan for Paris!</p>
     </div>
     <div class="container">
         <div class="form-container">
@@ -139,6 +157,37 @@ menu: nav/paris_hotbar.html
         <div class="budget-summary" id="budgetSummary">
             <h3>Your Budget Summary</h3>
             <p id="budgetStatus">Set your budget to see the summary.</p>
+            <table id="budgetTable" style="display:none;">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount (USD)</th>
+                        <th>Percentage of Total Budget</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Activities</td>
+                        <td id="activitiesAmount">$0</td>
+                        <td id="activitiesPercentage">0%</td>
+                    </tr>
+                    <tr>
+                        <td>Hotels</td>
+                        <td id="hotelsAmount">$0</td>
+                        <td id="hotelsPercentage">0%</td>
+                    </tr>
+                    <tr>
+                        <td>Transportation</td>
+                        <td id="transportationAmount">$0</td>
+                        <td id="transportationPercentage">0%</td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td id="totalAmount">$0</td>
+                        <td>100%</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="container">
@@ -150,4 +199,15 @@ menu: nav/paris_hotbar.html
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('budgetForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const budget = Number(document.getElementById('budget').value);
+            if (budget > 0) {
+                document.getElementById('budgetStatus').textContent = `Total Budget: $${budget}`;
+                document.getElementById('totalAmount').textContent = `$${budget}`;
+                document.getElementById('budgetTable').style.display = 'table';
+            }
+        });
+    </script>
 </body>
