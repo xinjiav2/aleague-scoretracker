@@ -152,6 +152,9 @@ menu: nav/paris_hotbar.html
                 </select>
                 <button type="submit">Check Options!</button>
             </form>
+            <a href="chat" style="display: inline-block; margin-top: 20px;">
+                <button type="button">Join a Chatroom about these choices!</button>
+            </a>
         </div>
     </div>
     <div class="container">
