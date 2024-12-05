@@ -1,9 +1,9 @@
 ---
 layout: post 
-title: Hong Kong Waypoints
+title: Mumbai Waypoints
 search_exclude: true
-permalink: /travel/hong_kong/wellness_waypoints
-menu: nav/hong_hotbar.html
+permalink: /travel/mumbai/wellness_waypoints
+menu: nav/mumbai_hotbar.html
 ---
 
 

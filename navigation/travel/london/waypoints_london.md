@@ -1,9 +1,9 @@
 ---
 layout: post 
-title: Hong Kong Waypoints
+title: London Waypoints
 search_exclude: true
-permalink: /travel/hong_kong/wellness_waypoints
-menu: nav/hong_hotbar.html
+permalink: /travel/london/wellness_waypoints
+menu: nav/london_hotbar.html
 ---
 
 
