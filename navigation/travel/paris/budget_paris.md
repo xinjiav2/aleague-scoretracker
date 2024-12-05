@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Paris-Budget
+title: Paris Budget
 search_exclude: true
 permalink: /travel/Paris/budget
 menu: nav/paris_hotbar.html
