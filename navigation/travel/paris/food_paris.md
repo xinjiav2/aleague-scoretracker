@@ -2,7 +2,7 @@
 layout: post 
 title: Cuisine Chronicles
 search_exclude: true
-permalink: /travel/food_paris
+permalink: /travel/paris/food_paris
 menu: nav/paris_hotbar.html
 ---
 
