@@ -6,25 +6,61 @@ permalink: /travel/London/packing_portal_london
 menu: nav/london_hotbar.html
 ---
 
-<head>
-
-
-
-</head>
 
 <body>
     <div class="container">
         <!-- Main Content -->
         <div class="main">
-            <h1>Packing Portal</h1>
+            <h1>Packing Portal: London</h1>
             <div class="packing-items">
-                <div class="packing-item">Packing Item</div>
-                <div class="packing-item">Packing Item</div>
-                <div class="packing-item">Packing Item</div>
-                <div class="packing-item">Packing Item</div>
-                <div class="packing-item">Packing Item</div>
-                <div class="packing-item">Packing Item</div>
-                <div class="packing-item">Packing Item</div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Waterproof Coat</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Umbrella</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Walking Shoes</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Scarf</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Gloves</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">UK Adapter</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Smartphone Charger</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Water Bottle</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Comfortable Socks</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Hat</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Camera</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item">
+                    <label for="packing-item">Snacks</label><br>
+                </div>
             </div>
         </div>
         <!-- Filters -->
@@ -36,94 +72,110 @@ menu: nav/london_hotbar.html
             <button>Transportation</button>
             <button>Technology</button>
         </div>
+        <div class="personal_checklist">
+            <h3>Personal Packing List</h3>
+            <hr>
+        </div>
     </div>
 </body>
 
 <style>
 
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #f9f9f9;
-        overflow-x: hidden;
-    }
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    gap: 20px;
+}
 
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        width: 100%;
-        max-width: 1200px;
-        gap: 20px;
-        margin: 0;
-        box-sizing: border-box;
-    }
+.content-wrapper {
+    display: flex;
+    flex: 3 1 600px;
+    gap: 20px;
+}
 
-    /* Main Content */
-    .main {
-        flex: 2 1 600px;
-        background: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-        box-sizing: border-box;
-    }
+.main {
+    flex: 3;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    float: left;
+}
 
-    .main h1 {
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 24px;
-        color: black;
-    }
+.main h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: black;
+}
 
+.packing-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
 
-    .packing-items {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-    }
+.packing-item {
+    padding: 15px;
+    background: #f1f1f1;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    color: black;
+}
 
-    .packing-item {
-        padding: 15px;
-        background: #f1f1f1;
-        border-radius: 5px;
-        text-align: center;
-        font-size: 18px;
-        color: black;
-    }
+.filters {
+    flex: 1;
+    background: #eaf4ff;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
 
-    /* Filters */
-    .filters {
-        flex: 1 1 200px;
-        background: #eaf4ff;
-        padding: 20px;
-        border-radius: 10px;
-        box-sizing: border-box;
-    }
+.filters h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+}
 
-    .filters h3 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: black;
-    }
+.filters button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #d8ecff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
 
-    .filters button {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-        padding: 10px;
-        background-color: #d8ecff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+.filters button:hover {
+    background-color: #b5dbff;
+}
 
-    .filters button:hover {
-        background-color: #b5dbff;
-    }
+.personal_checklist {
+    flex: 3;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.personal_checklist h3 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.personal_checklist hr {
+    border: 2px solid black;
+}
+
 </style>
