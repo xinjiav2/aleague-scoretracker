@@ -148,8 +148,9 @@ menu: nav/paris_hotbar.html
                     <option value="activities">Activities</option>
                     <option value="hotels">Hotels</option>
                     <option value="transportation">Transportation</option>
+                    <option value="food">Food</option>
                 </select>
-                <button type="submit">Get Options</button>
+                <button type="submit">Check Options!</button>
             </form>
         </div>
     </div>
@@ -182,6 +183,11 @@ menu: nav/paris_hotbar.html
                         <td id="transportationPercentage">0%</td>
                     </tr>
                     <tr>
+                        <td>Food</td>
+                        <td id="foodAmount">$0</td>
+                        <td id="foodPercentage">0%</td>
+                    </tr>
+                    <tr>
                         <td>Total</td>
                         <td id="totalAmount">$0</td>
                         <td>100%</td>
@@ -192,7 +198,7 @@ menu: nav/paris_hotbar.html
     </div>
     <div class="container">
         <div class="category">
-            <h2>Post-Trip Budget Tips</h2>
+            <h2>Budget Tips</h2>
             <div class="post-item">
                 <h3>Budget-Saving Tip</h3>
                 <p>Consider staying in budget hostels or using public transportation instead of taxis for savings!</p>
@@ -208,6 +214,9 @@ menu: nav/paris_hotbar.html
                 document.getElementById('totalAmount').textContent = `$${budget}`;
                 document.getElementById('budgetTable').style.display = 'table';
             }
-        });
+            } else {
+            alert("Please enter a valid positive number.");
+            }
+        );
     </script>
 </body>
