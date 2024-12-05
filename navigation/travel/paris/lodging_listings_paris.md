@@ -1,9 +1,8 @@
 ---
 layout: post 
-title: Paris
+title: Lodging Listings
 search_exclude: true
-permalink: /travel/Paris
-menu: nav/paris_hotbar.html
+permalink: /travel/paris/lodging_listings_paris
 ---
 
 
