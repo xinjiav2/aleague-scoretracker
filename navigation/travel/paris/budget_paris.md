@@ -213,10 +213,9 @@ menu: nav/paris_hotbar.html
                 document.getElementById('budgetStatus').textContent = `Total Budget: $${budget}`;
                 document.getElementById('totalAmount').textContent = `$${budget}`;
                 document.getElementById('budgetTable').style.display = 'table';
-            }
             } else {
-            alert("Please enter a valid positive number.");
+                alert("Please enter a valid positive number.");
             }
-        );
+        });
     </script>
 </body>
