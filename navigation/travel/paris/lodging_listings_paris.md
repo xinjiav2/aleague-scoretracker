@@ -18,10 +18,40 @@ menu: nav/paris_hotbar.html
         </div>
       </header>
       <div class="filters">
-        <div class="filter">Price</div>
-        <div class="filter">Rating</div>
-        <div class="filter">Nearby</div>
-        <div class="filter">Food</div>
+        <div class="filter" data-filter="price">Price</div>
+        <div class="filter" data-filter="rating">Rating</div>
+        <div class="filter" data-filter="nearby">Nearby</div>
+        <div class="filter" data-filter="food">Food</div>
+        <div class="vertical-line"></div>
+        <div class="apply" data-filter="apply">Apply</div>
+      </div>
+      <div class="filter-options">
+        <div id="price-filter" class="filter-input hidden">
+          <label for="price">Enter maximum price:</label>
+          <input type="number" id="price" placeholder="e.g., 100">
+        </div>
+        <div id="rating-filter" class="filter-input hidden">
+          <label for="rating">Select minimum rating:</label>
+          <select id="rating">
+            <option value="1">1 Star</option>
+            <option value="2">2 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+          </select>
+        </div>
+        <div id="nearby-filter" class="filter-input hidden">
+          <label for="nearby">Enter maximum distance (miles):</label>
+          <input type="number" id="nearby" placeholder="e.g., 10">
+        </div>
+        <div id="food-filter" class="filter-input hidden">
+          <label for="food">Select dietary preference:</label>
+          <select id="food">
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="lactose">Lactose Intolerant</option>
+          </select>
+        </div>
       </div>
       <div class="listings">
         <div class="listing">
@@ -83,6 +113,15 @@ menu: nav/paris_hotbar.html
     padding: 8px 15px;
     border: 1px solid #767676;
   }
+  .vertical-line {
+    border-left: solid;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    border-width: 1px;
+    border-style: dashed;
+    border-color:#444;
+  }
   .filters {
     display: flex;
     justify-content: center;
@@ -93,14 +132,14 @@ menu: nav/paris_hotbar.html
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  .filter {
+  .filter, .apply {
     padding: 10px 15px;
     background-color: #121212;
     border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
   }
-  .filter:hover {
+  .filter:hover, .apply:hover{
     background-color: #e7e7e7;
   }
   .listings {
@@ -125,4 +164,24 @@ menu: nav/paris_hotbar.html
     border-radius: 5px;
     margin-top: 10px;
   }
+  .hidden {
+    display: none;
+  }
+  .filter-options {
+    margin-top: 20px;
+  }
+  .filter-input {
+    margin: 10px 0;
+  }
 </style>
+<script>
+  document.querySelectorAll('.filter').forEach(filter => {
+    filter.addEventListener('click', () => {
+      document.querySelectorAll('.filter-input').forEach(input => {
+        input.classList.add('hidden');
+      });
+      const filterId = filter.dataset.filter + '-filter';
+      document.getElementById(filterId).classList.remove('hidden');
+    });
+  });
+</script>
