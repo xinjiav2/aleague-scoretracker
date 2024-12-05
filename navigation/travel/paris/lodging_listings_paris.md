@@ -13,8 +13,8 @@ menu: nav/paris_hotbar.html
         <h1>Lodging Listings</h1>
         <hr>
         <div class="search-bar">
-          <input type="text" placeholder="Search">
-          <button>Search</button>
+          <input type="text" placeholder="Search for a place...">
+          <button>Go</button>
         </div>
       </header>
       <div class="filters">
