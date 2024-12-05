@@ -26,25 +26,26 @@ menu: nav/paris_hotbar.html
 <div class="main-content">
     <h1>Wellness Waypoints</h1>
     <div class="search-bar">
-        <input type="text" placeholder="Search your need">
-        <button class="search-btn">Search</button>
+        <input type="text" id="searchInput" placeholder="Search your need">
+        <button class="search-btn" onclick="searchItem()">Search</button>
     </div>
     <div class="buttons-section">
-        <button class="main-btn">Hospitals</button>
-        <button class="main-btn">Recovery Centers</button>
-        <button class="main-btn">Pharmacies</button>
-        <button class="main-btn">Emergency Contacts</button>
-        <button class="main-btn">Insurance</button>
+        <button class="main-btn" onclick="displayContent('Type 1')">Type 1</button>
+        <button class="main-btn" onclick="displayContent('Type 2')">Type 2</button>
+        <button class="main-btn" onclick="displayContent('Type 3')">Type 3</button>
+        <button class="main-btn" onclick="displayContent('Type 4')">Type 4</button>
+        <button class="main-btn" onclick="displayContent('Type 5')">Type 5</button>
     </div>
 </div>
 
 <!-- Filters (Right) -->
 <div class="filters">
     <h2>Filters</h2>
-    <button class="filter-btn">Type</button>
-    <button class="filter-btn">Type</button>
-    <button class="filter-btn">Type</button>
-    <button class="filter-btn">Type</button>
+    <button class="filter-btn" onclick="filterContent('Hospitals')">Hospitals</button>
+    <button class="filter-btn" onclick="filterContent('Recovery Centers')">Recovery Centers</button>
+    <button class="filter-btn" onclick="filterContent('Pharmacies')">Pharmacies</button>
+    <button class="filter-btn" onclick="filterContent('Insurance')">Insurance</button>
+    <button class="filter-btn" onclick="filterContent('Emergency Contacts')">Emergency Contacts</button>
 </div>
 </div>
 
@@ -65,7 +66,7 @@ body {
 /* Container Layout */
 .container {
     display: grid;
-    grid-template-columns: 1.5fr 3fr 1.5fr; /* Sidebar | Main Content | Filters */
+    grid-template-columns: 2fr 3fr 2fr; /* Sidebar | Main Content | Filters */
     gap: 20px;
     width: 90%;
     max-width: 1200px;
@@ -80,15 +81,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: calc(100vh - 40px); /* Adjust height relative to the page */
+    min-height: calc(100vh - 40px);
     position: sticky;
-    top: 20px; /* Leave space for submenus at the top */
+    top: 20px;
     width: 100%;
 }
 
 .sidebar h2 {
     margin-bottom: 15px;
-    font-size: 18px;
+    font-size: 20px;
     color: #333;
     text-align: center;
 }
@@ -97,12 +98,12 @@ body {
     background-color: #eaf4ff;
     border: none;
     border-radius: 5px;
-    padding: 15px; /* Increased padding for better appearance */
+    padding: 15px;
     margin: 10px 0;
-    width: 90%; /* Adjusted width to ensure single-line display */
+    width: 95%; /* Ensures sections are wide enough */
     text-align: center;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .sidebar-btn:hover {
@@ -195,30 +196,57 @@ body {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    min-height: calc(100vh - 40px); /* Adjust height relative to the page */
+    min-height: calc(100vh - 40px);
     position: sticky;
-    top: 20px; /* Leave space for submenus at the top */
+    top: 20px;
 }
 
 .filters h2 {
     margin-bottom: 20px;
-    font-size: 18px;
+    font-size: 20px;
     color: #333;
 }
 
 .filter-btn {
     display: block;
-    width: 100%;
+    width: 95%; /* Keeps filter buttons wide */
     margin: 10px 0;
-    padding: 15px; /* Increased padding for better appearance */
+    padding: 15px;
     background-color: #eaf4ff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .filter-btn:hover {
     background-color: #b5dbff;
 }
 </style>
+
+<script>
+const contentData = {
+    Hospitals: "Find hospitals in your area for emergency or routine health checkups.",
+    "Recovery Centers": "Recovery centers for addiction and post-surgery rehabilitation.",
+    Pharmacies: "Nearby pharmacies for medicines and prescriptions.",
+    "Emergency Contacts": "Essential emergency numbers for local authorities.",
+    Insurance: "Find travel and health insurance providers."
+};
+
+function displayContent(section) {
+    const contentDisplay = document.getElementById("contentDisplay");
+    contentDisplay.innerHTML = contentData[section] || "Content not found.";
+}
+
+function searchItem() {
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+    const matchedContent = Object.keys(contentData).find(key =>
+        key.toLowerCase().includes(searchValue)
+    );
+    displayContent(matchedContent || "Content not found");
+}
+
+function filterContent(filter) {
+    displayContent(filter);
+}
+</script>
