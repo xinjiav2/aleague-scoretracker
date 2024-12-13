@@ -8,37 +8,32 @@ menu: nav/paris_hotbar.html
 
 
 <div class="container">
-    <!-- Sidebar (Left) -->
-    <div class="sidebar">
-        <h2>Menu</h2>
-        <button class="sidebar-btn">Section 1</button>
-        <button class="sidebar-btn">Section 2</button>
-        <button class="sidebar-btn">Section 3</button>
-        <button class="sidebar-btn">Section 4</button>
-        <button class="sidebar-btn">Section 5</button>
-        <div class="sidebar-footer">
-            <a href="#">Settings</a>
-            <a href="#">Contact Us</a>
-        </div>
-    </div>
-
-<!-- Main Content (Center) -->
-<div class="main-content">
+<!-- Header Section -->
+<header class="header">
     <h1>Wellness Waypoints</h1>
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search your need">
-        <button class="search-btn" onclick="searchItem()">Search</button>
-    </div>
+    <p>Your one-stop guide to health and wellness resources.</p>
+</header>
+
+<!-- Search Section -->
+<div class="search-section">
+    <input type="text" id="searchInput" placeholder="Search for resources">
+    <button class="search-btn" onclick="searchItem()">Search</button>
+</div>
+
+<!-- Main Content Section -->
+<div class="main-content">
     <div class="buttons-section">
+        <h2>Explore Sections</h2>
         <button class="main-btn" onclick="displayContent('Type 1')">Type 1</button>
         <button class="main-btn" onclick="displayContent('Type 2')">Type 2</button>
         <button class="main-btn" onclick="displayContent('Type 3')">Type 3</button>
         <button class="main-btn" onclick="displayContent('Type 4')">Type 4</button>
         <button class="main-btn" onclick="displayContent('Type 5')">Type 5</button>
     </div>
+
 </div>
 
-<!-- Filters (Right) -->
+<!-- Filters Section -->
 <div class="filters">
     <h2>Filters</h2>
     <button class="filter-btn" onclick="filterContent('Hospitals')">Hospitals</button>
@@ -47,208 +42,209 @@ menu: nav/paris_hotbar.html
     <button class="filter-btn" onclick="filterContent('Insurance')">Insurance</button>
     <button class="filter-btn" onclick="filterContent('Emergency Contacts')">Emergency Contacts</button>
 </div>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <p>&copy; 2024 Wellness Waypoints. All Rights Reserved.</p>
+    <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a>
+</footer>
 </div>
 
 <style>
 /* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+font-family: 'Arial', sans-serif;
+background-color: #f4f6f9;
+color: #333;
+line-height: 1.6;
 }
 
-/* Container Layout */
 .container {
-    display: grid;
-    grid-template-columns: 2fr 3fr 2fr; /* Sidebar | Main Content | Filters */
-    gap: 20px;
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
+width: 90%;
+max-width: 1200px;
+margin: 20px auto;
 }
 
-/* Sidebar (Left) */
-.sidebar {
-    background-color: #d8ecff;
-    padding: 20px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: calc(100vh - 40px);
-    position: sticky;
-    top: 20px;
-    width: 100%;
+/* Header Styling */
+.header {
+text-align: center;
+background-color: #007bff;
+color: #fff;
+padding: 20px;
+border-radius: 10px;
+margin-bottom: 20px;
+box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar h2 {
-    margin-bottom: 15px;
-    font-size: 20px;
-    color: #333;
-    text-align: center;
+.header h1 {
+font-size: 2.5em;
+margin-bottom: 10px;
 }
 
-.sidebar-btn {
-    background-color: #eaf4ff;
-    border: none;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 10px 0;
-    width: 95%; /* Ensures sections are wide enough */
-    text-align: center;
-    cursor: pointer;
-    font-size: 18px;
+.header p {
+font-size: 1.2em;
 }
 
-.sidebar-btn:hover {
-    background-color: #b5dbff;
+/* Search Section */
+.search-section {
+display: flex;
+justify-content: center;
+margin-bottom: 20px;
 }
 
-.sidebar-footer {
-    margin-top: auto;
-    text-align: center;
+.search-section input {
+width: 60%;
+padding: 10px;
+border-radius: 5px;
+border: 1px solid #ccc;
+margin-right: 10px;
 }
 
-.sidebar-footer a {
-    display: block;
-    margin: 10px 0;
-    color: #007bff;
-    text-decoration: none;
-    font-size: 14px;
+.search-section .search-btn {
+padding: 10px 20px;
+background-color: #007bff;
+border: none;
+border-radius: 5px;
+color: #fff;
+cursor: pointer;
+transition: background-color 0.3s ease;
 }
 
-.sidebar-footer a:hover {
-    color: #0056b3;
+.search-section .search-btn:hover {
+background-color: #0056b3;
 }
 
-/* Main Content (Center) */
+/* Main Content Section */
 .main-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.main-content h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.search-bar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.search-bar input {
-    width: 60%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.search-btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-}
-
-.search-btn:hover {
-    background-color: #0056b3;
+text-align: center;
+background: #fff;
+color: #000;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+margin-bottom: 20px;
 }
 
 .buttons-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+margin-bottom: 20px;
+}
+
+.buttons-section h2 {
+margin-bottom: 15px;
+color: #007bff;
+font-size: 1.8em;
 }
 
 .main-btn {
-    width: 80%;
-    padding: 15px;
-    background-color: #e0e0e0;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
+width: 80%;
+margin: 10px auto;
+padding: 15px;
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease;
 }
 
 .main-btn:hover {
-    background-color: #d1d1d1;
+background-color: #0056b3;
 }
 
-/* Filters (Right) */
+.info-box {
+margin-top: 20px;
+padding: 20px;
+background-color: #f4f6f9;
+color: #000;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+/* Filters Section */
 .filters {
-    background-color: #d8ecff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    min-height: calc(100vh - 40px);
-    position: sticky;
-    top: 20px;
+background-color: #fff;
+color: #000;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .filters h2 {
-    margin-bottom: 20px;
-    font-size: 20px;
-    color: #333;
+margin-bottom: 15px;
+color: #007bff;
+font-size: 1.8em;
+text-align: center;
 }
 
 .filter-btn {
-    display: block;
-    width: 95%; /* Keeps filter buttons wide */
-    margin: 10px 0;
-    padding: 15px;
-    background-color: #eaf4ff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
+width: 90%;
+margin: 10px auto;
+padding: 10px;
+background-color: #f4f6f9;
+border: 1px solid #007bff;
+border-radius: 5px;
+color: #007bff;
+cursor: pointer;
+font-size: 16px;
+transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .filter-btn:hover {
-    background-color: #b5dbff;
+background-color: #007bff;
+color: #fff;
+}
+
+/* Footer Section */
+.footer {
+text-align: center;
+padding: 20px;
+background-color: #007bff;
+color: #fff;
+border-radius: 10px;
+margin-top: 20px;
+}
+
+.footer a {
+color: #fff;
+text-decoration: underline;
+margin: 0 10px;
+}
+
+.footer a:hover {
+color: #d1d1d1;
 }
 </style>
 
 <script>
 const contentData = {
-    Hospitals: "Find hospitals in your area for emergency or routine health checkups.",
-    "Recovery Centers": "Recovery centers for addiction and post-surgery rehabilitation.",
-    Pharmacies: "Nearby pharmacies for medicines and prescriptions.",
-    "Emergency Contacts": "Essential emergency numbers for local authorities.",
-    Insurance: "Find travel and health insurance providers."
+Hospitals: "Find hospitals in your area for emergency or routine health checkups.",
+"Recovery Centers": "Recovery centers for addiction and post-surgery rehabilitation.",
+Pharmacies: "Nearby pharmacies for medicines and prescriptions.",
+"Emergency Contacts": "Essential emergency numbers for local authorities.",
+Insurance: "Find travel and health insurance providers."
 };
 
 function displayContent(section) {
-    const contentDisplay = document.getElementById("contentDisplay");
-    contentDisplay.innerHTML = contentData[section] || "Content not found.";
+const contentDisplay = document.getElementById("contentDisplay");
+contentDisplay.innerHTML = contentData[section] || "Content not found.";
 }
 
 function searchItem() {
-    const searchValue = document.getElementById("searchInput").value.toLowerCase();
-    const matchedContent = Object.keys(contentData).find(key =>
-        key.toLowerCase().includes(searchValue)
-    );
-    displayContent(matchedContent || "Content not found");
+const searchValue = document.getElementById("searchInput").value.toLowerCase();
+const matchedContent = Object.keys(contentData).find(key =>
+    key.toLowerCase().includes(searchValue)
+);
+displayContent(matchedContent || "Content not found");
 }
 
 function filterContent(filter) {
-    displayContent(filter);
+displayContent(filter);
 }
 </script>
-
-
