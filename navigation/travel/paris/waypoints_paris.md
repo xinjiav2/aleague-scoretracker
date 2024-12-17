@@ -6,249 +6,225 @@ permalink: /travel/paris/wellness_waypoints
 menu: nav/paris_hotbar.html
 ---
 
-
 <div class="container">
-    <!-- Sidebar (Left) -->
-    <div class="sidebar">
-        <h2>Menu</h2>
-        <button class="sidebar-btn">Section 1</button>
-        <button class="sidebar-btn">Section 2</button>
-        <button class="sidebar-btn">Section 3</button>
-        <button class="sidebar-btn">Section 4</button>
-        <button class="sidebar-btn">Section 5</button>
-        <div class="sidebar-footer">
-            <a href="#">Settings</a>
-            <a href="#">Contact Us</a>
-        </div>
-    </div>
-
-<!-- Main Content (Center) -->
-<div class="main-content">
+<!-- Header Section -->
+<header class="header">
     <h1>Wellness Waypoints</h1>
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search your need">
-        <button class="search-btn" onclick="searchItem()">Search</button>
-    </div>
-    <div class="buttons-section">
-        <button class="main-btn" onclick="displayContent('Type 1')">Type 1</button>
-        <button class="main-btn" onclick="displayContent('Type 2')">Type 2</button>
-        <button class="main-btn" onclick="displayContent('Type 3')">Type 3</button>
-        <button class="main-btn" onclick="displayContent('Type 4')">Type 4</button>
-        <button class="main-btn" onclick="displayContent('Type 5')">Type 5</button>
-    </div>
+    <p>Your one-stop guide to health and wellness resources.</p>
+</header>
+
+<!-- Search Section -->
+<div class="search-section">
+    <input type="text" id="searchInput" placeholder="Search for resources">
+    <button class="search-btn" onclick="searchItem()">Search</button>
 </div>
 
-<!-- Filters (Right) -->
+<!-- User Need Input Section -->
+<div class="search-section">
+    <input type="text" id="needInput" placeholder="Enter your need (e.g., broken bone, bloody nose)">
+    <button class="search-btn" onclick="findLocationByNeed()">Find Help</button>
+</div>
+
+<!-- Filters Section -->
 <div class="filters">
-    <h2>Filters</h2>
-    <button class="filter-btn" onclick="filterContent('Hospitals')">Hospitals</button>
-    <button class="filter-btn" onclick="filterContent('Recovery Centers')">Recovery Centers</button>
-    <button class="filter-btn" onclick="filterContent('Pharmacies')">Pharmacies</button>
-    <button class="filter-btn" onclick="filterContent('Insurance')">Insurance</button>
-    <button class="filter-btn" onclick="filterContent('Emergency Contacts')">Emergency Contacts</button>
+    <h2>Health Resource Filters</h2>
+    <div class="dropdown">
+        <button class="filter-btn" onclick="toggleDropdown('hospitals-dropdown')">Hospitals</button>
+        <div class="dropdown-content" id="hospitals-dropdown"></div>
+    </div>
+    <div class="dropdown">
+        <button class="filter-btn" onclick="toggleDropdown('pharmacies-dropdown')">Pharmacies</button>
+        <div class="dropdown-content" id="pharmacies-dropdown"></div>
+    </div>
+    <div class="dropdown">
+        <button class="filter-btn" onclick="toggleDropdown('recovery-dropdown')">Recovery Centers</button>
+        <div class="dropdown-content" id="recovery-dropdown"></div>
+    </div>
 </div>
+
+<!-- Map Section -->
+<div id="map" style="height: 400px; margin-top: 20px; border-radius: 10px;"></div>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <p>&copy; 2024 Wellness Waypoints. All Rights Reserved.</p>
+    <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a>
+</footer>
 </div>
 
-<style>
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!-- Leaflet.js for Map -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-}
-
-/* Container Layout */
-.container {
-    display: grid;
-    grid-template-columns: 2fr 3fr 2fr; /* Sidebar | Main Content | Filters */
-    gap: 20px;
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-}
-
-/* Sidebar (Left) */
-.sidebar {
-    background-color: #d8ecff;
-    padding: 20px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: calc(100vh - 40px);
-    position: sticky;
-    top: 20px;
-    width: 100%;
-}
-
-.sidebar h2 {
-    margin-bottom: 15px;
-    font-size: 20px;
-    color: #333;
-    text-align: center;
-}
-
-.sidebar-btn {
-    background-color: #eaf4ff;
-    border: none;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 10px 0;
-    width: 95%; /* Ensures sections are wide enough */
-    text-align: center;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.sidebar-btn:hover {
-    background-color: #b5dbff;
-}
-
-.sidebar-footer {
-    margin-top: auto;
-    text-align: center;
-}
-
-.sidebar-footer a {
-    display: block;
-    margin: 10px 0;
-    color: #007bff;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.sidebar-footer a:hover {
-    color: #0056b3;
-}
-
-/* Main Content (Center) */
-.main-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.main-content h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.search-bar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.search-bar input {
-    width: 60%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.search-btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-}
-
-.search-btn:hover {
-    background-color: #0056b3;
-}
-
-.buttons-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.main-btn {
-    width: 80%;
-    padding: 15px;
-    background-color: #e0e0e0;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.main-btn:hover {
-    background-color: #d1d1d1;
-}
-
-/* Filters (Right) */
-.filters {
-    background-color: #d8ecff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    min-height: calc(100vh - 40px);
-    position: sticky;
-    top: 20px;
-}
-
-.filters h2 {
-    margin-bottom: 20px;
-    font-size: 20px;
-    color: #333;
-}
-
-.filter-btn {
-    display: block;
-    width: 95%; /* Keeps filter buttons wide */
-    margin: 10px 0;
-    padding: 15px;
-    background-color: #eaf4ff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.filter-btn:hover {
-    background-color: #b5dbff;
-}
-</style>
-
+<!-- JavaScript -->
 <script>
-const contentData = {
-    Hospitals: "Find hospitals in your area for emergency or routine health checkups.",
-    "Recovery Centers": "Recovery centers for addiction and post-surgery rehabilitation.",
-    Pharmacies: "Nearby pharmacies for medicines and prescriptions.",
-    "Emergency Contacts": "Essential emergency numbers for local authorities.",
-    Insurance: "Find travel and health insurance providers."
+// Static Locations Data
+const locations = [
+{ name: "Saint Louis Hospital", type: "hospitals", lat: 48.8566, lng: 2.3522 },
+{ name: "Central Clinic", type: "hospitals", lat: 48.8540, lng: 2.3560 },
+{ name: "Green Pharmacy", type: "pharmacies", lat: 48.8584, lng: 2.3470 },
+{ name: "Healthline Pharmacy", type: "pharmacies", lat: 48.8590, lng: 2.3510 },
+{ name: "Wellness Recovery Center", type: "recovery", lat: 48.8555, lng: 2.3500 },
+{ name: "Bright Path Recovery", type: "recovery", lat: 48.8525, lng: 2.3555 }
+];
+
+// Initialize Map
+let map = L.map("map").setView([48.8566, 2.3522], 13);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+maxZoom: 18,
+attribution: "© OpenStreetMap"
+}).addTo(map);
+
+// Add markers for all locations
+locations.forEach(loc => {
+L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(loc.name);
+});
+
+// Populate Dropdown Menus
+function populateDropdowns() {
+const dropdowns = {
+    hospitals: document.getElementById("hospitals-dropdown"),
+    pharmacies: document.getElementById("pharmacies-dropdown"),
+    recovery: document.getElementById("recovery-dropdown")
 };
 
-function displayContent(section) {
-    const contentDisplay = document.getElementById("contentDisplay");
-    contentDisplay.innerHTML = contentData[section] || "Content not found.";
+for (let type in dropdowns) {
+    dropdowns[type].innerHTML = ""; // Clear existing items
+    locations
+        .filter(loc => loc.type === type)
+        .forEach(loc => {
+            const item = document.createElement("div");
+            item.className = "dropdown-item";
+            item.textContent = loc.name;
+            item.onclick = () => map.setView([loc.lat, loc.lng], 15);
+            dropdowns[type].appendChild(item);
+        });
+}
 }
 
+// Toggle Dropdown Visibility
+function toggleDropdown(dropdownId) {
+const dropdown = document.getElementById(dropdownId);
+dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+populateDropdowns();
+
+// Search Functionality
 function searchItem() {
-    const searchValue = document.getElementById("searchInput").value.toLowerCase();
-    const matchedContent = Object.keys(contentData).find(key =>
-        key.toLowerCase().includes(searchValue)
-    );
-    displayContent(matchedContent || "Content not found");
+const searchValue = document.getElementById("searchInput").value.toLowerCase();
+const result = locations.find(loc => loc.name.toLowerCase().includes(searchValue));
+if (result) {
+    map.setView([result.lat, result.lng], 15);
+} else {
+    alert("Location not found.");
+}
 }
 
-function filterContent(filter) {
-    displayContent(filter);
+// Find Location Based on User's Need
+function findLocationByNeed() {
+const need = document.getElementById("needInput").value.toLowerCase();
+
+let matchedType = "";
+if (need.includes("broken bone") || need.includes("injury")) {
+    matchedType = "hospitals";
+} else if (need.includes("bloody nose") || need.includes("prescription")) {
+    matchedType = "pharmacies";
+} else if (need.includes("recovery") || need.includes("rehab")) {
+    matchedType = "recovery";
+} else {
+    alert("No matching location found. Please refine your search.");
+    return;
+}
+
+const result = locations.find(loc => loc.type === matchedType);
+if (result) {
+    map.setView([result.lat, result.lng], 15);
+} else {
+    alert("No locations available for your need.");
+}
 }
 </script>
 
+<!-- CSS -->
+<style>
+/* General Styling */
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+background: linear-gradient(to bottom right, #2C3E50, #4CA1AF);
+color: #fff;
+}
 
+.container {
+width: 90%;
+max-width: 1200px;
+margin: 20px auto;
+}
+
+.header {
+text-align: center;
+background: #007bff;
+padding: 20px;
+border-radius: 10px;
+color: white;
+}
+
+.search-section {
+display: flex;
+justify-content: center;
+margin-top: 10px;
+}
+
+input, .search-btn {
+padding: 10px;
+border-radius: 5px;
+border: none;
+color: #333;
+}
+
+.filters {
+background: #fff;
+color: #333;
+padding: 20px;
+border-radius: 10px;
+margin-bottom: 20px;
+}
+
+.filter-btn {
+width: 100%;
+background: #007bff;
+color: white;
+padding: 10px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.dropdown-content {
+display: none;
+background-color: #f9f9f9;
+border: 1px solid #ccc;
+padding: 10px;
+margin-top: 5px;
+border-radius: 5px;
+}
+
+.dropdown-item {
+padding: 5px;
+color: #007bff;
+cursor: pointer;
+}
+
+.dropdown-item:hover {
+background-color: #ddd;
+}
+
+.footer {
+text-align: center;
+margin-top: 20px;
+background: #007bff;
+padding: 10px;
+color: white;
+}
+</style>
