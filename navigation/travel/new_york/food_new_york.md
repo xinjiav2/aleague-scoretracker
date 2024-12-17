@@ -3,7 +3,7 @@ layout: post
 title: Cuisine Chronicles
 search_exclude: true
 permalink: /travel/food_new_york
-menu: nav/hong_hotbar.html
+menu: nav/new_hotbar.html
 ---
 
 # 🌟 Welcome to New York Food Guide! 🌟 #
