@@ -1,78 +1,110 @@
 ---
-layout: post 
-title: Paris
+layout: post
+title: About
+permalink: /about/
+menu: nav/home.html
 search_exclude: true
-permalink: /travel/about
+show_reading_time: false
 ---
 
+<div id="team-cards" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;"></div>
+
 <script>
-  var pythonURI = "http://localhost:8887";
-//   if (location.hostname === "localhost") {
-//     pythonURI = "http://localhost:8887";
-//   } else if (location.hostname === "127.0.0.1") {
-//     pythonURI = "http://127.0.0.1:8887";
-//   } else {
-//     pythonURI = "https://flocker.nighthawkcodingsociety.com";
-//   }
-  const fetchOptions = {
-    method: "GET", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    cache: "default", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "include", // include, same-origin, omit
-    headers: {
-      "Content-Type": "application/json",
-      "X-Origin": "client", // New custom header to identify source
-    },
-  };
+    async function fetchTeamInfo() {
+        try {
+            // Fetch data from multiple endpoints (e.g., /api/derek, /api/john, /api/sarah)
+            const responses = await Promise.all([
+                fetch('http://127.0.0.1:8887/api/people/derek'),
+                fetch('http://127.0.0.1:8887/api/people/kiruthic'),
+                fetch('http://127.0.0.1:8887/api/people/tarun'),
+                fetch('http://127.0.0.1:8887/api/people/aadi'),
+                fetch('http://127.0.0.1:8887/api/people/aaditya'),
+                fetch('http://127.0.0.1:8887/api/people/arhaan'),
+                fetch('http://127.0.0.1:8887/api/people/rohan')
+            ]);
+    
+            // Convert all the responses to JSON
+            const data = await Promise.all(responses.map(response => response.json()));
+    
+            // Display team info using the data returned by the backend
+            data.forEach(member => displayTeamInfo(member)); // Display each member's info
+        } catch (error) {
+            console.error('Error fetching team info:', error);
+        }
+    }
 
-  fetch(`${pythonURI}/api/people`, fetchOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+function displayTeamInfo(member) {
+    const container = document.getElementById('team-cards');
+    
+    // Create the team card with the data
+    const card = document.createElement('div');
+    card.className = 'team-card';
 
-      let users = data;
-      console.log(users);
+    const name = document.createElement('h3');
+    name.textContent = member.name;
+    card.appendChild(name);
 
-      users.forEach((user) => {
-        let row = document.createElement("tr");
+    const age = document.createElement('p');
+    age.textContent = `Age: ${member.age}`;
+    card.appendChild(age);
 
-        let nameCell = document.createElement("td");
-        nameCell.textContent = user.name;
-        row.appendChild(nameCell);
+    const classes = document.createElement('p');
+    classes.textContent = `Classes: ${member.classes}`;
+    card.appendChild(classes);
 
-        let emailCell = document.createElement("td");
-        emailCell.textContent = user.id;
-        row.appendChild(emailCell);
+    const favoriteColor = document.createElement('p');
+    favoriteColor.textContent = `Favorite Color: ${member.favorite.color}`;
+    card.appendChild(favoriteColor);
 
-        let roleCell = document.createElement("td");
-        roleCell.textContent = user.role;
-        row.appendChild(roleCell);
+    const favoriteFood = document.createElement('p');
+    favoriteFood.textContent = `Favorite Food: ${member.favorite.food}`;
+    card.appendChild(favoriteFood);
 
-        let uidCell = document.createElement("td");
-        uidCell.textContent = user.uid;
-        row.appendChild(uidCell);
+    // Add the card to the container
+    container.appendChild(card);
+}
 
-        let themeModeCell = document.createElement("td");
-        themeModeCell.textContent = user.theme_mode;
-        row.appendChild(themeModeCell);
-
-        document.getElementById("userTableBody").appendChild(row);
-      });
-    });
+fetchTeamInfo();
 </script>
 
-<div class="about">
-  <h2>InterTravel People</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>ID</th>
-        <th>Role</th>
-        <th>uid</th>
-        <th>Theme Mode</th>
-      </tr>
-    </thead>
-    <tbody id="userTableBody"></tbody>
-  </table>
-</div>
+<style>
+#team-cards {
+    font-family: 'Arial', sans-serif;
+    margin: 20px auto;
+}
+
+.team-card {
+    background: linear-gradient(145deg, #1e1e2f, #252535);
+    border-radius: 10px;
+    color: #fff;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.team-card:hover {
+    transform: scale(1.05);
+}
+
+.team-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    color: #00d4ff;
+}
+
+.team-card p {
+    margin: 5px 0;
+    font-size: 1em;
+}
+
+.team-card a {
+    color: #00d4ff;
+    text-decoration: none;
+}
+
+.team-card a:hover {
+    text-decoration: underline;
+}
+</style>
