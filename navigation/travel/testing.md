@@ -3,7 +3,7 @@ layout: post
 title: Interactive Chat Room
 search_exclude: true
 permalink: /navigation/travel/testing.md
-menu: nav/create_and_compete.html
+menu: nav/london.html
 ---
 
 <script>
@@ -28,15 +28,6 @@ const response = await fetch(`${pythonURI}/api/post`, {
     <input type="text" id="chat-message" placeholder="Type your message here...">
     <button id="send-message" class="send-button">Send</button>
 </div>
-</div>
-
-<!-- Username Modal -->
-<div id="username-modal" class="modal">
-    <div class="modal-content">
-        <h2>Enter Your Username</h2>
-        <input type="text" id="username-input" placeholder="Enter username..." required>
-        <button id="username-submit">Enter Chat</button>
-    </div>
 </div>
 
 <!-- Chat Room Container (Initially Hidden) -->
