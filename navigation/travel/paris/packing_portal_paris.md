@@ -13,52 +13,52 @@ menu: nav/paris_hotbar.html
             <h1>Packing Portal: Paris</h1>
             <div class="packing-items">
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Comfortable Shoes</label><br>
+                    <input type="checkbox" id="packing-item-1" onclick="clickFunction(this, 'Comfortable Shoes')">
+                    <label for="packing-item-1">Comfortable Shoes</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Umbrella</label><br>
+                    <input type="checkbox" id="packing-item-2" onclick="clickFunction(this, 'Umbrella')">
+                    <label for="packing-item-2">Umbrella</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Power Bank</label><br>
+                    <input type="checkbox" id="packing-item-3" onclick="clickFunction(this, 'Power Bank')">
+                    <label for="packing-item-3">Power Bank</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Lip Balm</label><br>
+                    <input type="checkbox" id="packing-item-4" onclick="clickFunction(this, 'Lip Balm')">
+                    <label for="packing-item-4">Lip Balm</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">French Dictionary</label><br>
+                    <input type="checkbox" id="packing-item-5" onclick="clickFunction(this, 'French Dictionary')">
+                    <label for="packing-item-5">French Dictionary</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">France Guidebook</label><br>
+                    <input type="checkbox" id="packing-item-6" onclick="clickFunction(this, 'France Guidebook')">
+                    <label for="packing-item-6">France Guidebook</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Smartphone Charger</label><br>
+                    <input type="checkbox" id="packing-item-7" onclick="clickFunction(this, 'Smartphone Charger')">
+                    <label for="packing-item-7">Smartphone Charger</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Water Bottle</label><br>
+                    <input type="checkbox" id="packing-item-8" onclick="clickFunction(this, 'Water Bottle')">
+                    <label for="packing-item-8">Water Bottle</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Comfortable Socks</label><br>
+                    <input type="checkbox" id="packing-item-9" onclick="clickFunction(this, 'Comfortable Socks')">
+                    <label for="packing-item-9">Comfortable Socks</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Hat</label><br>
+                    <input type="checkbox" id="packing-item-10" onclick="clickFunction(this, 'Hat')">
+                    <label for="packing-item-10">Hat</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Sunglasses</label><br>
+                    <input type="checkbox" id="packing-item-11" onclick="clickFunction(this, 'Sunglasses')">
+                    <label for="packing-item-11">Sunglasses</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item">
-                    <label for="packing-item">Snacks</label><br>
+                    <input type="checkbox" id="packing-item-12" onclick="clickFunction(this, 'Snacks')">
+                    <label for="packing-item-12">Snacks</label><br>
                 </div>
             </div>
         </div>
@@ -74,9 +74,40 @@ menu: nav/paris_hotbar.html
         <div class="personal_checklist">
             <h3>Personal Packing List</h3>
             <hr>
+            <ul id="checklist_area"></ul>
         </div>
     </div>
 </body>
+
+<script>
+
+function clickFunction(checkbox, itemText) {
+  
+  // personal checklist
+  const personal_checklist = document.getElementById("checklist_area");
+
+  // logic for checkbox
+  if (checkbox.checked){
+
+    // add to personal checklist
+
+    const personal_checklist_item = document.createElement("li");
+    personal_checklist_item.textContent = itemText;
+    personal_checklist_item.setAttribute("id", checkbox.id + "-item");
+    personal_checklist.appendChild(personal_checklist_item);
+  } else {
+
+    // remove from personal checklist
+
+    const personal_checklist_item = document.getElementById(checkbox.id + "-item");
+    if (personal_checklist_item) {
+        personal_checklist.removeChild(personal_checklist_item);
+    }
+  }
+}
+
+</script>
+
 
 <style>
 
@@ -171,6 +202,13 @@ menu: nav/paris_hotbar.html
     text-align: center;
     margin-bottom: 20px;
     color: #333;
+}
+
+.personal_checklist li {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: black;
 }
 
 .personal_checklist hr {
