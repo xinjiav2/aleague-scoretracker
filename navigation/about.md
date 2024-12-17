@@ -48,9 +48,9 @@ function displayTeamInfo(member) {
     age.textContent = `Age: ${member.age}`;
     card.appendChild(age);
 
-    const school = document.createElement('p');
-    school.textContent = `School: ${member.school}`;
-    card.appendChild(school);
+    const classes = document.createElement('p');
+    classes.textContent = `Classes: ${member.classes}`;
+    card.appendChild(classes);
 
     const favoriteColor = document.createElement('p');
     favoriteColor.textContent = `Favorite Color: ${member.favorite.color}`;
