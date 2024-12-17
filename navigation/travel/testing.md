@@ -3,7 +3,6 @@ layout: post
 title: Interactive Chat Room
 search_exclude: true
 permalink: /navigation/travel/testing.md
-menu: nav/london.html
 ---
 
 <script>
