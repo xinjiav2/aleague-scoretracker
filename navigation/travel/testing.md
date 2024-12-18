@@ -1,9 +1,12 @@
 ---
-layout: post 
+layout: post
 title: Chat Room
-permalink: /create_and_compete/riddle
-menu: nav/create_and_compete.html
+permalink: /chat-room/
+menu: nav/home.html
+search_exclude: true
+show_reading_time: false
 ---
+
 
 <link rel="stylesheet" href="{{site.baseurl}}/navigation/create_and_compete/riddle.css">
 
