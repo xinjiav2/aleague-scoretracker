@@ -1,119 +1,127 @@
 ---
-layout: post
-title: Interactive Chat Room
-search_exclude: true
-permalink: /navigation/travel/testing.md
+layout: post 
+title: Chat Room
+permalink: /create_and_compete/riddle
+menu: nav/create_and_compete.html
 ---
 
-<script>
-const response = await fetch(`${pythonURI}/api/post`, {
-    ...fetchOptions,
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ section_name: "Home Page" })
-});
-</script>
+<link rel="stylesheet" href="{{site.baseurl}}/navigation/create_and_compete/riddle.css">
 
-<div class="chat-room-container">
-<p>Share your feedback, discuss guesses, and chat with others in real time!</p>
+<details>
+  <br>
+  <summary>Room Details</summary>
 
-<!-- Chat Box -->
-<div id="chat-box" class="chat-box"></div>
+  <a href="{{site.baseurl}}/moderation/rules_riddle/">Moderation Rules</a>
 
-<!-- Chat Input -->
-<div class="chat-input">
-    <input type="text" id="chat-message" placeholder="Type your message here...">
-    <button id="send-message" class="send-button">Send</button>
+  <p>The main purpose of our riddle room is to have people think critically and collaborate with the other members of the channel to solve the riddle as fast as possible.</p>
+
+  <p>Room will consist of:</p>
+  <ul>
+    <li>Daily riddle which is optionally pinned to the top of our channel</li>
+    <li>Answers will be posted at the end of the day</li>
+    <li>Chat box where members of the channel can collaborate to solve the riddle</li>
+    <li>AI which posts the answer if someone gets it, else posts the answer at the end of the day</li>
+    <li>Profanity is censored</li>
+  </ul>
+</details>
+
+
+<div id="riddle-container">
+    <h4 style="text-align: center;">Riddle of the Day</h4>
+    <p id="riddle-text"></p>
 </div>
-</div>
 
-<!-- Chat Room Container (Initially Hidden) -->
-<div class="chat-room-container" style="display: none;">
-    <p class="chat-header">Interactive Chat Room</p>
-    <div id="chat-box" class="chat-box"></div>
-    <div class="chat-input">
-        <input type="text" id="chat-message" placeholder="Type your message here...">
-        <button id="send-message" class="send-button">Send</button>
-        <button id="clear-chat" class="send-button">Clear Chat</button>
+<div id="chat-container">
+    <div id="chat-box"></div>
+    <div id="users-list">
+        <h4 style="color: #4A4848;" >Users</h4>
+        <ul id="userList">
+            <li>System</li>
+        </ul>
     </div>
 </div>
 
-<script src="{{site.baseurl}}/navigation/travel/chat.js"></script>
+<div class="input-group">
+    <input type="text" id="message-input" placeholder="Type your message...">
+    <button id="send-button" onclick="sendMessage()">Send</button>
+</div>
 
-<style>
-/* General Container Styling */
-.chat-room-container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  font-family: 'Arial', sans-serif;
-}
+<div class="input-group">
+    <input type="text" id="answer-input" placeholder="Enter your answer(with no extra characters)...">
+    <button id="check-answer" onclick="checkAnswer()">Check Answer</button>
+</div>
 
-/* Header Styling */
-.chat-header {
-  font-size: 1.8em;
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-}
+<script>
+    const chatBox = document.getElementById('chat-box');
+    const messageInput = document.getElementById('message-input');
+    const answerInput = document.getElementById('answer-input');
+    const userList = document.getElementById('userList');
+    const riddleText = document.getElementById('riddle-text');
+    const users = new Set(['System']);
+    let username;
+    let currentRiddle;
 
-/* Chat Box Styling */
-.chat-box {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  height: 300px;
-  overflow-y: scroll;
-  padding: 15px;
-  font-size: 1.2em;
-  background-color: #000;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    function displayRiddle() {
+        const riddles = [
+            { question: "What has keys but can't open locks?", answer: "piano" },
+            { question: "What has a head, a tail, but no body?", answer: "coin" },
+            { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "m" },
+            { question: "I'm tall when I'm young, and I'm short when I'm old. What am I?", answer: "candle" },
+            { question: "What has to be broken before you can use it?", answer: "egg" }
+        ];
+        const riddleIndex = new Date().getDate() % riddles.length;
+        currentRiddle = riddles[riddleIndex];
+        riddleText.textContent = currentRiddle.question;
+    }
 
-/* Message Styling */
-.message {
-  margin-bottom: 10px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: #eef2f7;
-  color: #f5f0f0
-;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+    function requestUsername() {
+        while (true) {
+            const enteredUsername = prompt("Enter your username:");
+            if (enteredUsername && !users.has(enteredUsername)) {
+                username = enteredUsername;
+                addUser(username);
+                displayMessage(`You have joined as ${username}.`, true);
+                break;
+            } else {
+                alert("Username is taken or invalid. Please try again.");
+            }
+        }
+    }
 
-/* Input Box Styling */
-.chat-input {
-  display: flex;
-  margin-top: 15px;
-}
+    function displayMessage(message, isSystem = false) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', isSystem ? 'system-message' : 'user-message');
+        messageElement.textContent = message;
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
 
-.chat-message {
-  flex: 1;
-  padding: 10px;
-  font-size: 1.2em;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-right: 10px;
-}
+    function addUser(newUsername) {
+        users.add(newUsername);
+        const userItem = document.createElement('li');
+        userItem.textContent = newUsername;
+        userList.appendChild(userItem);
+    }
 
-.send-button {
-  padding: 10px 15px;
-  font-size: 1.2em;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    function sendMessage() {
+        const messageText = messageInput.value.trim();
+        if (messageText !== '') {
+            displayMessage(`${username}: ${messageText}`);
+            messageInput.value = '';
+        }
+    }
 
-.send-button:hover {
-  background-color: #0056b3;
-}
-</style>
+    function checkAnswer() {
+        const userAnswer = answerInput.value.trim().toLowerCase();
+        if (userAnswer === currentRiddle.answer) {
+            displayMessage(`${username} got it right!`, true);
+        } else {
+            displayMessage(`${username} guessed wrong! Try again.`, true);
+        }
+        answerInput.value = '';
+    }
+
+    displayMessage("Welcome to the Riddle Room Chat!", true);
+    requestUsername();
+    displayRiddle();
+</script>
