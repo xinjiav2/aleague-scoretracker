@@ -78,6 +78,7 @@ menu: nav/paris_hotbar.html
         </div>
     </div>
 </body>
+<script src="../../assets/js/travel/packing_portal.js"></script>
 
 <script>
 
@@ -187,6 +188,10 @@ function clickFunction(checkbox, itemText) {
 
 .filters button:hover {
     background-color: #b5dbff;
+}
+
+.filters button:active {
+    background-color: blue;
 }
 
 .personal_checklist {
