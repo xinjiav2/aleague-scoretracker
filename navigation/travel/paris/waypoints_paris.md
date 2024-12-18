@@ -60,91 +60,112 @@ menu: nav/paris_hotbar.html
 <script>
 // Static Locations Data
 const locations = [
-{ name: "Saint Louis Hospital", type: "hospitals", lat: 48.8566, lng: 2.3522 },
-{ name: "Central Clinic", type: "hospitals", lat: 48.8540, lng: 2.3560 },
-{ name: "Green Pharmacy", type: "pharmacies", lat: 48.8584, lng: 2.3470 },
-{ name: "Healthline Pharmacy", type: "pharmacies", lat: 48.8590, lng: 2.3510 },
-{ name: "Wellness Recovery Center", type: "recovery", lat: 48.8555, lng: 2.3500 },
-{ name: "Bright Path Recovery", type: "recovery", lat: 48.8525, lng: 2.3555 }
+    // Hospitals
+    { name: "Saint Louis Hospital", type: "hospitals", lat: 48.8566, lng: 2.3522 },
+    { name: "Central Clinic", type: "hospitals", lat: 48.8540, lng: 2.3560 },
+    { name: "Pitié-Salpêtrière Hospital", type: "hospitals", lat: 48.8389, lng: 2.3664 },
+    { name: "Necker Hospital", type: "hospitals", lat: 48.8446, lng: 2.3162 },
+    { name: "Georges Pompidou Hospital", type: "hospitals", lat: 48.8414, lng: 2.2774 },
+    { name: "Lariboisière Hospital", type: "hospitals", lat: 48.8803, lng: 2.3554 },
+    { name: "Robert Debré Hospital", type: "hospitals", lat: 48.8905, lng: 2.4050 },
+
+    // Pharmacies
+    { name: "Green Pharmacy", type: "pharmacies", lat: 48.8584, lng: 2.3470 },
+    { name: "Healthline Pharmacy", type: "pharmacies", lat: 48.8590, lng: 2.3510 },
+    { name: "City Care Pharmacy", type: "pharmacies", lat: 48.8665, lng: 2.3311 },
+    { name: "Central Paris Pharmacy", type: "pharmacies", lat: 48.8730, lng: 2.2988 },
+    { name: "Pharmacie de la Gare", type: "pharmacies", lat: 48.8443, lng: 2.3711 },
+    { name: "Pharmacie Bastille", type: "pharmacies", lat: 48.8537, lng: 2.3691 },
+    { name: "Champs-Élysées Pharmacy", type: "pharmacies", lat: 48.8698, lng: 2.3065 },
+
+    // Recovery Centers
+    { name: "Wellness Recovery Center", type: "recovery", lat: 48.8555, lng: 2.3500 },
+    { name: "Bright Path Recovery", type: "recovery", lat: 48.8525, lng: 2.3555 },
+    { name: "Paris Rehabilitation Center", type: "recovery", lat: 48.8465, lng: 2.3392 },
+    { name: "Recovery House Montparnasse", type: "recovery", lat: 48.8437, lng: 2.3234 },
+    { name: "Seine River Recovery Center", type: "recovery", lat: 48.8600, lng: 2.3775 },
+    { name: "Saint-Germain Recovery Clinic", type: "recovery", lat: 48.8538, lng: 2.3332 },
+    { name: "Eiffel Recovery Center", type: "recovery", lat: 48.8587, lng: 2.2923 }
 ];
 
 // Initialize Map
 let map = L.map("map").setView([48.8566, 2.3522], 13);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-maxZoom: 18,
-attribution: "© OpenStreetMap"
+    maxZoom: 18,
+    attribution: "© OpenStreetMap"
 }).addTo(map);
 
 // Add markers for all locations
 locations.forEach(loc => {
-L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(loc.name);
+    L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(loc.name);
 });
 
 // Populate Dropdown Menus
 function populateDropdowns() {
-const dropdowns = {
-    hospitals: document.getElementById("hospitals-dropdown"),
-    pharmacies: document.getElementById("pharmacies-dropdown"),
-    recovery: document.getElementById("recovery-dropdown")
-};
+    const dropdowns = {
+        hospitals: document.getElementById("hospitals-dropdown"),
+        pharmacies: document.getElementById("pharmacies-dropdown"),
+        recovery: document.getElementById("recovery-dropdown")
+    };
 
-for (let type in dropdowns) {
-    dropdowns[type].innerHTML = ""; // Clear existing items
-    locations
-        .filter(loc => loc.type === type)
-        .forEach(loc => {
-            const item = document.createElement("div");
-            item.className = "dropdown-item";
-            item.textContent = loc.name;
-            item.onclick = () => map.setView([loc.lat, loc.lng], 15);
-            dropdowns[type].appendChild(item);
-        });
-}
+    for (let type in dropdowns) {
+        dropdowns[type].innerHTML = ""; // Clear existing items
+        locations
+            .filter(loc => loc.type === type)
+            .forEach(loc => {
+                const item = document.createElement("div");
+                item.className = "dropdown-item";
+                item.textContent = loc.name;
+                item.onclick = () => map.setView([loc.lat, loc.lng], 15);
+                dropdowns[type].appendChild(item);
+            });
+    }
 }
 
 // Toggle Dropdown Visibility
 function toggleDropdown(dropdownId) {
-const dropdown = document.getElementById(dropdownId);
-dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    const dropdown = document.getElementById(dropdownId);
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
 
 populateDropdowns();
 
 // Search Functionality
 function searchItem() {
-const searchValue = document.getElementById("searchInput").value.toLowerCase();
-const result = locations.find(loc => loc.name.toLowerCase().includes(searchValue));
-if (result) {
-    map.setView([result.lat, result.lng], 15);
-} else {
-    alert("Location not found.");
-}
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+    const result = locations.find(loc => loc.name.toLowerCase().includes(searchValue));
+    if (result) {
+        map.setView([result.lat, result.lng], 15);
+    } else {
+        alert("Location not found.");
+    }
 }
 
 // Find Location Based on User's Need
 function findLocationByNeed() {
-const need = document.getElementById("needInput").value.toLowerCase();
+    const need = document.getElementById("needInput").value.toLowerCase();
 
-let matchedType = "";
-if (need.includes("broken bone") || need.includes("injury")) {
-    matchedType = "hospitals";
-} else if (need.includes("bloody nose") || need.includes("prescription")) {
-    matchedType = "pharmacies";
-} else if (need.includes("recovery") || need.includes("rehab")) {
-    matchedType = "recovery";
-} else {
-    alert("No matching location found. Please refine your search.");
-    return;
-}
+    let matchedType = "";
+    if (need.includes("broken bone") || need.includes("injury")) {
+        matchedType = "hospitals";
+    } else if (need.includes("bloody nose") || need.includes("prescription")) {
+        matchedType = "pharmacies";
+    } else if (need.includes("recovery") || need.includes("rehab")) {
+        matchedType = "recovery";
+    } else {
+        alert("No matching location found. Please refine your search.");
+        return;
+    }
 
-const result = locations.find(loc => loc.type === matchedType);
-if (result) {
-    map.setView([result.lat, result.lng], 15);
-} else {
-    alert("No locations available for your need.");
-}
+    const result = locations.find(loc => loc.type === matchedType);
+    if (result) {
+        map.setView([result.lat, result.lng], 15);
+    } else {
+        alert("No locations available for your need.");
+    }
 }
 </script>
+
 
 <!-- CSS -->
 <style>
@@ -188,7 +209,7 @@ background: #fff;
 color: #333;
 padding: 20px;
 border-radius: 10px;
-margin-bottom: 20px;
+margin-bottom: 50px;
 }
 
 .filter-btn {
