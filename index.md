@@ -7,3 +7,4 @@ hide: true
 menu: nav/home.html
 ---
 
+<button onclick="window.location.href='{{site.baseurl}}/about';">About Us!</button>
