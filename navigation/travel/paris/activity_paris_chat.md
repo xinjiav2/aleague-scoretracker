@@ -107,7 +107,7 @@ async function sendToGeminiAPI(userMessage) {
                 },
                 body: JSON.stringify({
                     contents: [{
-                        parts: [{ text: `${userMessage}` }]
+                        parts: [{ text: `You are a travel agent who is supposed to help to users with any questions they have about traveling. Your goal is to sound natural, relatable, and like an agent. You may refer to online budgets, travel times, locations, and anything else travel-related. If asked something complex, admit you might not know the full answer. ${userMessage}` }]
                     }]
                 })
             });
