@@ -1,7 +1,7 @@
 ---
 layout: post
-title: City API
-permalink: /city-api/
+title: Search for a City
+permalink: /city-searcher/
 menu: nav/home.html
 search_exclude: true
 show_reading_time: false
@@ -14,6 +14,7 @@ show_reading_time: false
         padding: 20px;
         max-width: 300px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #6837e6;
     }
     .card h3 {
         margin: 0 0 10px;
