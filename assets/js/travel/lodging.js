@@ -39,6 +39,11 @@ async function fetchHotelData() {
             const card = document.createElement("div");
             card.className = "card";
             placeInfo = place.display_name.split(", ")
+
+            const hotelName = document.createElement("h2");
+            hotelName.textContent = placeInfo[0];
+            card.appendChild(hotelName);
+            placeInfo.shift()
             placeInfo.forEach((point) => {
                 const pointElement = document.createElement("p");
                 pointElement.textContent = point;

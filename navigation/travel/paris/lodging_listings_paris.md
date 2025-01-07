@@ -55,8 +55,8 @@ menu: nav/paris_hotbar.html
           </select>
         </div>
       </div>
-      <p id="destination">Hilton Hotel</p>
-      <p id="place">New York</p>
+      <p id="destination">Holiday Inn</p>
+      <p id="place">San Diego</p>
       <div class="listings">
         <div class="listing">
           Holiday Inn Paris - Gare Lyon Bastille
