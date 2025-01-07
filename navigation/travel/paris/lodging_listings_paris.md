@@ -8,7 +8,7 @@ menu: nav/paris_hotbar.html
 <head>
   <link rel="stylesheet" href="../../assets/css/travel/lodging.css">
 </head>
-<body>
+<body id="body">
   <div class="container">
     <main class="main-content">
       <header>
@@ -55,6 +55,8 @@ menu: nav/paris_hotbar.html
           </select>
         </div>
       </div>
+      <p id="destination">Hilton Hotel</p>
+      <p id="place">New York</p>
       <div class="listings">
         <div class="listing">
           Holiday Inn Paris - Gare Lyon Bastille
