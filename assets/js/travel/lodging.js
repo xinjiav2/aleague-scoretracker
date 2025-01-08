@@ -9,14 +9,13 @@ document.querySelectorAll('.filter').forEach(filter => {
 });
 
 
-var destination = document.getElementById("destination").textContent.trim().replace(/\s+/g, '+');
-var place = document.getElementById("place").textContent.trim().replace(/\s+/g, '+');
-
-
-const url = `https://nominatim.openstreetmap.org/search?q=${destination},${place}&format=json&addressdetails=`;
-
-
 async function fetchHotelData() {
+
+    var destination = document.getElementById("destination").value.trim().replace(/\s+/g, '+');
+    var place = document.getElementById("place").value.trim().replace(/\s+/g, '+');
+
+    const url = `https://nominatim.openstreetmap.org/search?q=${destination},${place}&format=json&addressdetails=`;
+
     try {
         const response = await fetch(url, {
             headers: {
@@ -28,7 +27,6 @@ async function fetchHotelData() {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
 
         const data = await response.json();
 
@@ -53,12 +51,7 @@ async function fetchHotelData() {
             body.appendChild(card);
         });
 
-
-
-        
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
-
-fetchHotelData();

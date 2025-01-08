@@ -15,8 +15,9 @@ menu: nav/paris_hotbar.html
         <h1>Lodging Listings</h1>
         <hr>
         <div class="search-bar">
-          <input type="text" placeholder="Search for a place...">
-          <button>Go</button>
+          <input type="text" id="destination" placeholder="Search for a hotel...">
+          <input type="text" id="place" placeholder="Search for a city...">
+          <button onclick="fetchHotelData();">Go</button>
         </div>
       </header>
       <div class="filters">
@@ -55,8 +56,6 @@ menu: nav/paris_hotbar.html
           </select>
         </div>
       </div>
-      <p id="destination">Holiday Inn</p>
-      <p id="place">San Diego</p>
       <div class="listings">
         <div class="listing">
           Holiday Inn Paris - Gare Lyon Bastille
