@@ -77,10 +77,16 @@ menu: nav/paris_hotbar.html
             <ul id="checklist_area"></ul>
         </div>
     </div>
+    <div id="weather-cards" class="weather-container">
+    
+    </div>  
 </body>
+
 <script src="../../assets/js/travel/packing_portal.js"></script>
 
 <script>
+
+// code for personal checklist
 
 function clickFunction(checkbox, itemText) {
   
@@ -106,6 +112,66 @@ function clickFunction(checkbox, itemText) {
     }
   }
 }
+
+// code for weather api
+
+async function fetchWeatherData() {
+
+    try {
+
+        // Fetch weather data for Paris using its latitude and longitude
+        const response = await fetch('https://api.api-ninjas.com/v1/weather?lat=48.8566&lon=2.3522&X-Api-Key=MQI4P3He9SrgKNuM2Jlxpw==0jgKA84fv3L0yojr');
+
+
+        // Check if the response is okay
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // Convert the response to JSON
+        const weatherData = await response.json();
+
+        // Display the weather info
+        displayWeatherInfo(weatherData);
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+    }
+}
+
+function displayWeatherInfo(weather) {
+    const container = document.getElementById('weather-cards');
+
+    // Create a card to display weather info
+    const card = document.createElement('div');
+    card.className = 'weather-card';
+
+    const location = document.createElement('h3');
+    location.textContent = `Location: Paris`;
+    card.appendChild(location);
+
+    const temperature = document.createElement('p');
+    temperature.textContent = `Temperature: ${weather.temperature}°C`;
+    card.appendChild(temperature);
+
+    const condition = document.createElement('p');
+    condition.textContent = `Condition: ${weather.condition}`;
+    card.appendChild(condition);
+
+    const humidity = document.createElement('p');
+    humidity.textContent = `Humidity: ${weather.humidity}%`;
+    card.appendChild(humidity);
+
+    const windSpeed = document.createElement('p');
+    windSpeed.textContent = `Wind Speed: ${weather.wind_speed} km/h`;
+    card.appendChild(windSpeed);
+
+    // Add the card to the container
+    container.appendChild(card);
+}
+
+// Call the function to fetch and display weather data
+fetchWeatherData();
+
 
 </script>
 
