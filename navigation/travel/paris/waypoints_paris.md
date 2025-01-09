@@ -13,6 +13,15 @@ menu: nav/paris_hotbar.html
     <p>Your guide to health and wellness resources.</p>
 </header>
 
+<!-- Search Section -->
+    <!-- User Need Input Section -->
+
+<div class="search-section">
+    <input type="text" id="searchInput" placeholder="Enter your condition (e.g., broken bone, sunburn)" />
+    <button class="search-btn" onclick="searchCategory()">Search</button>
+</div>
+<div id="searchResult" class="search-result"></div>
+
 <!-- Accordion Section -->
 <div class="accordion">
     <!-- Hospitals Section -->
@@ -130,6 +139,73 @@ const locations = [
     document.addEventListener("DOMContentLoaded", populateAccordion);
 </script>
 
+<script>
+    // Keyword-to-category mapping
+    const keywords = {
+        hospital: [
+            "fractures", "broken bones", "severe bleeding", "head injuries",
+            "concussions", "heart attack", "stroke", "appendicitis", "dehydration",
+            "heatstroke", "allergic reaction", "burns", "respiratory issues",
+            "infections", "snake bite", "animal bite"
+        ],
+        pharmacy: [
+            "minor cuts", "motion sickness", "mild allergies", "upset stomach",
+            "diarrhea", "pain", "headaches", "coughs", "colds", "insect bites",
+            "stings", "sunburn", "blisters", "skin irritation", "menstrual pain"
+        ],
+        recovery: [
+            "muscle strains", "sprains", "back pain", "neck pain",
+            "post-surgery recovery", "joint injuries", "exhaustion", "chronic fatigue",
+            "mental health", "substance overuse", "addiction", "rehabilitation",
+            "mobility issues"
+        ]
+    };
+
+    // Search function
+    function searchCategory() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        let result = "No matching category found. Please refine your search.";
+
+        for (const [category, terms] of Object.entries(keywords)) {
+            if (terms.some(term => input.includes(term))) {
+                result = `This condition is best handled by a ${category.toUpperCase()}.`;
+                break;
+            }
+        }
+
+        // Display the result
+        document.getElementById("searchResult").textContent = result;
+    }
+</script>
+
+<script>
+function searchCategory() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    let result = "No matching category found. Please refine your search.";
+
+    for (const [category, terms] of Object.entries(keywords)) {
+        if (terms.some(term => input.includes(term))) {
+            result = `This condition is best handled by a ${category.toUpperCase()}.`;
+            break;
+        }
+    }
+
+    // Display the result
+    document.getElementById("searchResult").textContent = result;
+
+    // Send the search input and response to the backend
+    fetch("/store_search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ search_input: input, response: result })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data.message))
+    .catch(error => console.error("Error storing search history:", error));
+}
+
+</script>
+
 <style>
     
     body {
@@ -212,6 +288,12 @@ const locations = [
         color: white;
         padding: 10px;
     }
+
+    .search-result {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #333;
+    }    
 </style>
 
 <style>
