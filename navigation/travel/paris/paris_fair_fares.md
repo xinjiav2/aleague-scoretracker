@@ -26,14 +26,19 @@ menu: nav/paris_hotbar.html
         max-width: 1200px;
         margin: 20px auto;
         padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
     }
 
     .section {
-        margin: 20px 0;
-        padding: 20px;
+        flex: 1 1 calc(45% - 20px);
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        min-width: 300px;
     }
 
     .section h2 {
@@ -88,7 +93,17 @@ menu: nav/paris_hotbar.html
         color: white;
         border-top: 5px solid #004080;
     }
+
+    .form-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-group input {
+        flex: 1;
+    }
 </style>
+
 <div class="header">
     <h1>Fair Fares</h1>
     <p>Your travel, your way – simplified!</p>
@@ -106,15 +121,17 @@ menu: nav/paris_hotbar.html
 
     <div class="section">
         <h2>Explore Travel Options</h2>
-        <form id="optionsForm">
-            <label for="transportType">Select Travel Type:</label>
-            <select id="transportType" name="transportType" required>
-                <option value="">Choose an option</option>
-                <option value="publicTransit">Public Transit</option>
-                <option value="rideshare">Rideshare</option>
-                <option value="rental">Rental Services</option>
-                <option value="flights">Flights</option>
-            </select>
+        <form id="travelForm">
+            <label for="pickup">Enter Pickup Location:</label>
+            <input type="text" id="pickup" name="pickup" required placeholder="Pickup Address">
+
+            <label for="destination">Enter Destination Location:</label>
+            <input type="text" id="destination" name="destination" required placeholder="Destination Address">
+
+            <div class="form-group">
+                <input type="number" id="date" name="date" required placeholder="UNIX Timestamp">
+            </div>
+
             <button type="submit">Get Recommendations</button>
         </form>
     </div>
@@ -128,18 +145,10 @@ menu: nav/paris_hotbar.html
     </div>
 
     <div class="section">
-        <h2>Tips for Budget-Friendly Travel</h2>
-        <div class="info-card">
-            <h3>Public Transit Savings</h3>
-            <p>Use transit passes for unlimited travel at a lower cost.</p>
-        </div>
-        <div class="info-card">
-            <h3>Ride-sharing Hacks</h3>
-            <p>Carpool to split costs with other riders.</p>
-        </div>
-        <div class="info-card">
-            <h3>Flight Deals</h3>
-            <p>Book tickets on weekdays for better rates.</p>
+        <h2>Travel Options</h2>
+        <div id="travelResults" class="info-card">
+            <h3>Results:</h3>
+            <p>Enter your travel details to get recommendations.</p>
         </div>
     </div>
 </div>
@@ -149,58 +158,50 @@ menu: nav/paris_hotbar.html
 </div>
 
 <script>
-
-
-    document.getElementById('budgetForm').addEventListener('submit', function(e) {
+    document.getElementById('budgetForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const budget = document.getElementById('budget').value;
         const summary = document.getElementById('budgetSummary');
         summary.innerHTML = `<h3>Summary:</h3><p>Your budget is set to $${budget}. Explore the best options within your range.</p>`;
     });
 
-    document.getElementById('optionsForm').addEventListener('submit', function(e) {
+    document.getElementById('travelForm').addEventListener('submit', async function (e) {
         e.preventDefault();
-        const type = document.getElementById('transportType').value;
-        alert(`Fetching recommendations for ${type}`);
-    });
 
-    const fetchButton = document.getElementById('fetchButton');
-    const pickup = document.getElementById('pickup');
-    const destination = document.getElementById('destination');
-    const date = document.getElementById('date');
-    fetchButton.addEventListener('click', async () => {
-        const cityName = cityInput.value.trim();
-        if (!cityName) {
-            cityCard.innerHTML = `<p>Please enter a city name.</p>`;
+        const pickup = document.getElementById('pickup').value.trim();
+        const destination = document.getElementById('destination').value.trim();
+        const date = document.getElementById('date').value.trim();
+
+        if (!pickup || !destination || !date) {
+            alert('Please fill in all fields.');
             return;
         }
-        const apiUrl = `https://api.taxicode.com/booking/quote/?pickup=${pickup}&destination=${destination}&date=${date}`;
+        const apiUrl = `https://api.taxicode.com/booking/quote/?pickup=${encodeURIComponent(
+pickup)}&destination=${encodeURIComponent(destination)}&date=${date}`;
+
         try {
             const response = await fetch(apiUrl, {
                 headers: {
-                    'X-Api-Key': 'MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA+RqNh\/5Zde9mRAGw2YsebvIhvLI\/5YFsuTcRdVkaXNFBz15tFLSCNY6ZZ94QoxLUjpfnHzYB4PPVSrQ0DGBqqGSfAjQzteljurEZIVHq2EoOoEZFOoieegdYzO07gvxBbew5GtCiR5d3k+Kn6KyVEcwknQsDf2VSKZ0zI+oqCQly0ERWcJCIXvcHois9uCtF0CbF3z4\/frKoNQIUZuZoVmzTjW6UqvMYCFGH4hSGvJ\/SdO+3fSCggYQnjD89URe3plLswkllqDjlMl8FBlk2RmXoEfdrwekUHHvrMdcHFMtFV9Y355Ky8wbQCXvQT2LJKJr9Xe0L5vt\/F\/XKAKHFrOF5Eazt3ORsd2MNrKzmG6u56Ax+y7hVXZrOM9nST+eMsb+A5rV4Z1sQLmADfX4qwoLRwANneh7CRIiJ3NokSfxNIa0T6UskuGiO8qBbX4sMlV5NUIHupfnpwC3Z2YKjcuDOkt3ezGq\/tf2pNzi86tBMLVjU4pGhKKZidvNLnoLbYZNpyHUiFn7e74AIl7jxBS2na8NW2mMP3d2PlVc47tOaGdSW+o0gjnA1jpF3J4tybvi49mN4Muc5yvM75WHXLenT6MxeNPG58+VstOv7Lt5+aez6cCogqi4Wh8o5PpQWkUJyn1VhoeM7BxMkOs\/h+gBW+G\/9D0vRRfJdw7OfLLcCAwEAAQ=='
+                    'X-Api-Key': 'MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAvWsZp6+LgsDLDZNThnxP\nedjz6oRCKzkarLAH/zYX/6ZfrxVBE4Lu+/jAcxT9nA2QFaOijjV+dLdqr0XdjBAZ\nWThgPkISRV6assRIo5Z7q/6YbeNtkeOEIRwGOFB+sGhE/NSPaoChSBVlfaISoPFs\n7twPpcaPG+ua+SeBPTuFRLO6YDaQy9TObprk5cDGbYHsqAZm6IZGHLAKUPWGeGMB\nrjnPZzHbvkkGJAqhHw7twLtRbj/9ZWRh4n2sk8gMU+g4HJGAWv4wVZ3VrIdc+w6R\nIoUaqvYYGOHqulOLoYpstNAooJhprKAbWoLsN1GBCm/a0EePMZu2KlQNjw5VWt7o\nLOOsqALPZjsJ0AhGe8XlW496amiH+hvjeWIlPEVdE2oy+iuso/izRiWbzHqZV4i6\n4+SByscSgFaZP/yjMv9k5F8Z1ZWyTd4HQ81QZT1kZLOdvZ+/xrWlVb+T4K0R2ARI\nUb8aoV0Z6B7sCl97aFu9/80lSPy/V9vk2a/a8VzFbb1Ybzmcok+tIg6Fh0vo0lCc\nx/lFTUElD+SeFt4thVSUWuLczUuGTmBumrXB8LAJFyAIAIBOe2Vvjf9EfhItWI8q\nCq447GHyhTsoL7U3j/bCCcTzpRgZyRd5x9EfuRpJoj2mTOrXHpsGZAkuaUmwiTc7\nXquTSj+EjPh4d75q4zbjE3UCAwEAAQ=='
                 }
             });
+
+            const travelResults = document.getElementById('travelResults');
+
             if (response.ok) {
                 const data = await response.json();
-                if (data.length > 0) {
-                    const cityInfo = data[0];
-                    cityCard.innerHTML = `
-                        <h3>${cityInfo.name}</h3>
-                        <p>Latitude: ${cityInfo.latitude}</p>
-                        <p>Longitude: ${cityInfo.longitude}</p>
-                        <p>Country: ${cityInfo.country}</p>
-                        <p>Population: ${cityInfo.population.toLocaleString()}</p>
-                        <p>${cityInfo.is_capital ? 'This city is a capital!' : 'This city is not a capital.'}</p>
-                    `;
+                if (data && data.length > 0) {
+                    travelResults.innerHTML = `<h3>Results:</h3>${data.map(
+                        result => `<p>${result.name}: $${result.price}</p>`
+                    ).join('')}`;
                 } else {
-                    cityCard.innerHTML = `<p>Unable to find city!</p>`;
+                    travelResults.innerHTML = `<h3>Results:</h3><p>No options found for the provided details.</p>`;
                 }
             } else {
-                cityCard.innerHTML = `<p>Error fetching data: ${response.status}</p>`;
+                travelResults.innerHTML = `<h3>Results:</h3><p>Error fetching data: ${response.status}</p>`;
             }
         } catch (error) {
-            cityCard.innerHTML = `<p>Error: ${error.message}</p>`;
+            travelResults.innerHTML = `<h3>Results:</h3><p>Error: ${error.message}</p>`;
         }
     });
 </script>
