@@ -77,7 +77,7 @@ menu: nav/mumbai_hotbar.html
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ section_name: "Create and Compete" }) // Adjust the section name as needed
+                body: JSON.stringify({ section_name: "Wellness Waypoints" }) // Adjust the section name as needed
             });
             if (!response.ok) {
                 throw new Error('Failed to fetch groups: ' + response.statusText);
