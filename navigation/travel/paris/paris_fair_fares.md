@@ -6,6 +6,8 @@ permalink: /travel/paris/paris_fair_fares
 menu: nav/paris_hotbar.html
 ---
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
     body {
         margin: 0;
@@ -133,7 +135,20 @@ menu: nav/paris_hotbar.html
     <p>&copy; Fair Fares is Fairly Fantastic</p>
 </div>
 
-<script>
+<style>
+    .form {
+        display: flex;
+        flex-direction: column;
+    }
+    input {
+        margin-bottom: 25px;
+    }
+</style>
+
+<script type="module">
+    function test(){
+        console.log('hi');
+    }
     const accessKey = 'e57e129b3e76d1dc706a05dc1e776b40';
 
     document.getElementById('flightForm').addEventListener('submit', async function (e) {
@@ -171,4 +186,168 @@ menu: nav/paris_hotbar.html
             flightResults.innerHTML = `<h3>Results:</h3><p>Error: ${error.message}</p>`;
         }
     });
+    import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+// Initialize variables
+let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+expenses = expenses.filter(exp => exp && typeof exp.amount === 'number'); // Ensure all entries are valid
+const form = document.getElementById('expense-form');
+const ctx = document.getElementById('expenseChart').getContext('2d');
+const expenseList = document.getElementById('expense-list');
+
+// Initialize Chart
+let expenseChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Expenses',
+            data: [],
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'top' },
+        }
+    }
+});
+
+// Load existing data on page load
+window.onload = () => {
+    displayExpenses();
+    updateChart();
+};
+
+// Event Listeners
+document.getElementById('btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    addExpense();
+});
+
+document.getElementById('btn1').addEventListener('click', clearExpenses);
+
+// Add a new expense
+function addExpense() {
+    const item = document.getElementById('item').value.trim();
+    const amount = parseFloat(document.getElementById('amount').value.trim());
+    const description = document.getElementById('description').value.trim();
+
+    if (!item || isNaN(amount) || !description) {
+        alert('Please fill in all fields with valid values.');
+        return;
+    }
+
+    const expense = { item, amount, description };
+    expenses.push(expense);
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+
+    form.reset();
+    updateChart();
+    displayExpenses();
+    submitPost(item, amount, description);
+}
+
+
+// Display all expenses
+function displayExpenses() {
+    expenseList.innerHTML = expenses
+        .map(exp => {
+    const amount = parseFloat(exp.amount) || 0; // Ensure amount is a valid number
+    return `<li>${exp.item} - ${exp.description}: $${amount.toFixed(2)}</li>`;
+})
+
+        .join('');
+}
+
+// Clear all expenses
+function clearExpenses() {
+    expenses = [];
+    localStorage.removeItem('expenses');
+    displayExpenses();
+    updateChart();
+}
+
+// Update the chart
+function updateChart() {
+    expenseChart.data.labels = expenses.map(exp => exp.item);
+    expenseChart.data.datasets[0].data = expenses.map(exp => exp.amount);
+    expenseChart.update();
+}
+
+// Change chart type
+function changeChartType() {
+    const selectedType = document.getElementById('chart-type').value;
+    expenseChart.destroy();
+
+    expenseChart = new Chart(ctx, {
+        type: selectedType,
+        data: {
+            labels: expenses.map(exp => exp.item),
+            datasets: [{
+                label: 'Expenses',
+                data: expenses.map(exp => exp.amount),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+            }
+        }
+    });
+}
+    async function submitPost(item, amount, description) {
+    const channel_id = 1;
+    const postData = {
+        title: "title",
+        comment: `${item}, ${amount}, ${description}`,
+        channel_id: channel_id
+    };
+
+    try {
+        const response = await fetch(`${pythonURI}/api/post`, {
+            ...fetchOptions,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add channel: ' + response.statusText);
+        }
+    } catch (error) {
+        console.error('Error adding channel:', error);
+        alert('Error adding channel: ' + error.message);
+    }
+}
+
 </script>
+
+<h1>Travel Fare Expense Tracker</h1>
+<form id="expense-form">
+    <label for="item">Item:</label>
+    <input id="item" type="text" placeholder="Enter Item:"><br>
+    <label for="amnt">Amount:</label>
+    <input id="amount" type="text" placeholder="Enter Amount:"><br>
+    <label for="description">Description:</label>
+    <input id="description" type="text" placeholder="Enter Description:"><br>
+</form>
+<button id="btn" type="submit">Submit</button>
+<button id="btn1" type="submit">Clear</button>
+
+
+<h2>Expense Breakdown</h2>
+<h4>Select Chart Type</h4>
+<select id="chart-type" onchange="changeChartType()">
+    <option value="pie">Pie</option>
+    <option value="bar">Bar</option>
+</select>
+
+<canvas id="expenseChart" width="400" height="400"></canvas>
+
+<h2>Expense List</h2>
+<ul id="expense-list"></ul>
