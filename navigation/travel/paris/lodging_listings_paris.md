@@ -8,15 +8,16 @@ menu: nav/paris_hotbar.html
 <head>
   <link rel="stylesheet" href="../../assets/css/travel/lodging.css">
 </head>
-<body>
+<body id="body">
   <div class="container">
     <main class="main-content">
       <header>
         <h1>Lodging Listings</h1>
         <hr>
         <div class="search-bar">
-          <input type="text" placeholder="Search for a place...">
-          <button>Go</button>
+          <input type="text" id="destination" placeholder="Search for a hotel...">
+          <input type="text" id="place" placeholder="Search for a city...">
+          <button onclick="fetchHotelData();">Go</button>
         </div>
       </header>
       <div class="filters">

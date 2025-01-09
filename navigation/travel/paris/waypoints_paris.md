@@ -1,5 +1,5 @@
 ---
-layout: post 
+layout: post
 title: Paris Waypoints
 search_exclude: true
 permalink: /travel/paris/wellness_waypoints
@@ -7,245 +7,195 @@ menu: nav/paris_hotbar.html
 ---
 
 <div class="container">
-<!-- Header Section -->
-<header class="header">
-    <h1>Wellness Waypoints</h1>
-    <p>Your one-stop guide to health and wellness resources.</p>
-</header>
+    <!-- Header Section -->
+    <header class="header">
+        <h1>Wellness Waypoints</h1>
+        <p>Your guide to health and wellness resources.</p>
+    </header>
 
-<!-- Search Section -->
-<div class="search-section">
-    <input type="text" id="searchInput" placeholder="Search for resources">
-    <button class="search-btn" onclick="searchItem()">Search</button>
-</div>
-
-<!-- User Need Input Section -->
-<div class="search-section">
-    <input type="text" id="needInput" placeholder="Enter your need (e.g., broken bone, bloody nose)">
-    <button class="search-btn" onclick="findLocationByNeed()">Find Help</button>
-</div>
-
-<!-- Filters Section -->
-<div class="filters">
-    <h2>Health Resource Filters</h2>
-    <div class="dropdown">
-        <button class="filter-btn" onclick="toggleDropdown('hospitals-dropdown')">Hospitals</button>
-        <div class="dropdown-content" id="hospitals-dropdown"></div>
+    <!-- Accordion Section -->
+    <div class="accordion">
+        <!-- Hospitals Section -->
+        <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion('hospitals-list')">Hospitals</button>
+            <div class="accordion-content" id="hospitals-list"></div>
+        </div>
+        
+        <!-- Pharmacies Section -->
+        <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion('pharmacies-list')">Pharmacies</button>
+            <div class="accordion-content" id="pharmacies-list"></div>
+        </div>
+        
+        <!-- Recovery Centers Section -->
+        <div class="accordion-item">
+            <button class="accordion-btn" onclick="toggleAccordion('recovery-list')">Recovery Centers</button>
+            <div class="accordion-content" id="recovery-list"></div>
+        </div>
     </div>
-    <div class="dropdown">
-        <button class="filter-btn" onclick="toggleDropdown('pharmacies-dropdown')">Pharmacies</button>
-        <div class="dropdown-content" id="pharmacies-dropdown"></div>
-    </div>
-    <div class="dropdown">
-        <button class="filter-btn" onclick="toggleDropdown('recovery-dropdown')">Recovery Centers</button>
-        <div class="dropdown-content" id="recovery-dropdown"></div>
-    </div>
+
+    <!-- Map Section -->
+    <div id="map" style="height: 400px; margin-top: 20px; border-radius: 10px;"></div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>&copy; 2024 Wellness Waypoints. All Rights Reserved.</p>
+    </footer>
 </div>
 
-<!-- Map Section -->
-<div id="map" style="height: 400px; margin-top: 20px; border-radius: 10px;"></div>
-
-<!-- Footer Section -->
-<footer class="footer">
-    <p>&copy; 2024 Wellness Waypoints. All Rights Reserved.</p>
-    <a href="#">Contact Us</a> | <a href="#">Privacy Policy</a>
-</footer>
-</div>
-
-<!-- Leaflet.js for Map -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<!-- JavaScript -->
 <script>
-// Static Locations Data
-const locations = [
-    // Hospitals
-    { name: "Saint Louis Hospital", type: "hospitals", lat: 48.8566, lng: 2.3522 },
-    { name: "Central Clinic", type: "hospitals", lat: 48.8540, lng: 2.3560 },
-    { name: "Pitié-Salpêtrière Hospital", type: "hospitals", lat: 48.8389, lng: 2.3664 },
-    { name: "Necker Hospital", type: "hospitals", lat: 48.8446, lng: 2.3162 },
-    { name: "Georges Pompidou Hospital", type: "hospitals", lat: 48.8414, lng: 2.2774 },
-    { name: "Lariboisière Hospital", type: "hospitals", lat: 48.8803, lng: 2.3554 },
-    { name: "Robert Debré Hospital", type: "hospitals", lat: 48.8905, lng: 2.4050 },
+    // Static Locations Data
+    const locations = [
+        { name: "Saint Louis Hospital", type: "hospitals", lat: 48.8566, lng: 2.3522 },
+        { name: "Central Clinic", type: "hospitals", lat: 48.8540, lng: 2.3560 },
+        { name: "Pitié-Salpêtrière Hospital", type: "hospitals", lat: 48.8389, lng: 2.3664 },
+        { name: "Necker Hospital", type: "hospitals", lat: 48.8446, lng: 2.3162 },
+        { name: "Georges Pompidou Hospital", type: "hospitals", lat: 48.8414, lng: 2.2774 },
+        { name: "Green Pharmacy", type: "pharmacies", lat: 48.8584, lng: 2.3470 },
+        { name: "Healthline Pharmacy", type: "pharmacies", lat: 48.8590, lng: 2.3510 },
+        { name: "City Care Pharmacy", type: "pharmacies", lat: 48.8665, lng: 2.3311 },
+        { name: "Central Paris Pharmacy", type: "pharmacies", lat: 48.8730, lng: 2.2988 },
+        { name: "Wellness Recovery Center", type: "recovery", lat: 48.8555, lng: 2.3500 },
+        { name: "Bright Path Recovery", type: "recovery", lat: 48.8525, lng: 2.3555 },
+        { name: "Paris Rehabilitation Center", type: "recovery", lat: 48.8465, lng: 2.3392 },
+    ];
 
-    // Pharmacies
-    { name: "Green Pharmacy", type: "pharmacies", lat: 48.8584, lng: 2.3470 },
-    { name: "Healthline Pharmacy", type: "pharmacies", lat: 48.8590, lng: 2.3510 },
-    { name: "City Care Pharmacy", type: "pharmacies", lat: 48.8665, lng: 2.3311 },
-    { name: "Central Paris Pharmacy", type: "pharmacies", lat: 48.8730, lng: 2.2988 },
-    { name: "Pharmacie de la Gare", type: "pharmacies", lat: 48.8443, lng: 2.3711 },
-    { name: "Pharmacie Bastille", type: "pharmacies", lat: 48.8537, lng: 2.3691 },
-    { name: "Champs-Élysées Pharmacy", type: "pharmacies", lat: 48.8698, lng: 2.3065 },
+    // Initialize Map
+    const map = L.map("map").setView([48.8566, 2.3522], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: "© OpenStreetMap"
+    }).addTo(map);
 
-    // Recovery Centers
-    { name: "Wellness Recovery Center", type: "recovery", lat: 48.8555, lng: 2.3500 },
-    { name: "Bright Path Recovery", type: "recovery", lat: 48.8525, lng: 2.3555 },
-    { name: "Paris Rehabilitation Center", type: "recovery", lat: 48.8465, lng: 2.3392 },
-    { name: "Recovery House Montparnasse", type: "recovery", lat: 48.8437, lng: 2.3234 },
-    { name: "Seine River Recovery Center", type: "recovery", lat: 48.8600, lng: 2.3775 },
-    { name: "Saint-Germain Recovery Clinic", type: "recovery", lat: 48.8538, lng: 2.3332 },
-    { name: "Eiffel Recovery Center", type: "recovery", lat: 48.8587, lng: 2.2923 }
-];
+    // Add map markers
+    locations.forEach(loc => {
+        L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(loc.name);
+    });
 
-// Initialize Map
-let map = L.map("map").setView([48.8566, 2.3522], 13);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-    attribution: "© OpenStreetMap"
-}).addTo(map);
+    // Populate accordion content
+    function populateAccordion() {
+        const sections = {
+            hospitals: document.getElementById("hospitals-list"),
+            pharmacies: document.getElementById("pharmacies-list"),
+            recovery: document.getElementById("recovery-list"),
+        };
 
-// Add markers for all locations
-locations.forEach(loc => {
-    L.marker([loc.lat, loc.lng]).addTo(map).bindPopup(loc.name);
-});
-
-// Populate Dropdown Menus
-function populateDropdowns() {
-    const dropdowns = {
-        hospitals: document.getElementById("hospitals-dropdown"),
-        pharmacies: document.getElementById("pharmacies-dropdown"),
-        recovery: document.getElementById("recovery-dropdown")
-    };
-
-    for (let type in dropdowns) {
-        dropdowns[type].innerHTML = ""; // Clear existing items
-        locations
-            .filter(loc => loc.type === type)
-            .forEach(loc => {
-                const item = document.createElement("div");
-                item.className = "dropdown-item";
-                item.textContent = loc.name;
-                item.onclick = () => map.setView([loc.lat, loc.lng], 15);
-                dropdowns[type].appendChild(item);
-            });
-    }
-}
-
-// Toggle Dropdown Visibility
-function toggleDropdown(dropdownId) {
-    const dropdown = document.getElementById(dropdownId);
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-}
-
-populateDropdowns();
-
-// Search Functionality
-function searchItem() {
-    const searchValue = document.getElementById("searchInput").value.toLowerCase();
-    const result = locations.find(loc => loc.name.toLowerCase().includes(searchValue));
-    if (result) {
-        map.setView([result.lat, result.lng], 15);
-    } else {
-        alert("Location not found.");
-    }
-}
-
-// Find Location Based on User's Need
-function findLocationByNeed() {
-    const need = document.getElementById("needInput").value.toLowerCase();
-
-    let matchedType = "";
-    if (need.includes("broken bone") || need.includes("injury")) {
-        matchedType = "hospitals";
-    } else if (need.includes("bloody nose") || need.includes("prescription")) {
-        matchedType = "pharmacies";
-    } else if (need.includes("recovery") || need.includes("rehab")) {
-        matchedType = "recovery";
-    } else {
-        alert("No matching location found. Please refine your search.");
-        return;
+        for (let type in sections) {
+            sections[type].innerHTML = ""; // Clear existing items
+            locations
+                .filter(loc => loc.type === type)
+                .forEach(loc => {
+                    const item = document.createElement("div");
+                    item.className = "accordion-item-content";
+                    item.textContent = loc.name;
+                    item.onclick = () => map.setView([loc.lat, loc.lng], 15); // Center map on location
+                    sections[type].appendChild(item);
+                });
+        }
     }
 
-    const result = locations.find(loc => loc.type === matchedType);
-    if (result) {
-        map.setView([result.lat, result.lng], 15);
-    } else {
-        alert("No locations available for your need.");
+    // Toggle accordion visibility
+    function toggleAccordion(sectionId) {
+        const section = document.getElementById(sectionId);
+        const isExpanded = section.style.display === "block";
+
+        // Collapse all sections
+        document.querySelectorAll(".accordion-content").forEach(content => {
+            content.style.display = "none";
+        });
+
+        // Expand the clicked section
+        if (!isExpanded) {
+            section.style.display = "block";
+        }
     }
-}
+
+    // Populate accordion on page load
+    document.addEventListener("DOMContentLoaded", populateAccordion);
 </script>
 
-
-<!-- CSS -->
 <style>
-/* General Styling */
-body {
-font-family: Arial, sans-serif;
-margin: 0;
-background: linear-gradient(to bottom right, #2C3E50, #4CA1AF);
-color: #fff;
-}
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f5f5;
+        color: #333;
+    }
 
-.container {
-width: 90%;
-max-width: 1200px;
-margin: 20px auto;
-}
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 20px auto;
+    }
 
-.header {
-text-align: center;
-background: #007bff;
-padding: 20px;
-border-radius: 10px;
-color: white;
-}
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-.search-section {
-display: flex;
-justify-content: center;
-margin-top: 10px;
-}
+    /* Accordion Section */
+    .accordion {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 
-input, .search-btn {
-padding: 10px;
-border-radius: 5px;
-border: none;
-color: #333;
-}
+    .accordion-item {
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        overflow: hidden;
+    }
 
-.filters {
-background: #fff;
-color: #333;
-padding: 20px;
-border-radius: 10px;
-margin-bottom: 50px;
-}
+    .accordion-btn {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 10px;
+        text-align: left;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+    }
 
-.filter-btn {
-width: 100%;
-background: #007bff;
-color: white;
-padding: 10px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-}
+    .accordion-btn:hover {
+        background-color: #0056b3;
+    }
 
-.dropdown-content {
-display: none;
-background-color: #f9f9f9;
-border: 1px solid #ccc;
-padding: 10px;
-margin-top: 5px;
-border-radius: 5px;
-}
+    .accordion-content {
+        display: none;
+        background: white;
+        color: #333;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
 
-.dropdown-item {
-padding: 5px;
-color: #007bff;
-cursor: pointer;
-}
+    .accordion-item-content {
+        padding: 5px;
+        cursor: pointer;
+    }
 
-.dropdown-item:hover {
-background-color: #ddd;
-}
+    .accordion-item-content:hover {
+        background-color: #f0f0f0;
+    }
 
-.footer {
-text-align: center;
-margin-top: 20px;
-background: #007bff;
-padding: 10px;
-color: white;
-}
+    /* Map Section */
+    #map {
+        height: 400px;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 20px;
+        background: #007bff;
+        color: white;
+        padding: 10px;
+    }
 </style>
