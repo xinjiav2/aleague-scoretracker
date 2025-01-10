@@ -62,7 +62,7 @@ menu: nav/paris_hotbar.html
                 </div>
             </div>
         </div>
-        <!-- Filters -->
+        <!-- Filters
         <div class="filters">
             <h3>Filters</h3>
             <button>Season</button>
@@ -71,6 +71,7 @@ menu: nav/paris_hotbar.html
             <button>Transportation</button>
             <button>Technology</button>
         </div>
+        -->
         <div class="personal_checklist">
             <h3>Personal Packing List</h3>
             <hr>
@@ -78,7 +79,6 @@ menu: nav/paris_hotbar.html
         </div>
     </div>
     <div id="weather-cards" class="weather-container">
-    
     </div>  
 </body>
 
@@ -119,19 +119,20 @@ async function fetchWeatherData() {
 
     try {
 
-        // Fetch weather data for Paris using its latitude and longitude
-        const response = await fetch('https://api.api-ninjas.com/v1/weather?lat=48.8566&lon=2.3522&X-Api-Key=MQI4P3He9SrgKNuM2Jlxpw==0jgKA84fv3L0yojr');
+        // fetch weather data for Paris using its latitude and longitude
+        const response = await fetch('http://127.0.0.1:8887/api/weather?lat=48.8566&lon=2.3522');
 
 
-        // Check if the response is okay
+        // check if response is ok
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Convert the response to JSON
+        // convert the response to JSON
         const weatherData = await response.json();
 
-        // Display the weather info
+        // displaying the weather info
+
         displayWeatherInfo(weatherData);
     } catch (error) {
         console.error('Error fetching weather data:', error);
@@ -141,7 +142,7 @@ async function fetchWeatherData() {
 function displayWeatherInfo(weather) {
     const container = document.getElementById('weather-cards');
 
-    // Create a card to display weather info
+    // create a card to display weather info
     const card = document.createElement('div');
     card.className = 'weather-card';
 
@@ -150,20 +151,28 @@ function displayWeatherInfo(weather) {
     card.appendChild(location);
 
     const temperature = document.createElement('p');
-    temperature.textContent = `Temperature: ${weather.temperature}°C`;
+    temperature.textContent = `Temperature: ${weather.temp}°C`;
     card.appendChild(temperature);
 
-    const condition = document.createElement('p');
-    condition.textContent = `Condition: ${weather.condition}`;
-    card.appendChild(condition);
+    const min_temp = document.createElement('p');
+    min_temp.textContent = `Minimum Temperature: ${weather.min_temp}°C`;
+    card.appendChild(min_temp);
+
+    const max_temp = document.createElement('p');
+    max_temp.textContent = `Maximum Temperature: ${weather.max_temp}°C`;
+    card.appendChild(max_temp);
 
     const humidity = document.createElement('p');
     humidity.textContent = `Humidity: ${weather.humidity}%`;
     card.appendChild(humidity);
 
-    const windSpeed = document.createElement('p');
-    windSpeed.textContent = `Wind Speed: ${weather.wind_speed} km/h`;
-    card.appendChild(windSpeed);
+    const wind_speed = document.createElement('p');
+    wind_speed.textContent = `Wind Speed: ${weather.wind_speed} km/h`;
+    card.appendChild(wind_speed);
+
+    const feels_like = document.createElement('p');
+    feels_like.textContent = `Feels Like: ${weather.feels_like}°C`;
+    card.appendChild(feels_like);
 
     // Add the card to the container
     container.appendChild(card);
@@ -285,5 +294,48 @@ fetchWeatherData();
 .personal_checklist hr {
     border: 2px solid black;
 }
+
+
+#weather-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
+.weather-card {
+    border: 1px solid #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: rgba(22, 207, 244, 0.75);
+    color: #fff;
+    text-align: left;
+}
+
+.weather-card h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #ffe08a; /* Golden color for title */
+}
+
+.weather-card p {
+    font-size: 1.2em;
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+.weather-card strong {
+    font-weight: bold;
+    color: #ffd700;
+}
+
+
+
 
 </style>
