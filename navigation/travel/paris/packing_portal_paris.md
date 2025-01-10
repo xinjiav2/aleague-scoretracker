@@ -62,7 +62,7 @@ menu: nav/paris_hotbar.html
                 </div>
             </div>
         </div>
-        <!-- Filters -->
+        <!-- Filters
         <div class="filters">
             <h3>Filters</h3>
             <button>Season</button>
@@ -71,6 +71,7 @@ menu: nav/paris_hotbar.html
             <button>Transportation</button>
             <button>Technology</button>
         </div>
+        -->
         <div class="personal_checklist">
             <h3>Personal Packing List</h3>
             <hr>
@@ -118,19 +119,20 @@ async function fetchWeatherData() {
 
     try {
 
-        // Fetch weather data for Paris using its latitude and longitude
-        const response = await fetch('https://api.api-ninjas.com/v1/weather?lat=48.8566&lon=2.3522&X-Api-Key=MQI4P3He9SrgKNuM2Jlxpw==0jgKA84fv3L0yojr');
+        // fetch weather data for Paris using its latitude and longitude
+        const response = await fetch('http://127.0.0.1:8887/api/weather?lat=48.8566&lon=2.3522');
 
 
-        // Check if the response is okay
+        // check if response is ok
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Convert the response to JSON
+        // convert the response to JSON
         const weatherData = await response.json();
 
-        // Display the weather info
+        // displaying the weather info
+
         displayWeatherInfo(weatherData);
     } catch (error) {
         console.error('Error fetching weather data:', error);
