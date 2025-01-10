@@ -229,28 +229,95 @@ menu: nav/paris_hotbar.html
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('budgetForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const budget = Number(document.getElementById('budget').value);
-            if (budget > 0) {
-                document.getElementById('budgetStatus').textContent = `Total Budget: $${budget}`;
-                document.getElementById('totalAmount').textContent = `$${budget}`;
-                const activities = budget * 0.30;
-                const hotels = budget * 0.40; 
-                const transportation = budget * 0.30; 
-                document.getElementById('activitiesAmount').textContent = `$${activities}`;
-                document.getElementById('activitiesPercentage').textContent = `${(activities / budget * 100)}%`;
-                document.getElementById('hotelsAmount').textContent = `$${hotels.toFixed(2)}`;
-                document.getElementById('hotelsPercentage').textContent = `${(hotels / budget * 100)}%`;
-                document.getElementById('transportationAmount').textContent = `$${transportation}`;
-                document.getElementById('transportationPercentage').textContent = `${(transportation / budget * 100)}%`;
-                document.getElementById('budgetTable').style.display = 'table';
-            } else {
-                alert("Please enter a valid positive number.");
+    <div class="container">
+        <h1>Currency Converter</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th><th>Name</th><th>Symbol</th><th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CNY</td><td>Chinese Yuan</td><td>GBP</td><td>British Pound</td>
+                </tr>
+                <tr>
+                    <td>CHF</td><td>Swiss Franc</td><td>NZD</td><td>New Zealand Dollar</td>
+                </tr>
+                <tr>
+                    <td>AUD</td><td>Australian Dollar</td><td>KRW</td><td>South Korean Won</td>
+                </tr>
+                <tr>
+                    <td>PLN</td><td>Polish Zloty</td><td>DKK</td><td>Danish Krone</td>
+                </tr>
+                <tr>
+                    <td>TRY</td><td>Turkish Lira</td><td>HKD</td><td>Hong Kong Dollar</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-container">
+            <label for="have">From (e.g., GBP):</label>
+            <input type="text" id="have" placeholder="Currency code" required>
+            <label for="want">To (e.g., AUD):</label>
+            <input type="text" id="want" placeholder="Currency code" required>
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount" required>
+            <button id="convertButton">Convert</button>
+        </div>
+        <div id="conversionResult"></div>
+    </div>
+
+<script>
+    document.getElementById('budgetForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const budget = Number(document.getElementById('budget').value);
+        if (budget > 0) {
+            document.getElementById('budgetStatus').textContent = `Total Budget: $${budget}`;
+            document.getElementById('totalAmount').textContent = `$${budget}`;
+            const activities = budget * 0.30;
+            const hotels = budget * 0.40; 
+            const transportation = budget * 0.30; 
+            document.getElementById('activitiesAmount').textContent = `$${activities}`;
+            document.getElementById('activitiesPercentage').textContent = `${(activities / budget * 100)}%`;
+            document.getElementById('hotelsAmount').textContent = `$${hotels.toFixed(2)}`;
+            document.getElementById('hotelsPercentage').textContent = `${(hotels / budget * 100)}%`;
+            document.getElementById('transportationAmount').textContent = `$${transportation}`;
+            document.getElementById('transportationPercentage').textContent = `${(transportation / budget * 100)}%`;
+            document.getElementById('budgetTable').style.display = 'table';
+        } else {
+            alert("Please enter a valid positive number.");
+        }
+    });
+    document.getElementById('convertButton').addEventListener('click', function() {
+        const have = document.getElementById('have').value.trim();
+        const want = document.getElementById('want').value.trim();
+        const amount = document.getElementById('amount').value.trim();
+        const resultElement = document.getElementById('conversionResult');
+        // Validate input fields
+        if (!have || !want || !amount) {
+            resultElement.textContent = 'Please fill out all fields.';
+            return;
+        }
+        // Make a request to the backend API (Flask)
+        fetch(`http://127.0.0.1:8887/api/convertcurrency?have=${have}&want=${want}&amount=${amount}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.new_amount) {
+                resultElement.textContent = `${amount} ${have} = ${result.new_amount} ${want}`;
+            } else {
+                resultElement.textContent = `Error: Unable to convert currency.`;
+            }
+        })
+        .catch(error => {
+            resultElement.textContent = `Error: ${error.message}`;
         });
-    </script>
+    });
+</script>
 
     
 <script type="module">
@@ -269,7 +336,7 @@ menu: nav/paris_hotbar.html
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ section_name: "Shared Interest" }) // Adjust the section name as needed
+                body: JSON.stringify({ section_name: "Shared Interest" })
             });
             if (!response.ok) {
                 throw new Error('Failed to fetch groups: ' + response.statusText);
@@ -278,7 +345,7 @@ menu: nav/paris_hotbar.html
             const groupSelect = document.getElementById('group_id');
             groups.forEach(group => {
                 const option = document.createElement('option');
-                option.value = group.name; // Use group name for payload
+                option.value = group.name; 
                 option.textContent = group.name;
                 groupSelect.appendChild(option);
             });
@@ -353,21 +420,17 @@ menu: nav/paris_hotbar.html
     document.getElementById('postForm').addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        // Extract data from form
         const title = document.getElementById('title').value;
         const comment = document.getElementById('comment').value;
         const channelId = document.getElementById('channel_id').value;
 
-        // Create API payload
         const postData = {
             title: title,
             comment: comment,
             channel_id: channelId
         };
 
-        // Trap errors
         try {
-            // Send POST request to backend, purpose is to write to database
             const response = await fetch(`${pythonURI}/api/post`, {
                 ...fetchOptions,
                 method: 'POST',
@@ -381,13 +444,11 @@ menu: nav/paris_hotbar.html
                 throw new Error('Failed to add post: ' + response.statusText);
             }
 
-            // Successful post
             const result = await response.json();
             alert('Post added successfully!');
             document.getElementById('postForm').reset();
             fetchData(channelId);
         } catch (error) {
-            // Present alert on error from backend
             console.error('Error adding post:', error);
             alert('Error adding post: ' + error.message);
         }
@@ -410,22 +471,14 @@ menu: nav/paris_hotbar.html
             if (!response.ok) {
                 throw new Error('Failed to fetch posts: ' + response.statusText);
             }
-
-            // Parse the JSON data
             const postData = await response.json();
 
-            // Extract posts count
             const postCount = postData.length || 0;
 
-            // Update the HTML elements with the data
             document.getElementById('count').innerHTML = `<h2>Count ${postCount}</h2>`;
 
-            // Get the details div
             const detailsDiv = document.getElementById('details');
-            detailsDiv.innerHTML = ''; // Clear previous posts
-
-            // Iterate over the postData and create HTML elements for each item
-            // Iterate over the postData and create HTML elements for each item
+            detailsDiv.innerHTML = '';
 postData.forEach(postItem => {
     const postElement = document.createElement('div');
     postElement.className = 'post-item';
@@ -443,7 +496,5 @@ postData.forEach(postItem => {
             console.error('Error fetching data:', error);
         }
     }
-
-    // Fetch groups when the page loads
     fetchGroups();
 </script>
