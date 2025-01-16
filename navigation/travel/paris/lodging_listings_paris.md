@@ -92,10 +92,10 @@ menu: nav/paris_hotbar.html
         });
         const likeButton = document.createElement("button");
         likeButton.className = "like-button";
-        likeButton.textContent = "Like";
+        likeButton.textContent = "🤍";
         likeButton.onclick = () => {
           likeHotel(hotelTitle, countryTitle);
-          likeButton.textContent = "Liked!";
+          likeButton.textContent = "❤️";
         };
         card.appendChild(likeButton);
 
