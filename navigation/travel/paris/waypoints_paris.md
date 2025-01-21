@@ -9,7 +9,7 @@ menu: nav/paris_hotbar.html
 <script src="{{site.baseurl}}/navigation/create_and_compete/scripted.js"></script>
 
 
-<div class="zoomnguess-container">
+<div class="waypoints-container">
    <h1>Wellness Waypoint</h1>
 
 <!-- Accordion Section -->
@@ -354,176 +354,594 @@ const locations = [
 
 
 <style>
-        /* General Styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #1254f0, hsla(277, 87%, 54%, 0.632), #0ee070, #5a67d8);
-            background-size: 400% 400%;
-            animation: glowingBackground 20s ease infinite;
-            color: #fff;
-        }
+   .waypointsnguess-container {
+       font-family: Arial, sans-serif;
+       margin: 0 auto;
+       padding: 20px;
+       max-width: 800px;
+       text-align: center;
+       box-shadow: 0 4px 8px rgba(0, 0, 255, 0.2); /* Blue shadow for main container */
+       border-radius: 10px;
+   }
 
-        @keyframes glowingBackground {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
 
-        /* Container */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            display: flex;
-            justify-content: center;
-            box-sizing: border-box;
-        }
+   h1 {
+       font-size: 2em;
+       color: #333;
+       text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for heading */
+   }
 
-        /* Form Styling */
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            max-width: 800px;
-            background-color: #2C3E50;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            color: #ECF0F1;
-        }
 
-        .form-container input,
-        .form-container textarea,
-        .form-container select {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            border: none;
-            width: 100%;
-        }
+   .guess-box label {
+   font-size: 1.5em; /* Make the font size larger */
+   color: #333333; /* Dark grey color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for label */
+   }
 
-        /* Button Styling */
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            background-color: #007bff;
-            color: #fff;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 255, 0.3);
-        }
 
-        button:hover {
-            background-color: #0056b3;
-            transform: scale(1.03);
-            box-shadow: 0 6px 12px rgba(0, 0, 255, 0.6);
-        }
+   .explanation-box label {
+   font-size: 1.5em; /* Make the font size larger */
+   color: #333333; /* Dark grey color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for label */
+   }
 
-        /* Accordion */
-        .accordion {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
 
-        .accordion-item {
-            background: #007bff;
-            color: white;
-            border-radius: 5px;
-        }
+   .submit-button {
+   font-size: 1.5em; /* Make the font size larger */
+   color: #333333; /* Dark grey color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for label */
+   }
+   .waypoints-image-section,
+   .explanation-box,
+   #feedback-section,
+   #leaderboard-section {
+       margin-top: 20px;
+       padding: 15px;
+       background-color: #fff;
+       border-radius: 8px;
+       box-shadow: 0 4px 6px rgba(0, 0, 255, 0.2); /* Blue shadow for sections */
+   }
 
-        .accordion-btn {
-            width: 100%;
-            background: none;
-            border: none;
-            padding: 10px;
-            text-align: left;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-        }
 
-        .accordion-btn:hover {
-            background-color: #0056b3;
-        }
+   .waypoints-image-box {
+       display: inline-block;
+       box-shadow: 0 4px 8px rgba(0, 0, 255, 0.3); /* Blue shadow for image box */
+   }
 
-        .accordion-content {
-            display: none;
-            background: white;
-            color: #333;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-top: none;
-        }
 
-        /* Map */
-        #map {
-            height: 400px;
-            margin-top: 20px;
-            border-radius: 10px;
-        }
+   .feedback-button label {
+   font-size: 1.5em; /* Make the font size larger */
+   color: #333333; /* Dark grey color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for label */
+   }
 
-        /* Image Section */
-        .zoom-image-section {
-            margin-bottom: 15px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 255, 0.2);
-        }
 
-        .zoom-image-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 150px;
-            padding: 10px;
-            border: 2px solid #007BFF;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
+   .feedback-button {
+   font-size: 1.5em; /* Increase font size */
+   color: #333333; /* Dark grey text color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for text */
+   background-color: #007bff; /* Button background color (optional) */
+   padding: 10px 20px; /* Add padding for better appearance */
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+   box-shadow: 0 4px 6px rgba(0, 0, 255, 0.3); /* Blue shadow around button */
+   transition: box-shadow 0.3s ease;
+   }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
 
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 255, 0.3);
-            width: 80%;
-            max-width: 500px;
-            text-align: center;
-        }
+   .feedback-button:hover {
+   box-shadow: 0 6px 12px rgba(0, 0, 255, 0.4); /* Stronger shadow on hover */
+   }
+   .waypoints-image {
+       max-width: 100%;
+       border-radius: 8px;
+   }
+   .submit-button label {
+   font-size: 1.5em; /* Make the font size larger */
+   color: #333333; /* Dark grey color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for label */
+   }
+   .submit-button {
+   font-size: 1.5em; /* Increase font size */
+   color: #333333; /* Dark grey text color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for text */
+   background-color: #007bff; /* Button background color (optional) */
+   padding: 10px 20px; /* Add padding for better appearance */
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+   box-shadow: 0 4px 6px rgba(0, 0, 255, 0.3); /* Blue shadow around button */
+   transition: box-shadow 0.3s ease;
+   }
 
-        /* Leaderboard */
-        .leaderboard-box {
-            list-style-type: none;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
 
-        .leaderboard-box li {
-            padding: 5px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
+   .submit-button:hover {
+   box-shadow: 0 6px 12px rgba(0, 0, 255, 0.4); /* Stronger shadow on hover */
+   }
 
-        .leaderboard-box li:hover {
-            background-color: rgba(0, 123, 255, 0.1);
-        }
-    </style>
+
+   .modal {
+       display: none;
+       position: fixed;
+       z-index: 1;
+       padding-top: 60px;
+       left: 0;
+       top: 0;
+       width: 100%;
+       height: 100%;
+       background-color: rgba(0, 0, 0, 0.5);
+   }
+
+
+   .modal-content {
+       background-color: #fefefe;
+       margin: auto;
+       padding: 20px;
+       border-radius: 10px;
+       box-shadow: 0 4px 8px rgba(0, 0, 255, 0.3); /* Blue shadow for modal */
+       width: 80%;
+       max-width: 500px;
+       text-align: center;
+       text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow effect */
+   }
+
+
+   .close-button {
+       color: #aaa;
+       float: right;
+       font-size: 28px;
+       font-weight: bold;
+       cursor: pointer;
+   }
+   #feedback-modal .modal-content {
+   font-size: 1.5em; /* Make the font size larger */
+   color: #333333; /* Dark grey text color for all modal content */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue text shadow */
+}
+
+
+#feedback-modal h2 {
+   font-size: 2em; /* Larger font size for the heading */
+   color: #333333; /* Dark grey text color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue text shadow for heading */
+}
+
+
+#feedback-modal p {
+   font-size: 1.2em; /* Slightly larger font size for paragraph text */
+   color: #333333; /* Dark grey text color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue text shadow for paragraph */
+}
+
+
+#feedback-modal .close-button {
+   font-size: 1.5em; /* Font size for the close button */
+   color: #333333; /* Dark grey text color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue text shadow for close button */
+   cursor: pointer; /* Pointer cursor for better interactivity */
+}
+
+
+.info-box label {
+   font-size: 1.5em; /* Make the font size larger */
+   color: #333333; /* Dark grey color */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for label */
+   }
+
+
+#feedback-section .info-box {
+   font-size: 1.5em; /* Make the font size larger */
+   color: #333333; /* Dark grey text color for all modal content */
+   text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue text shadow */
+}
+
+
+</style>
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 800px;
+        width: 100%;
+        background-color: #2C3E50;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        color: #ECF0F1;
+    }
+    .form-container label {
+        margin-bottom: 5px;
+    }
+    .form-container input, .form-container textarea, .form-container select {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        width: 100%;
+    }
+    .form-container button {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #34495E;
+        color: #ECF0F1;
+        cursor: pointer;
+    }
+
+    /* Full-Page Background with Strong Glowing Effect */
+body {
+    background: linear-gradient(135deg, #1254f0, hsla(277, 87%, 54%, 0.632), #0ee070, #5a67d8);
+    background-size: 400% 400%;
+    animation: glowingBackground 20s ease infinite;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Glowing Animation for Background */
+@keyframes glowingBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* General container for Zoom N Guess game */
+.waypointsnguess-container {
+    width: 80%;
+    max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid #007BFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.5);
+    margin: 20px auto;
+    text-align: center;
+    color: #007BFF;
+}
+
+h1, h2 {
+    color: #007BFF;
+    text-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+p, label, .info-box, .leaderboard-box li {
+    color: #333;
+}
+
+/* Image of the Day Text */
+.image-of-day-text {
+    font-size: 2em;
+    color: rgb(28, 44, 218);
+    margin-bottom: 15px;
+    text-align: center;
+    color: #007BFF;
+}
+
+/* Zoom Image Display Section */
+.waypoints-image-section {
+    margin-bottom: 15px;
+}
+
+.waypoints-image-box {
+    border: 2px solid #007BFF;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Additional styles omitted for brevity */
+
+
+/* Guess Input Box */
+.guess-box {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.guess-box input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    color: #007BFF; /* Text color to stand out against white */
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guess-box input:focus {
+    border-color: #0056b3;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.6); /* Blue glow on focus */
+}
+
+/* Explanation Box */
+.explanation-box {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.explanation-box textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #2c6bb3;
+    border-radius: 5px;
+    resize: vertical;
+    height: 80px;
+    color: #2874a7;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.explanation-box textarea:focus {
+    border-color: #216088;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit Button */
+.submit-button {
+    width: 100%;
+    background-color: #007BFF;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5); /* Glowing shadow */
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+}
+
+/* Feedback Button */
+.feedback-button {
+   width: 100%;
+   background-color: #007BFF;
+   color: #ffffff;
+   font-size: 18px;
+   padding: 12px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+   margin-top: 10px;
+   box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5);
+}
+
+.feedback-button:hover {
+   background-color: #0056b3;
+   transform: scale(1.03);
+   box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+}
+
+/* Comment Button */
+.Comment-button {
+    width: 100%;
+    background-color: #007BFF;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.5);
+ }
+ 
+ .Comment-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+ }
+
+/* Feedback Section */
+#feedback-section {
+    margin-top: 20px;
+}
+
+#feedback-display {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #e6d6d6;
+    color: #d9534f; /* Red color for feedback text */
+    font-weight: bold;
+    box-shadow: 0px 2px 6px rgba(217, 83, 79, 0.5); /* Red shadow */
+}
+
+/* Leaderboard Styling */
+.leaderboard-box {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.leaderboard-box li {
+    padding: 5px 0;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+}
+
+.leaderboard-box li:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 2px solid #007BFF;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #ffffff;
+}
+
+.close-button {
+    color: #ffffff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #007BFF;
+}
+
+</style>
+
+<style>
+    
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f5f5;
+        color: #333;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 20px auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Accordion Section */
+    .accordion {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .accordion-item {
+        background: #007bff;
+        color: white;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .accordion-btn {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 10px;
+        text-align: left;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+    }
+
+    .accordion-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .accordion-content {
+        display: none;
+        background: white;
+        color: #333;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+
+    .accordion-item-content {
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .accordion-item-content:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Map Section */
+    #map {
+        height: 400px;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 20px;
+        background: #007bff;
+        color: white;
+        padding: 10px;
+    }
+
+    .search-result {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #333;
+    }    
+</style>
+
+<style>
+   /* Full-Page Background with Strong Glowing Effect */
+body {
+    background: linear-gradient(135deg, #1254f0, hsla(277, 87%, 54%, 0.632), #0ee070, #5a67d8);
+    background-size: 400% 400%;
+    animation: glowingBackground 20s ease infinite;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Glowing Animation for Background */
+@keyframes glowingBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+</style> 
+
