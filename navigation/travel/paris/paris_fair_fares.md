@@ -108,26 +108,14 @@ menu: nav/paris_hotbar.html
     <p>Your travel, your way – simplified!</p>
 </div>
 
-<div class="container">
-    <div class="section">
-        <h2>Search Flights</h2>
-        <form id="flightForm">
-            <label for="dep_iata">Departure Airport (IATA Code):</label>
-            <input type="text" id="dep_iata" name="dep_iata" required placeholder="e.g., LAX">
-
-            <label for="arr_iata">Arrival Airport (IATA Code):</label>
-            <input type="text" id="arr_iata" name="arr_iata" required placeholder="e.g., JFK">
-
-            <button type="submit">Search Flights</button>
-        </form>
-    </div>
-
-    <div class="section">
-        <h2>Flight Results</h2>
-        <div id="flightResults" class="info-card">
-            <h3>Results:</h3>
-            <p>Enter your flight details to view available options.</p>
-        </div>
+<div>
+    <form id="flightForm" class="form">
+        <input type="text" id="origin" name="origin" placeholder="Origin IATA" required>
+        <input type="text" id="destination" name="destination" placeholder="Destination IATA" required>
+        <button type="submit">Search Flights</button>
+    </form>
+    <div class="info-card">
+        <div id="flightResults"></div>
     </div>
 </div>
 
@@ -140,53 +128,57 @@ menu: nav/paris_hotbar.html
         display: flex;
         flex-direction: column;
     }
-    input {
-        margin-bottom: 25px;
+    .info-card {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin-top: 20px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        max-height: 300px; /* Set max height for scrollable content */
+        overflow-y: auto; /* Enable vertical scrolling if needed */
+    }
+    .footer {
+        text-align: center;
+        padding: 10px;
+        background-color: #001F3F;
+        color: #000; /* Footer text is black */
+        border-top: 5px solid #004080;
     }
 </style>
 
 <script type="module">
-    function test(){
-        console.log('hi');
-    }
-    const accessKey = 'e57e129b3e76d1dc706a05dc1e776b40';
+    import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+    document.getElementById('flightForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        await fetchFlightData();
+    });
 
-    document.getElementById('flightForm').addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        const depIata = document.getElementById('dep_iata').value.trim().toUpperCase();
-        const arrIata = document.getElementById('arr_iata').value.trim().toUpperCase();
-
-        if (!depIata || !arrIata) {
-            alert('Please fill in all fields.');
-            return;
-        }
-
-        const apiUrl = `https://api.aviationstack.com/v1/flights?access_key=${accessKey}&dep_iata=${encodeURIComponent(depIata)}&arr_iata=${encodeURIComponent(arrIata)}`;
-
-        const flightResults = document.getElementById('flightResults');
-
+    async function fetchFlightData() {
         try {
-            const response = await fetch(apiUrl);
+            const origin = document.getElementById('origin').value;
+            const destination = document.getElementById('destination').value;
+            console.log(`Fetching flights from ${origin} to ${destination}`);
+            const response = await fetch(`http://127.0.0.1:8887/api/flight?origin=${origin}&destination=${destination}`);
+            const flightResults = document.getElementById('flightResults');
 
-            if (response.ok) {
-                const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
-                if (data.data && data.data.length > 0) {
-                    flightResults.innerHTML = `<h3>Results:</h3>${data.data.map(
-                        flight => `<p>Flight ${flight.flight.iata}: ${flight.airline.name} - Departure: ${flight.departure.scheduled}, Arrival: ${flight.arrival.scheduled}</p>`
-                    ).join('')}`;
-                } else {
-                    flightResults.innerHTML = `<h3>Results:</h3><p>No flights found for the provided details.</p>`;
-                }
+            const data = await response.json();
+            console.log('Response Data:', data);
+
+            if (data && data.data && data.data.length > 0) {
+                flightResults.innerHTML = `<h3>Results:</h3>${data.data.map(
+                    flight => `<p>Flight ${flight.flight.iata}: ${flight.airline.name} - Departure: ${flight.departure.scheduled}, Arrival: ${flight.arrival.scheduled}</p>`
+                ).join('')}`;
             } else {
-                flightResults.innerHTML = `<h3>Results:</h3><p>Error fetching data: ${response.status}</p>`;
+                flightResults.innerHTML = `<h3>Results:</h3><p>No flights found for the provided details.</p>`;
             }
         } catch (error) {
             flightResults.innerHTML = `<h3>Results:</h3><p>Error: ${error.message}</p>`;
         }
-    });
-    import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+    }
 // Initialize variables
 let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 expenses = expenses.filter(exp => exp && typeof exp.amount === 'number'); // Ensure all entries are valid
