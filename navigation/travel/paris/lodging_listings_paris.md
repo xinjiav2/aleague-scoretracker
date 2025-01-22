@@ -31,28 +31,20 @@ menu: nav/paris_hotbar.html
   </div>
 </body>
 
+
 <script type="module">
+
   import {
     pythonURI,
     fetchOptions,
   } from "{{ site.baseurl }}/assets/js/api/config.js";
 
-  document.querySelectorAll(".filter").forEach((filter) => {
-    filter.addEventListener("click", () => {
-      document.querySelectorAll(".filter-input").forEach((input) => {
-        input.classList.add("hidden");
-      });
-      const filterId = filter.dataset.filter + "-filter";
-      document.getElementById(filterId).classList.remove("hidden");
-    });
-  });
-
   document.addEventListener("DOMContentLoaded", (event) => {
     const goButton = document.getElementById("goButton");
-    goButton.addEventListener("click", helppp);
+    goButton.addEventListener("click", FindHotels);
   });
 
-  async function helppp() {
+  async function FindHotels() {
     var destination = document
       .getElementById("destination")
       .value.trim()
@@ -73,6 +65,7 @@ menu: nav/paris_hotbar.html
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
+      console.log(data)
       const body = document.getElementById("main-content");
       data.forEach((place, index) => {
         const card = document.createElement("div");
@@ -80,11 +73,10 @@ menu: nav/paris_hotbar.html
         const placeInfo = place.display_name.split(", ");
         const hotelName = document.createElement("h2");
 
-        const hotelTitle = placeInfo[0]
+        const hotelTitle = JSON.stringify(index + 1) + ") " + placeInfo[0]
         hotelName.textContent = hotelTitle;
         card.appendChild(hotelName);
         placeInfo.shift();
-        const countryTitle = placeInfo.slice(-1)[0] 
         placeInfo.forEach((point) => {
           const pointElement = document.createElement("p");
           pointElement.textContent = point;
@@ -94,7 +86,7 @@ menu: nav/paris_hotbar.html
         likeButton.className = "like-button";
         likeButton.textContent = "🤍";
         likeButton.onclick = () => {
-          likeHotel(hotelTitle, countryTitle);
+          likeHotel(hotelTitle, data);
           likeButton.textContent = "❤️";
         };
         card.appendChild(likeButton);
@@ -105,32 +97,67 @@ menu: nav/paris_hotbar.html
       console.error("Error fetching data:", error);
     }
   }
-  async function likeHotel(hotelName, countryName) {
+  async function likeHotel(hotelName, data) {
 
-    const title = hotelName;
-    const content = countryName;
-    const channel_id = 1;
+    const dataNumber = parseInt(hotelName.split(') ')[0])
+    const countryName = data[dataNumber-1]['address']['country']
+    postHotelData(hotelName, countryName)
+
+  };
+
+  async function postHotelData(hotel, location) {
     const postData = {
-      title: title,
-      comment: content,
-      channel_id: channel_id,
+      hotel: hotel,
+      location: location,
+      rating: 123
     };
-    try {
-      const response = await fetch(`${pythonURI}/api/post`, {
-        ...fetchOptions,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
 
+    try {
+      const response = await fetch('http://127.0.0.1:8887/api/hotel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(postData)
       });
+
       if (!response.ok) {
-        throw new Error("Failed to add channel: " + response.statusText);
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      const data = await response.json();
+      console.log('Post response:', data);
     } catch (error) {
-      console.error("Error adding channel:", error);
-      alert("Error adding channel: " + error.message);
+      console.error("Error posting data:", error);
     }
   }
+
+  async function putHotelData() {
+    const putData = {
+      id: 1,
+      hotel: "hi",
+      location: "NEjtjtjt",
+      rating: 123
+    };
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(putData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Put response:', data);
+    } catch (error) {
+      console.error("Error putting data:", error);
+    }
+  }
+
 </script>

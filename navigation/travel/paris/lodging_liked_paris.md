@@ -16,18 +16,18 @@ import {
     fetchOptions,
 } from "{{ site.baseurl }}/assets/js/api/config.js";
 
-async function fetchData(channelId) {
+
+
+document.addEventListener("DOMContentLoaded", (event) => {
+    fetchLikedHotels();
+});
+async function fetchLikedHotels() {
     try {
-        const response = await fetch(`${pythonURI}/api/posts/filter`, {
-            ...fetchOptions,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ channel_id: channelId })
+        const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {
+
         });
         if (!response.ok) {
-            throw new Error('Failed to fetch posts: ' + response.statusText);
+            throw new Error('Failed to fetch hotels: ' + response.statusText);
         }
 
         const postData = await response.json();
@@ -39,9 +39,16 @@ async function fetchData(channelId) {
             const postElement = document.createElement('div');
             postElement.className = 'post-item';
             postElement.innerHTML = `
-                <h3>${postItem.title}</h3>
-                <p>${postItem.comment}</p>
+                <h3>${postItem.hotel}</h3>
+                <p>${postItem.location}</p>
+                <p>${postItem.rating}</p>
             `;
+            const unlikeButton = document.createElement("button");
+            unlikeButton.textContent = "Unlike";
+            unlikeButton.onclick = () => {
+                deleteHotel(postItem.id);
+            };
+            postElement.appendChild(unlikeButton)
             detailsDiv.appendChild(postElement);
         });
     } catch (error) {
@@ -49,5 +56,33 @@ async function fetchData(channelId) {
     }
 }
 
-fetchData(1);
+
+  async function deleteHotel(id) {
+    const deleteData = {
+      id: id,
+    };
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(deleteData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Delete response:', data);
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
+
+    fetchLikedHotels();
+  }
+
+
 </script>
