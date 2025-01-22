@@ -151,15 +151,15 @@ function displayWeatherInfo(weather) {
     card.appendChild(location);
 
     const temperature = document.createElement('p');
-    temperature.textContent = `Temperature: ${weather.temp}°C`;
+    temperature.textContent = `Temperature: ${weather.temp}°C (${1.8 * (weather.temp) + 32}°F)`;
     card.appendChild(temperature);
 
     const min_temp = document.createElement('p');
-    min_temp.textContent = `Minimum Temperature: ${weather.min_temp}°C`;
+    min_temp.textContent = `Minimum Temperature: ${weather.min_temp}°C (${1.8 * (weather.min_temp) + 32}°F)`;
     card.appendChild(min_temp);
 
     const max_temp = document.createElement('p');
-    max_temp.textContent = `Maximum Temperature: ${weather.max_temp}°C`;
+    max_temp.textContent = `Maximum Temperature: ${weather.max_temp}°C (${1.8 * (weather.max_temp) + 32}°F)`;
     card.appendChild(max_temp);
 
     const humidity = document.createElement('p');
@@ -171,12 +171,29 @@ function displayWeatherInfo(weather) {
     card.appendChild(wind_speed);
 
     const feels_like = document.createElement('p');
-    feels_like.textContent = `Feels Like: ${weather.feels_like}°C`;
+    feels_like.textContent = `Feels Like: ${weather.feels_like}°C (${1.8 * (weather.feels_like) + 32}°F)`;
     card.appendChild(feels_like);
+
+    const suggestion = document.createElement('h3');
+
+    if ((1.8 * (weather.temp) + 32) < 45) {
+        suggestion.textContent = `Wow! It's ${1.8 * (weather.temp) + 32}°F. That's pretty cold! You should wear heavier clothes, such as a jacket, pants, hoodies, etc.`;
+    } else if ((1.8 * (weather.temp) + 32) >= 45 && (1.8 * (weather.temp) + 32) < 60) {
+        suggestion.textContent = `It's ${1.8 * (weather.temp) + 32}°F. It's not extremely cold, but your should consider wearing heavier clothing, such as pants, hoodies, and long sleeve shirts.`;
+    } else if ((1.8 * (weather.temp) + 32) >= 60 && (1.8 * (weather.temp) + 32) < 80) {
+        suggestion.textContent = `It's ${1.8 * (weather.temp) + 32}°F. It's getting warmer, so you can wear lighter clothing such as shorts and t-shirts.`;
+    } else if ((1.8 * (weather.temp) + 32) >= 80) {
+        suggestion.textContent = `Wow! It's ${1.8 * (weather.temp) + 32}°F. That's pretty hot! You should wear lighter clothing such as shorts and t-shirts.`;
+    }
+
+    card.appendChild(suggestion);
+    
 
     // Add the card to the container
     container.appendChild(card);
 }
+
+
 
 // Call the function to fetch and display weather data
 fetchWeatherData();

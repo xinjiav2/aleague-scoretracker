@@ -9,7 +9,7 @@ menu: nav/paris_hotbar.html
 <script src="{{site.baseurl}}/navigation/create_and_compete/scripted.js"></script>
 
 
-<div class="zoomnguess-container">
+<div class="waypoints-container">
    <h1>Wellness Waypoint</h1>
 
 <!-- Accordion Section -->
@@ -354,7 +354,7 @@ const locations = [
 
 
 <style>
-   .zoomnguess-container {
+   .waypointsnguess-container {
        font-family: Arial, sans-serif;
        margin: 0 auto;
        padding: 20px;
@@ -391,7 +391,7 @@ const locations = [
    color: #333333; /* Dark grey color */
    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4); /* Blue shadow for label */
    }
-   .zoom-image-section,
+   .waypoints-image-section,
    .explanation-box,
    #feedback-section,
    #leaderboard-section {
@@ -403,7 +403,7 @@ const locations = [
    }
 
 
-   .zoom-image-box {
+   .waypoints-image-box {
        display: inline-block;
        box-shadow: 0 4px 8px rgba(0, 0, 255, 0.3); /* Blue shadow for image box */
    }
@@ -433,7 +433,7 @@ const locations = [
    .feedback-button:hover {
    box-shadow: 0 6px 12px rgba(0, 0, 255, 0.4); /* Stronger shadow on hover */
    }
-   .zoom-image {
+   .waypoints-image {
        max-width: 100%;
        border-radius: 8px;
    }
@@ -578,24 +578,8 @@ const locations = [
         cursor: pointer;
     }
 
-    /* Full-Page Background with Strong Glowing Effect */
-body {
-    background: linear-gradient(135deg, #1254f0, hsla(277, 87%, 54%, 0.632), #0ee070, #5a67d8);
-    background-size: 400% 400%;
-    animation: glowingBackground 20s ease infinite;
-    font-family: Arial, sans-serif;
-    color: #fff;
-}
-
-/* Glowing Animation for Background */
-@keyframes glowingBackground {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 /* General container for Zoom N Guess game */
-.zoomnguess-container {
+.waypointsnguess-container {
     width: 80%;
     max-width: 600px;
     background-color: rgba(0, 0, 0, 0.9);
@@ -627,11 +611,11 @@ p, label, .info-box, .leaderboard-box li {
 }
 
 /* Zoom Image Display Section */
-.zoom-image-section {
+.waypoints-image-section {
     margin-bottom: 15px;
 }
 
-.zoom-image-box {
+.waypoints-image-box {
     border: 2px solid #007BFF;
     border-radius: 8px;
     padding: 10px;
