@@ -578,22 +578,6 @@ const locations = [
         cursor: pointer;
     }
 
-    /* Full-Page Background with Strong Glowing Effect */
-body {
-    background: linear-gradient(135deg, #1254f0, hsla(277, 87%, 54%, 0.632), #0ee070, #5a67d8);
-    background-size: 400% 400%;
-    animation: glowingBackground 20s ease infinite;
-    font-family: Arial, sans-serif;
-    color: #fff;
-}
-
-/* Glowing Animation for Background */
-@keyframes glowingBackground {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 /* General container for Zoom N Guess game */
 .waypointsnguess-container {
     width: 80%;
