@@ -5,49 +5,158 @@ search_exclude: true
 permalink: /travel/paris/lodging_liked_paris
 menu: nav/paris_hotbar.html
 ---
+<head>
+  <link rel="stylesheet" href="../../assets/css/travel/lodging.css" />
+</head>
 
-<div id="hotelCount"></div>
-<div id="details"></div>
-
+<body>
+    <main class="main-content" id="main-content">
+        <div id="hotelCount"></div>
+    </main>
+</body>
 
 <script type="module">
-import {
-    pythonURI,
-    fetchOptions,
-} from "{{ site.baseurl }}/assets/js/api/config.js";
 
-async function fetchData(channelId) {
+document.addEventListener("DOMContentLoaded", (event) => {
+    fetchLikedHotels();
+});
+
+async function fetchLikedHotels() {
     try {
-        const response = await fetch(`${pythonURI}/api/posts/filter`, {
-            ...fetchOptions,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ channel_id: channelId })
-        });
+        const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {});
+
         if (!response.ok) {
-            throw new Error('Failed to fetch posts: ' + response.statusText);
+            throw new Error('Failed to fetch hotels: ' + response.statusText);
         }
 
-        const postData = await response.json();
-        const postCount = postData.length || 0;
-        document.getElementById('hotelCount').innerHTML = `<h2>You have liked ${postCount} hotels!</h2>`;
-        const detailsDiv = document.getElementById('details');
-        detailsDiv.innerHTML = '';
-        postData.forEach(postItem => {
-            const postElement = document.createElement('div');
-            postElement.className = 'post-item';
-            postElement.innerHTML = `
-                <h3>${postItem.title}</h3>
-                <p>${postItem.comment}</p>
+        const data = await response.json();
+        var hotelCount = data.length || 0;
+
+        document.getElementById('hotelCount').innerHTML = `<h2>You have liked ${hotelCount} hotels!</h2>`;
+
+        const body = document.getElementById('main-content');
+
+        data.forEach(item => {
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <h2>${item.hotel}</h2>
+                <p>${item.city}, ${item.country}</p>
             `;
-            detailsDiv.appendChild(postElement);
+
+            const starsContainer = document.createElement("div");
+            starsContainer.className = "stars-container";
+            let selectedRating = item.rating;
+
+
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement("span");
+                star.className = "star";
+                star.textContent = "★";
+                star.dataset.value = i;
+                star.onclick = () => {
+                    selectedRating = i;
+                    updateStars(starsContainer, selectedRating);
+                    putHotelData(item.id, i)
+                };
+                starsContainer.appendChild(star);
+            }
+
+            updateStars(starsContainer, selectedRating);
+
+            card.appendChild(starsContainer);
+
+            const removeButton = document.createElement("button");
+            removeButton.className = "remove-button";
+            removeButton.textContent = "Remove";
+            removeButton.onclick = () => {
+                deleteHotel(item.id);
+                hotelCount -= 1;
+                document.getElementById('hotelCount').innerHTML = `<h2>You have liked ${hotelCount} hotels!</h2>`;
+                card.remove();
+            };
+            card.appendChild(removeButton);
+
+            body.appendChild(card);
+
         });
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
 
-fetchData(1);
+function handleKeyPress(event, id) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const newRating = event.target.textContent;
+        putHotelData(id, newRating);
+    }
+}
+
+function updateStars(container, rating) {
+    const stars = container.querySelectorAll(".star");
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.style.color = "gold";
+        } else {
+            star.style.color = "gray";
+        }
+    });
+}
+
+async function putHotelData(id, newRating) {
+    
+    const putData = {
+        id: id,
+        rating: parseInt(newRating)
+    };
+
+    try {
+        const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(putData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Put response:', data);
+    } catch (error) {
+        console.error("Error putting data:", error);
+    }
+}
+
+async function deleteHotel(id) {
+
+    const deleteData = {
+        id: id,
+    };
+
+    try {
+        const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(deleteData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Delete response:', data);
+    } catch (error) {
+        console.error("Error deleting data:", error);
+    }
+}
+
+
 </script>

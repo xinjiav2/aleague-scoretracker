@@ -122,12 +122,20 @@ header {
     margin-right: auto;
     width: 80%;
     padding-left: 5px;
-    background-color:cadetblue
-   
+    background: linear-gradient(145deg, #1c9b7b, #2c96ac);
+    transition: transform .2s;
 
 }
 
-.like-button {
+.card:hover {
+    transform: scale(1.02);
+}
+
+.star {
+    cursor: pointer;
+    font-size: 20px;
+}
+.save-button, .remove-button {
     margin-bottom: 10px;
     border-style: solid;
     border-radius: 5px;

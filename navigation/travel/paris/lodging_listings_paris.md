@@ -31,106 +31,128 @@ menu: nav/paris_hotbar.html
   </div>
 </body>
 
+
 <script type="module">
-  import {
-    pythonURI,
-    fetchOptions,
-  } from "{{ site.baseurl }}/assets/js/api/config.js";
 
-  document.querySelectorAll(".filter").forEach((filter) => {
-    filter.addEventListener("click", () => {
-      document.querySelectorAll(".filter-input").forEach((input) => {
-        input.classList.add("hidden");
-      });
-      const filterId = filter.dataset.filter + "-filter";
-      document.getElementById(filterId).classList.remove("hidden");
+document.addEventListener("DOMContentLoaded", (event) => {
+  const goButton = document.getElementById("goButton");
+  goButton.addEventListener("click", FindHotels);
+});
+
+async function FindHotels() {
+  var destination = document
+    .getElementById("destination")
+    .value.trim()
+    .replace(/\s+/g, "+");
+  var place = document
+    .getElementById("place")
+    .value.trim()
+    .replace(/\s+/g, "+");
+  const url = `https://nominatim.openstreetmap.org/search?q=${destination},${place}&format=json&addressdetails=`;
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "MyHotelApp/1.0 (contact@example.com)",
+      },
     });
-  });
 
-  document.addEventListener("DOMContentLoaded", (event) => {
-    const goButton = document.getElementById("goButton");
-    goButton.addEventListener("click", helppp);
-  });
-
-  async function helppp() {
-    var destination = document
-      .getElementById("destination")
-      .value.trim()
-      .replace(/\s+/g, "+");
-    var place = document
-      .getElementById("place")
-      .value.trim()
-      .replace(/\s+/g, "+");
-    const url = `https://nominatim.openstreetmap.org/search?q=${destination},${place}&format=json&addressdetails=`;
-    try {
-      const response = await fetch(url, {
-        headers: {
-          "User-Agent": "MyHotelApp/1.0 (contact@example.com)",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      const body = document.getElementById("main-content");
-      data.forEach((place, index) => {
-        const card = document.createElement("div");
-        card.className = "card";
-        const placeInfo = place.display_name.split(", ");
-        const hotelName = document.createElement("h2");
-
-        const hotelTitle = placeInfo[0]
-        hotelName.textContent = hotelTitle;
-        card.appendChild(hotelName);
-        placeInfo.shift();
-        const countryTitle = placeInfo.slice(-1)[0] 
-        placeInfo.forEach((point) => {
-          const pointElement = document.createElement("p");
-          pointElement.textContent = point;
-          card.appendChild(pointElement);
-        });
-        const likeButton = document.createElement("button");
-        likeButton.className = "like-button";
-        likeButton.textContent = "🤍";
-        likeButton.onclick = () => {
-          likeHotel(hotelTitle, countryTitle);
-          likeButton.textContent = "❤️";
-        };
-        card.appendChild(likeButton);
-
-        body.appendChild(card);
-      });
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-  }
-  async function likeHotel(hotelName, countryName) {
+    const data = await response.json();
+    console.log(data)
+    const body = document.getElementById("main-content");
+    data.forEach((index) => {
 
-    const title = hotelName;
-    const content = countryName;
-    const channel_id = 1;
-    const postData = {
-      title: title,
-      comment: content,
-      channel_id: channel_id,
-    };
-    try {
-      const response = await fetch(`${pythonURI}/api/post`, {
-        ...fetchOptions,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const card = document.createElement("div");
+      card.className = "card";
 
-        },
-        body: JSON.stringify(postData),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to add channel: " + response.statusText);
+      const hotelTitle = index['display_name'].split(', ')[0]
+      const cityTitle = index['address']['city']
+      const countryTitle = index['address']['country']
+
+      const hotelElement = document.createElement("h2");
+      hotelElement.textContent = hotelTitle;
+      card.appendChild(hotelElement);
+      
+      const locationElement = document.createElement("p");
+      locationElement.textContent = `${cityTitle}, ${countryTitle}`;
+      card.append(locationElement);
+
+      const starsContainer = document.createElement("div");
+      starsContainer.className = "stars-container";
+      let selectedRating = 5;
+
+      for (let i = 1; i <= 5; i++) {
+          const star = document.createElement("span");
+          star.className = "star";
+          star.textContent = "★";
+          star.dataset.value = i;
+          star.onclick = () => {
+              selectedRating = i;
+              updateStars(starsContainer, selectedRating);
+          };
+          starsContainer.appendChild(star);
       }
-    } catch (error) {
-      console.error("Error adding channel:", error);
-      alert("Error adding channel: " + error.message);
-    }
+
+      updateStars(starsContainer, selectedRating);
+
+      card.appendChild(starsContainer);
+  
+      const saveButton = document.createElement("button");
+      saveButton.className = "save-button";
+      saveButton.textContent = "Save";
+      saveButton.onclick = () => {
+        postHotelData(hotelTitle, cityTitle, countryTitle, selectedRating);
+        saveButton.textContent = "Saved!";
+      };
+      card.appendChild(saveButton);
+
+      body.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
   }
+}
+
+function updateStars(container, rating) {
+    const stars = container.querySelectorAll(".star");
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.style.color = "gold";
+        } else {
+            star.style.color = "gray";
+        }
+    });
+}
+
+async function postHotelData(hotelTitle, cityTitle, countryTitle, rating) {
+
+  const postData = {
+    hotel: hotelTitle,
+    city: cityTitle,
+    country: countryTitle,
+    rating: rating
+  };
+
+  try {
+    const response = await fetch('http://127.0.0.1:8887/api/hotel', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('Post response:', data);
+  } catch (error) {
+    console.error("Error posting data:", error);
+  }
+}
+
 </script>
