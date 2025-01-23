@@ -133,7 +133,8 @@ menu: nav/paris_hotbar.html
         padding: 20px;
         margin-top: 20px;
         border-radius: 5px;
-        background-color: #f9f9f9;
+        background-color: #000; /* Set background color to black */
+        color: #fff; /* Set text color to white */
         max-height: 300px; /* Set max height for scrollable content */
         overflow-y: auto; /* Enable vertical scrolling if needed */
     }
