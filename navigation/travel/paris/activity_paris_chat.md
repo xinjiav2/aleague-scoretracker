@@ -82,7 +82,7 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
         const msgDiv = document.createElement('div');
         msgDiv.textContent = message;
         document.getElementById('messages').appendChild(msgDiv);
-        submitPost(message);
+        submitPost(message, null);
         
         const response = await sendToGeminiAPI(message);
 
@@ -91,6 +91,7 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
 
         console.log(response)
         document.getElementById('messages').appendChild(responseDiv);
+        submitPost(null, response);
 
         input.value = '';
         document.getElementById('chat-window').scrollTop = document.getElementById('chat-window').scrollHeight;
@@ -98,7 +99,7 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
 });
 
 async function sendToGeminiAPI(userMessage) {
-        const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDS3SPkR0UScS4ZLziJM77Sbd7EJNPjk2A";
+        const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyB2xY2tmePaUvsK61oGNUQUWA-tGrhfUZo";
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -121,31 +122,56 @@ async function sendToGeminiAPI(userMessage) {
             return "An error occurred while communicating with the AI.";
         }
     }
-
-async function submitPost(userMessage) {
-    const title = "Title";
-        const content = userMessage;
-        const channel_id = 2;
-        const postData = {
-            title: title,
-            comment: content,
-            channel_id: channel_id
-        };
-        try {
-            const response = await fetch(`${pythonURI}/api/post`, {
-                ...fetchOptions,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(postData)
-            });
-            if (!response.ok) {
-                throw new Error('Failed to add channel: ' + response.statusText);
+async function fetchMessages() {
+    try {
+        const response = await fetch(`${pythonURI}/api/messages`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
-        } catch (error) {
-            console.error('Error adding channel:', error);
-            alert('Error adding channel: ' + error.message);
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch messages: ' + response.statusText);
         }
+
+        const messages = await response.json();
+        messages.forEach(message => {
+            const msgDiv = document.createElement('div');
+            msgDiv.textContent = message.comment; // Adjust this based on your backend response structure
+            document.getElementById('messages').appendChild(msgDiv);
+        });
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+    }
 }
+
+async function submitPost(userMessage, geminiResponse) {
+    const title = "Title";
+    const postData = {
+        title: title,
+        comment: userMessage || geminiResponse,
+        channel_id: 2
+    };
+    try {
+        const response = await fetch(`${pythonURI}/api/post`, {
+            ...fetchOptions,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+        if (!response.ok) {
+            throw new Error('Failed to add channel: ' + response.statusText);
+        }
+    } catch (error) {
+        console.error('Error adding channel:', error);
+        alert('Error adding channel: ' + error.message);
+    }
+}
+
+console.error()
+
+window.onload = fetchMessages;
 </script>
