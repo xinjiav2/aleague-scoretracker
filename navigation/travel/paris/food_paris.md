@@ -6,9 +6,8 @@ permalink: /travel/paris/food_paris
 menu: nav/paris_hotbar.html
 ---
 
-# 🌟 Welcome to Paris Food Guide! 🌟 #
-
-Paris, the city of love and gastronomy, offers exquisite dishes and iconic restaurants. Here are five must-visit spots to indulge your taste buds: 
+<h1>🌟 Welcome to Paris Food Guide! 🌟</h1>
+<p>Paris, the city of love and gastronomy, offers exquisite dishes and iconic restaurants. Here are five must-visit spots to indulge your taste buds:</p>
 
 ---
 
@@ -23,6 +22,7 @@ Paris, the city of love and gastronomy, offers exquisite dishes and iconic resta
     <li>Baguettes</li>
     <li>Seasonal Fruit Tarts</li>
   </ul>
+  <a href="/travel_frontend/travel/paris/food_paris123" style="color: #007bff; text-decoration: none;">Write a Review for Le Grenier à Pain</a>
 </div>
 
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
@@ -36,6 +36,7 @@ Paris, the city of love and gastronomy, offers exquisite dishes and iconic resta
     <li>Duck Breast with Cherry Reduction</li>
     <li>Rich Chocolate Tart</li>
   </ul>
+  <a href="/travel_frontend/travel/paris/food_paris/review" style="color: #007bff; text-decoration: none;">Write a Review for L'Ambroisie</a>
 </div>
 
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
@@ -49,6 +50,7 @@ Paris, the city of love and gastronomy, offers exquisite dishes and iconic resta
     <li>Beef Tartare</li>
     <li>Chocolate Mousse</li>
   </ul>
+  <a href="/travel/Paris/food_paris/review" style="color: #007bff; text-decoration: none;">Write a Review for Chez Janou</a>
 </div>
 
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
@@ -62,6 +64,7 @@ Paris, the city of love and gastronomy, offers exquisite dishes and iconic resta
     <li>Hummus with Pita</li>
     <li>Pickled Vegetables</li>
   </ul>
+  <a href="/travel/Paris/food_paris/review" style="color: #007bff; text-decoration: none;">Write a Review for L'As du Fallafel</a>
 </div>
 
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
@@ -75,5 +78,7 @@ Paris, the city of love and gastronomy, offers exquisite dishes and iconic resta
     <li>Macarons</li>
     <li>Rich Hot Chocolate</li>
   </ul>
+  <a href="/travel/Paris/food_paris/review" style="color: #007bff; text-decoration: none;">Write a Review for Café de Flore</a>
 </div>
+
 
