@@ -46,6 +46,7 @@ menu: nav/paris_hotbar.html
                 <th>Injury</th>
                 <th>Location</th>
                 <th>Address</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -133,6 +134,7 @@ menu: nav/paris_hotbar.html
               locationInput.value = ""; // Clear the location if no match
           }
       });
+      
   </script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -154,6 +156,8 @@ menu: nav/paris_hotbar.html
       maxZoom: 18,
       attribution: "© OpenStreetMap contributors",
     }).addTo(map);
+
+    getCareCenterData(currentUserID);
 
     const goButton = document.getElementById("goButton");
     goButton.addEventListener("click", (event) => {
@@ -234,14 +238,11 @@ document.querySelectorAll(".like-button").forEach((button) => {
     if (button.textContent === "Check In"){
         const title = button.getAttribute("data-title");
         checkinCareLocation(title);
-        button.textContent = "Check Out"; // Update button icon
-    }else{
-        const title = button.getAttribute("data-title");
-        checkoutCareLocation(title);
-        button.textContent = "Check In"; // Update button icon
+        button.textContent = "Checked In"; // Update button icon
     }
   });
 });
+
 
       // Adjust map view to fit all markers
       const markers = data.map((place) => [place.lat, place.lon]);
@@ -265,13 +266,17 @@ document.querySelectorAll(".like-button").forEach((button) => {
       .value.trim();
 
     postCareCenterData(injury, location, title);
-    //getCareCenterData(currentUserID);
 
+    alert(`Checked in for:${injury} to ${location} \nlocated in city:${place} \nat address:${title}`);   
     console.log(`Checked in for:${injury} to ${location} \nlocated in city:${place} \nat address:${title}`);
-    alert(`Checked in for:${injury} to ${location} \nlocated in city:${place} \nat address:${title}`);
+
+    getCareCenterData(currentUserID);
+
   }
 
-  function checkoutCareLocation(title) {
+  function checkoutCareLocation(waypointID) {
+    deleteCareCenterData(waypointID);
+ 
     const location = document
       .getElementById("location")
       .value.trim();
@@ -282,11 +287,11 @@ document.querySelectorAll(".like-button").forEach((button) => {
       .getElementById("injury")
       .value.trim();
 
-    deleteCareCenterData(3);
-    //getCareCenterData(currentUserID);
+    console.log(`Discharged for:${injury} from ${location} \nlocated in city:${place}`);
+    alert(`Discharged for:${injury} from ${location} \nlocated in city:${place}`);
+    
+    getCareCenterData(currentUserID);
 
-    console.log(`Discharged for:${injury} to ${location} \nlocated in city:${place} \nat address:${title}`);
-    alert(`Discharged for:${injury} to ${location} \nlocated in city:${place} \nat address:${title}`);
   }
 
   async function postCareCenterData(injury, location, address) {
@@ -301,9 +306,6 @@ document.querySelectorAll(".like-button").forEach((button) => {
         const response = await fetch(`${pythonURI}/api/waypoints`, {
         ...fetchOptions,
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
         body: JSON.stringify(postData)
         });
 
@@ -321,86 +323,73 @@ document.querySelectorAll(".like-button").forEach((button) => {
         console.error("Error posting data:", error);
       }
   }
-  async function getCareCenterData(_currentUserID) {
-  try {
-        const response = await fetch(`${pythonURI}/api/waypoints`, {
-        ...fetchOptions,
-        method: 'GET',
-        mode: 'no-cors'
+
+async function getCareCenterData(currentUserID) {
+    try {
+        const response = await fetch(`${pythonURI}/api/waypoints?user_id=${currentUserID}`, {
+            ...fetchOptions,
+            method: 'GET',
         });
 
         if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
         const data = await response.json();
 
-        alert(JSON.stringify(data));
-            // Clear previous results and markers
-            const carecenterTable = document.querySelector("#carecenterTable tbody");
-            carecenterTable.innerHTML = ""; // Reset table content
-            map.eachLayer((layer) => {
-                if (layer instanceof L.Marker) {
-                map.removeLayer(layer);
-                }
-            });
+        const carecenterTable = document.querySelector("#carecenterTable tbody");
+        carecenterTable.innerHTML = ""; // Clear previous entries
 
-            if (data.length === 0) {
-                const noResultsRow = document.createElement("tr");
-                noResultsRow.innerHTML = `<td colspan="4">No care center checkins</td>`;
-                resultsTableBody.appendChild(noResultsRow);
-                return;
-            }
+        if (data.length === 0) {
+            const noResultsRow = document.createElement("tr");
+            noResultsRow.innerHTML = `<td colspan="4">No care center check-ins available.</td>`;
+            carecenterTable.appendChild(noResultsRow);
+            return;
+        }
 
-            data.forEach((waypoint, index) => {
-            // Add table row
-                const row = document.createElement("tr");
-                alert (waypoint);
-                row.innerHTML = `
-                <td>${waypoint.id}</td>
+        data.forEach((waypoint, index) => {
+            const row = document.createElement("tr");
+            console.log(waypoint);
+            row.innerHTML = `
+                <td>${index + 1}</td>
                 <td>${waypoint.injury}</td>
                 <td>${waypoint.location}</td>
-                <td>${address}</td>
-                `;
-                resultsTableBody.appendChild(row);
+                <td>${waypoint.address}</td>
+                <td>
+                  <button class="checkout-button" data-waypointid="${waypoint.id}">Check Out</button>
+                </td>
+            `;
+            carecenterTable.appendChild(row);
+        });
+        // Add event listeners to "Check Out" buttons
+        document.querySelectorAll(".checkout-button").forEach(button => {
+            button.addEventListener("click", () => {
+                const waypointId = button.getAttribute("data-waypointid");
+                checkoutCareLocation(waypointId);
+            });
+        });        
+    } catch (error) {
+        console.error("Error fetching care center data:", error);
+    }
+}
 
-                console.log('Post response:', data);
-                });
-      }catch (error) {
-        console.error("Error posting data:", error);
-      }
-  }
 
-  async function deleteCareCenterData(waypointid) {
-
-    const deleteData = {
-        id: id
-    };
-
-  try {
-        const response = await fetch(`${pythonURI}/api/waypoints`, {
-        ...fetchOptions,
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postData)
+async function deleteCareCenterData(waypointId) {
+    try {
+        const response = await fetch(`${pythonURI}/api/waypoints?waypoint_id=${waypointId}`, {
+            ...fetchOptions,
+            method: 'DELETE'
         });
 
         if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json();
-
-        if (typeof data === "object") {
-            currentUserID = data.user_id;
-        }
-
-      }catch (error) {
-        console.error("Error posting data:", error);
-      }
-  }
-
+        console.log(`Waypoint ID ${waypointId} deleted successfully.`);
+    } catch (error) {
+        console.error("Error deleting care center data:", error.message);
+    }
+}
 
 
 </script>
