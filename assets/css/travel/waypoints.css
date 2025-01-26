@@ -727,3 +727,26 @@ button:hover {
   .checkout-button:active {
     background-color: #ccc;
   }
+
+  .rating-star {
+    font-size: 1.0em;
+    cursor: pointer;
+    padding: 0 1px;
+    transition: color 0.3s ease;
+}
+
+.rating-star.active {
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.rating-star.red {
+    color: red;
+}
+
+.rating-star.yellow {
+    color: gold;
+}
+
+.rating-star.green {
+    color: green;
+}
