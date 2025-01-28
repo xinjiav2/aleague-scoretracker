@@ -46,6 +46,7 @@ menu: nav/paris_hotbar.html
                 <th>Injury</th>
                 <th>Location</th>
                 <th>Address</th>
+                <th>Rating</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -294,6 +295,16 @@ document.querySelectorAll(".like-button").forEach((button) => {
 
   }
 
+  function updateRating(waypointId, rating) {
+
+    updateCareCenterData(waypointId, rating);
+    alert(`Rating changed to: ${rating}`);
+    getCareCenterData(currentUserID);
+
+  }
+
+
+
   async function postCareCenterData(injury, location, address) {
 
     const postData = {
@@ -342,34 +353,82 @@ async function getCareCenterData(currentUserID) {
 
         if (data.length === 0) {
             const noResultsRow = document.createElement("tr");
-            noResultsRow.innerHTML = `<td colspan="4">No care center check-ins available.</td>`;
+            noResultsRow.innerHTML = `<td colspan="6">No care center check-ins available.</td>`;
             carecenterTable.appendChild(noResultsRow);
             return;
         }
 
         data.forEach((waypoint, index) => {
             const row = document.createElement("tr");
-            console.log(waypoint);
             row.innerHTML = `
                 <td>${index + 1}</td>
                 <td>${waypoint.injury}</td>
                 <td>${waypoint.location}</td>
                 <td>${waypoint.address}</td>
                 <td>
-                  <button class="checkout-button" data-waypointid="${waypoint.id}">Check Out</button>
+                    <div class="ratings">
+                        ${[1, 2, 3, 4, 5]
+                            .map(
+                                (rating) => `
+                                    <span 
+                                        class="rating-star 
+                                            ${rating <= waypoint.rating ? (rating <= 2 ? "red" : rating <= 4 ? "yellow" : "green") : ""}
+                                            ${rating <= waypoint.rating ? "active" : ""}" 
+                                        data-rating="${rating}" 
+                                        data-waypointid="${waypoint.id}">
+                                        &#9733;
+                                    </span>
+                                `
+                            )
+                            .join("")}
+                    </div>
+                </td>
+                <td>
+                    <button class="checkout-button" data-waypointid="${waypoint.id}">Check Out</button>
                 </td>
             `;
             carecenterTable.appendChild(row);
         });
+
         // Add event listeners to "Check Out" buttons
-        document.querySelectorAll(".checkout-button").forEach(button => {
+        document.querySelectorAll(".checkout-button").forEach((button) => {
             button.addEventListener("click", () => {
                 const waypointId = button.getAttribute("data-waypointid");
                 checkoutCareLocation(waypointId);
             });
-        });        
+        });
+
+        // Add event listeners to rating stars
+        document.querySelectorAll(".rating-star").forEach((star) => {
+            star.addEventListener("click", async (event) => {
+                const selectedRating = event.target.getAttribute("data-rating");
+                const waypointId = event.target.getAttribute("data-waypointid");
+                updateRating(waypointId, selectedRating);
+            });
+        });
     } catch (error) {
         console.error("Error fetching care center data:", error);
+    }
+}
+
+async function updateCareCenterData(waypointId, rating) {
+    try {
+        const response = await fetch(`${pythonURI}/api/waypoints`, {
+            ...fetchOptions,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ rating: parseInt(rating), waypoint_id: parseInt(waypointId) })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        console.log(`Rating updated for waypoint ID ${waypointId} to ${rating} stars.`);
+    } catch (error) {
+        console.error("Error updating rating:", error.message);
     }
 }
 
@@ -386,6 +445,8 @@ async function deleteCareCenterData(waypointId) {
         }
 
         console.log(`Waypoint ID ${waypointId} deleted successfully.`);
+        getCareCenterData(currentUserID);
+
     } catch (error) {
         console.error("Error deleting care center data:", error.message);
     }
