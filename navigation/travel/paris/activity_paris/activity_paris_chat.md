@@ -99,29 +99,29 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
 });
 
 async function sendToGeminiAPI(userMessage) {
-        const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyB2xY2tmePaUvsK61oGNUQUWA-tGrhfUZo";
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    contents: [{
-                        parts: [{ text: `You are a travel agent who is supposed to help to users with any questions they have about traveling. Your goal is to sound natural, relatable, and like an agent. You may refer to online budgets, travel times, locations, and anything else travel-related. If asked something complex, admit you might not know the full answer. ${userMessage}` }]
-                    }]
-                })
-            });
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            const data = await response.json();
-            return data.candidates[0].content.parts[0].text;
-        } catch (error) {
-            console.error('Error communicating with Gemini API:', error);
-            return "An error occurred while communicating with the AI.";
+    const apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyB2xY2tmePaUvsK61oGNUQUWA-tGrhfUZo";
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: `You are a travel agent who is supposed to help to users with any questions they have about traveling. Your goal is to sound natural, relatable, and like an agent. You may refer to online budgets, travel times, locations, and anything else travel-related. If asked something complex, admit you might not know the full answer. ${userMessage}` }]
+                }]
+            })
+        });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
         }
+        const data = await response.json();
+        return data.candidates[0].content.parts[0].text;
+    } catch (error) {
+        console.error('Error communicating with Gemini API:', error);
+        return "An error occurred while communicating with the AI.";
     }
+}
 async function fetchMessages() {
     try {
         const response = await fetch(`${pythonURI}/api/messages`, {

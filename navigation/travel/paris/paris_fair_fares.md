@@ -13,12 +13,12 @@ menu: nav/paris_hotbar.html
         margin: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f4f4f9;
-        color: #000; /* Set all text to black */
+        color: #000;
     }
 
     .header {
         background: linear-gradient(to right, #001F3F, #004080);
-        color: #000; /* Header text is black */
+        color: #000;
         text-align: center;
         padding: 20px;
         border-radius: 8px;
@@ -41,11 +41,11 @@ menu: nav/paris_hotbar.html
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         padding: 20px;
         min-width: 300px;
-        color: #000; /* Set text color in sections to black */
+        color: #000;
     }
 
     .section h2 {
-        color: #000; /* Section headers are black */
+        color: #000;
         border-bottom: 2px solid #0073e6;
         padding-bottom: 10px;
     }
@@ -53,7 +53,7 @@ menu: nav/paris_hotbar.html
     .section label {
         display: block;
         margin-bottom: 10px;
-        color: #000; /* Labels are black */
+        color: #000;
     }
 
     .section input,
@@ -64,7 +64,7 @@ menu: nav/paris_hotbar.html
         margin-bottom: 15px;
         border: 1px solid #ddd;
         border-radius: 5px;
-        color: #000; /* Input text is black */
+        color: #000;
     }
 
     .section button {
@@ -84,24 +84,48 @@ menu: nav/paris_hotbar.html
         border-radius: 8px;
         padding: 20px;
         margin: 10px 0;
-        color: #000; /* Set text color to black */
-        max-height: 300px; /* Set max height for scrollable content */
-        overflow-y: auto; /* Enable vertical scrolling if needed */
+        color: #000;
+        max-height: 300px;
+        overflow-y: auto;
     }
 
     .info-card h3 {
-        color: #000; /* Header text in info card is black */
+        color: #000;
     }
 
     .footer {
         text-align: center;
         padding: 10px;
         background-color: #001F3F;
-        color: #000; /* Footer text is black */
+        color: #000;
         border-top: 5px solid #004080;
     }
-</style>
 
+    /* Table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table th, table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #0073e6;
+        color: white;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+</style>
 
 <div class="header">
     <h1>Fair Fares</h1>
@@ -116,231 +140,233 @@ menu: nav/paris_hotbar.html
     </form>
     <div class="info-card">
         <div id="flightResults"></div>
+        <div id="noteSection" style="display:none;">
+            <input type="text" id="noteInput" placeholder="Type your note here">
+            <button id="saveNoteButton">Save Note</button>
+        </div>
     </div>
+    <div id="notesTable"></div> <!-- Table will appear here -->
 </div>
 
 <div class="footer">
     <p>&copy; Fair Fares is Fairly Fantastic</p>
 </div>
 
-<style>
-    .form {
-        display: flex;
-        flex-direction: column;
-    }
-    .info-card {
-        border: 1px solid #ccc;
-        padding: 20px;
-        margin-top: 20px;
-        border-radius: 5px;
-        background-color: #000; /* Set background color to black */
-        color: #fff; /* Set text color to white */
-        max-height: 300px; /* Set max height for scrollable content */
-        overflow-y: auto; /* Enable vertical scrolling if needed */
-    }
-    .footer {
-        text-align: center;
-        padding: 10px;
-        background-color: #001F3F;
-        color: #000; /* Footer text is black */
-        border-top: 5px solid #004080;
-    }
-</style>
-
 <script type="module">
-    import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+    import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+
     document.getElementById('flightForm').addEventListener('submit', async function(event) {
         event.preventDefault();
         await fetchFlightData();
     });
 
     async function fetchFlightData() {
+        const origin = document.getElementById('origin').value;
+        const destination = document.getElementById('destination').value;
+        const flightResults = document.getElementById('flightResults');
+        const noteSection = document.getElementById('noteSection');
+        const noteInput = document.getElementById('noteInput');
+        const saveNoteButton = document.getElementById('saveNoteButton');
+
+        flightResults.innerHTML = '<p>Loading...</p>';
+
         try {
-            const origin = document.getElementById('origin').value;
-            const destination = document.getElementById('destination').value;
-            console.log(`Fetching flights from ${origin} to ${destination}`);
-            const response = await fetch(`http://127.0.0.1:8887/api/flight?origin=${origin}&destination=${destination}`);
-            const flightResults = document.getElementById('flightResults');
+            const response = await fetch(`http://127.0.0.1:8887/api/flight-api?origin=${origin}&destination=${destination}`);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            if (data && data.data && data.data.length > 0) {
+                flightResults.innerHTML = data.data.map(flight =>
+                    `<div class="flight-card">
+                        <p>Flight ${flight.flight.iata}: ${flight.airline.name} - Departure: ${flight.departure.scheduled}, Arrival: ${flight.arrival.scheduled}</p>
+                        <button class="note-button">Add Note</button>
+                        <div class="note-input" style="display:none;">
+                            <input type="text" class="note-text" placeholder="Type your note here">
+                            <button class="save-note">Save Note</button>
+                        </div>
+                    </div>`
+                ).join('');
+
+                const noteButtons = document.querySelectorAll('.note-button');
+                noteButtons.forEach((button, index) => {
+                    button.addEventListener('click', () => {
+                        const noteInputSection = button.closest('.flight-card').querySelector('.note-input');
+                        noteInputSection.style.display = 'block';
+                    });
+                });
+
+                const saveNoteButtons = document.querySelectorAll('.save-note');
+                saveNoteButtons.forEach((button, index) => {
+                    button.addEventListener('click', async () => {
+                        const noteText = button.closest('.flight-card').querySelector('.note-text').value;
+                        if (noteText) {
+                            await postFlightData(origin, destination, noteText);
+                            showNotesTable(); // Refresh the notes table after saving
+                        }
+                    });
+                });
+            } else {
+                flightResults.innerHTML = `<p>No flights found for the provided details.</p>`;
+            }
+        } catch (error) {
+            flightResults.innerHTML = `<p>Error: ${error.message}</p>`;
+        }
+    }
+
+    async function postFlightData(origin, destination, note) {
+        const postData = {
+            origin: origin,
+            destination: destination,
+            note: note
+        };
+
+        try {
+            const response = await fetch('http://127.0.0.1:8887/api/flight', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             const data = await response.json();
-            console.log('Response Data:', data);
-
-            if (data && data.data && data.data.length > 0) {
-                flightResults.innerHTML = `<h3>Results:</h3>${data.data.map(
-                    flight => `<p>Flight ${flight.flight.iata}: ${flight.airline.name} - Departure: ${flight.departure.scheduled}, Arrival: ${flight.arrival.scheduled}</p>`
-                ).join('')}`;
-            } else {
-                flightResults.innerHTML = `<h3>Results:</h3><p>No flights found for the provided details.</p>`;
-            }
+            console.log('Post response:', data);
+            alert('Note saved successfully!');
+            showNotesTable(); // Refresh the notes table after saving
         } catch (error) {
-            flightResults.innerHTML = `<h3>Results:</h3><p>Error: ${error.message}</p>`;
+            console.error("Error posting data:", error);
         }
     }
-// Initialize variables
-let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-expenses = expenses.filter(exp => exp && typeof exp.amount === 'number'); // Ensure all entries are valid
-const form = document.getElementById('expense-form');
-const ctx = document.getElementById('expenseChart').getContext('2d');
-const expenseList = document.getElementById('expense-list');
-
-// Initialize Chart
-let expenseChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: [],
-        datasets: [{
-            label: 'Expenses',
-            data: [],
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { position: 'top' },
-        }
-    }
-});
-
-// Load existing data on page load
-window.onload = () => {
-    displayExpenses();
-    updateChart();
-};
-
-// Event Listeners
-document.getElementById('btn').addEventListener('click', (e) => {
-    e.preventDefault();
-    addExpense();
-});
-
-document.getElementById('btn1').addEventListener('click', clearExpenses);
-
-// Add a new expense
-function addExpense() {
-    const item = document.getElementById('item').value.trim();
-    const amount = parseFloat(document.getElementById('amount').value.trim());
-    const description = document.getElementById('description').value.trim();
-
-    if (!item || isNaN(amount) || !description) {
-        alert('Please fill in all fields with valid values.');
-        return;
-    }
-
-    const expense = { item, amount, description };
-    expenses.push(expense);
-    localStorage.setItem('expenses', JSON.stringify(expenses));
-
-    form.reset();
-    updateChart();
-    displayExpenses();
-    submitPost(item, amount, description);
-}
-
-
-// Display all expenses
-function displayExpenses() {
-    expenseList.innerHTML = expenses
-        .map(exp => {
-    const amount = parseFloat(exp.amount) || 0; // Ensure amount is a valid number
-    return `<li>${exp.item} - ${exp.description}: $${amount.toFixed(2)}</li>`;
-})
-
-        .join('');
-}
-
-// Clear all expenses
-function clearExpenses() {
-    expenses = [];
-    localStorage.removeItem('expenses');
-    displayExpenses();
-    updateChart();
-}
-
-// Update the chart
-function updateChart() {
-    expenseChart.data.labels = expenses.map(exp => exp.item);
-    expenseChart.data.datasets[0].data = expenses.map(exp => exp.amount);
-    expenseChart.update();
-}
-
-// Change chart type
-function changeChartType() {
-    const selectedType = document.getElementById('chart-type').value;
-    expenseChart.destroy();
-
-    expenseChart = new Chart(ctx, {
-        type: selectedType,
-        data: {
-            labels: expenses.map(exp => exp.item),
-            datasets: [{
-                label: 'Expenses',
-                data: expenses.map(exp => exp.amount),
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
-            }]
+// Define your helper functions first
+async function updateFlightData(id, note, origin, destination) {
+    const updateData = { note: note };
+    const response = await fetch(`${pythonURI}/api/flight`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'top' },
-            }
-        }
+        body: JSON.stringify({
+            id: id,  // Use the correct ID for the rating to update
+            origin: origin,  // Pass the new rating value
+            destination: destination,
+            note: note
+
+        })
     });
+
+    if (!response.ok) {
+        console.error('Failed to update note');
+    } else {
+        console.log('Note updated');
+    }
 }
-    async function submitPost(item, amount, description) {
-    const channel_id = 1;
-    const postData = {
-        title: "title",
-        comment: `${item}, ${amount}, ${description}`,
-        channel_id: channel_id
-    };
+
+async function deleteFlightData(id) {
+    await fetch(`${pythonURI}/api/flight`, {
+        ...fetchOptions,
+        method: 'DELETE',
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id: id }),  // Use rating_id from the backend response
+        
+    });
+    /*
+    const response = await fetch(`http://127.0.0.1:8887/api/flight/${id}`, {
+        method: 'DELETE'
+    });
+    */
+    /*
+    if (!response.ok) {
+        console.error('Failed to delete note');
+    } else {
+        console.log('Note deleted');
+    }
+    */
+}
+
+// Now define the showNotesTable function
+async function showNotesTable() {
+    const tableSection = document.getElementById('notesTable');
+    tableSection.innerHTML = ''; // Clear any previous content
 
     try {
-        const response = await fetch(`${pythonURI}/api/post`, {
-            ...fetchOptions,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(postData)
-        });
+        // Fetch notes from the server
+        const response = await fetch('http://127.0.0.1:8887/api/flight');
 
         if (!response.ok) {
-            throw new Error('Failed to add channel: ' + response.statusText);
+            throw new Error(`Failed to fetch flight data with notes. Status: ${response.status}`);
+        }
+
+        const flights = await response.json();
+        console.log(flights); // Log the returned data for debugging
+
+        if (flights && flights.length > 0) {
+            const table = document.createElement('table');
+            table.innerHTML = `<tr><th>Origin</th><th>Destination</th><th>Notes</th><th>Actions</th></tr>`;
+
+            flights.forEach(flight => {
+                table.appendChild(buildTableRow(flight));
+            });
+
+            tableSection.appendChild(table);
+        } else {
+            tableSection.innerHTML = '<p>No notes available.</p>';
         }
     } catch (error) {
-        console.error('Error adding channel:', error);
-        alert('Error adding channel: ' + error.message);
+        console.error('Error loading the notes table:', error);
+        tableSection.innerHTML = '<p>Failed to load notes. Please try again later.</p>';
     }
 }
 
+// Helper function to build a table row
+function buildTableRow(flight) {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${sanitize(flight.origin)}</td>
+        <td>${sanitize(flight.destination)}</td>
+        <td>${sanitize(flight.notes || '')}</td>
+        <td>
+            <button class="edit-note-button" data-id="${sanitize(flight.id)}">Edit Note</button>
+            <button class="delete-note-button" data-id="${sanitize(flight.id)}">Delete</button>
+        </td>
+    `;
+
+    // Attach event listeners
+    row.querySelector('.edit-note-button').addEventListener('click', async () => {
+        const noteId = flight.id;
+        const newNote = prompt('Edit your note:', flight.notes || '');
+        if (newNote !== null) { // Allow empty notes
+            await updateFlightData(noteId, newNote,flight.origin, flight.destination);
+            showNotesTable(); // Refresh the notes table
+        }
+    });
+
+    row.querySelector('.delete-note-button').addEventListener('click', async () => {
+        const noteId = flight.id;
+        if (confirm(`Are you sure you want to delete the note for flight from ${flight.origin} to ${flight.destination}?`)) {
+            await deleteFlightData(noteId);
+            showNotesTable(); // Refresh the notes table
+        }
+    });
+
+    return row;
+}
+
+// Basic sanitization function
+function sanitize(input) {
+    const tempDiv = document.createElement('div');
+    tempDiv.textContent = input;
+    return tempDiv.innerHTML;
+}
+
+
 </script>
-
-<h1>Travel Fare Expense Tracker</h1>
-<form id="expense-form">
-    <label for="item">Item:</label>
-    <input id="item" type="text" placeholder="Enter Item:"><br>
-    <label for="amnt">Amount:</label>
-    <input id="amount" type="text" placeholder="Enter Amount:"><br>
-    <label for="description">Description:</label>
-    <input id="description" type="text" placeholder="Enter Description:"><br>
-</form>
-<button id="btn" type="submit">Submit</button>
-<button id="btn1" type="submit">Clear</button>
-
-
-<h2>Expense Breakdown</h2>
-<h4>Select Chart Type</h4>
-<select id="chart-type" onchange="changeChartType()">
-    <option value="pie">Pie</option>
-    <option value="bar">Bar</option>
-</select>
-
-<canvas id="expenseChart" width="400" height="400"></canvas>
-
-<h2>Expense List</h2>
-<ul id="expense-list"></ul>

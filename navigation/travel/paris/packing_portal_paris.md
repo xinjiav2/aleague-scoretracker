@@ -13,105 +13,65 @@ menu: nav/paris_hotbar.html
             <h1>Packing Portal: Paris</h1>
             <div class="packing-items">
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-1" onclick="clickFunction(this, 'Comfortable Shoes')">
+                    <input type="checkbox" id="packing-item-1" onclick="handleCheckboxClick(this, 'Comfortable Shoes')">
                     <label for="packing-item-1">Comfortable Shoes</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-2" onclick="clickFunction(this, 'Umbrella')">
+                    <input type="checkbox" id="packing-item-2" onclick="handleCheckboxClick(this, 'Umbrella')">
                     <label for="packing-item-2">Umbrella</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-3" onclick="clickFunction(this, 'Power Bank')">
+                    <input type="checkbox" id="packing-item-3" onclick="handleCheckboxClick(this, 'Power Bank')">
                     <label for="packing-item-3">Power Bank</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-4" onclick="clickFunction(this, 'Lip Balm')">
+                    <input type="checkbox" id="packing-item-4" onclick="handleCheckboxClick(this, 'Lip Balm')">
                     <label for="packing-item-4">Lip Balm</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-5" onclick="clickFunction(this, 'French Dictionary')">
+                    <input type="checkbox" id="packing-item-5" onclick="handleCheckboxClick(this, 'French Dictionary')">
                     <label for="packing-item-5">French Dictionary</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-6" onclick="clickFunction(this, 'France Guidebook')">
+                    <input type="checkbox" id="packing-item-6" onclick="handleCheckboxClick(this, 'France Guidebook')">
                     <label for="packing-item-6">France Guidebook</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-7" onclick="clickFunction(this, 'Smartphone Charger')">
+                    <input type="checkbox" id="packing-item-7" onclick="handleCheckboxClick(this, 'Smartphone Charger')">
                     <label for="packing-item-7">Smartphone Charger</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-8" onclick="clickFunction(this, 'Water Bottle')">
+                    <input type="checkbox" id="packing-item-8" onclick="handleCheckboxClick(this, 'Water Bottle')">
                     <label for="packing-item-8">Water Bottle</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-9" onclick="clickFunction(this, 'Comfortable Socks')">
+                    <input type="checkbox" id="packing-item-9" onclick="handleCheckboxClick(this, 'Comfortable Socks')">
                     <label for="packing-item-9">Comfortable Socks</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-10" onclick="clickFunction(this, 'Hat')">
+                    <input type="checkbox" id="packing-item-10" onclick="handleCheckboxClick(this, 'Hat')">
                     <label for="packing-item-10">Hat</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-11" onclick="clickFunction(this, 'Sunglasses')">
+                    <input type="checkbox" id="packing-item-11" onclick="handleCheckboxClick(this, 'Sunglasses')">
                     <label for="packing-item-11">Sunglasses</label><br>
                 </div>
                 <div class="packing-item">
-                    <input type="checkbox" id="packing-item-12" onclick="clickFunction(this, 'Snacks')">
+                    <input type="checkbox" id="packing-item-12" onclick="handleCheckboxClick(this, 'Snacks')">
                     <label for="packing-item-12">Snacks</label><br>
                 </div>
             </div>
         </div>
-        <!-- Filters
-        <div class="filters">
-            <h3>Filters</h3>
-            <button>Season</button>
-            <button>Trip Duration</button>
-            <button>Age</button>
-            <button>Transportation</button>
-            <button>Technology</button>
-        </div>
-        -->
-        <div class="personal_checklist">
-            <h3>Personal Packing List</h3>
-            <hr>
-            <ul id="checklist_area"></ul>
+        <div class="button_container">
+        <a href="{{ site.baseurl }}/travel/paris/packing_checklist_paris" id="packing_items_button" class="button">Personal Packing Checklist</a>
         </div>
     </div>
     <div id="weather-cards" class="weather-container">
     </div>  
 </body>
 
-<script src="../../assets/js/travel/packing_portal.js"></script>
 
 <script>
-
-// code for personal checklist
-
-function clickFunction(checkbox, itemText) {
-  
-  // personal checklist
-  const personal_checklist = document.getElementById("checklist_area");
-
-  // logic for checkbox
-  if (checkbox.checked){
-
-    // add to personal checklist
-
-    const personal_checklist_item = document.createElement("li");
-    personal_checklist_item.textContent = itemText;
-    personal_checklist_item.setAttribute("id", checkbox.id + "-item");
-    personal_checklist.appendChild(personal_checklist_item);
-  } else {
-
-    // remove from personal checklist
-
-    const personal_checklist_item = document.getElementById(checkbox.id + "-item");
-    if (personal_checklist_item) {
-        personal_checklist.removeChild(personal_checklist_item);
-    }
-  }
-}
 
 // code for weather api
 
@@ -137,7 +97,7 @@ async function fetchWeatherData() {
     } catch (error) {
         console.error('Error fetching weather data:', error);
     }
-}
+};
 
 function displayWeatherInfo(weather) {
     const container = document.getElementById('weather-cards');
@@ -193,25 +153,69 @@ function displayWeatherInfo(weather) {
     container.appendChild(card);
 }
 
-
-
-// Call the function to fetch and display weather data
+// call the function to fetch and display weather data
 fetchWeatherData();
+
+</script>
+
+
+<script type="module">
+
+import {
+    pythonURI,
+    fetchOptions,
+} from "{{ site.baseurl }}/assets/js/api/config.js";
+
+
+async function postPackingChecklist(itemText) {
+    console.log("post test:", itemText);
+    const postData = {
+        user: "toby",
+        item: itemText
+    };
+    
+    try {
+        const response = await fetch(`http://127.0.0.1:8887/api/packing_checklists`, {
+            //...fetchOptions,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add item: ' + response.statusText);
+        }
+
+        const data = await response.json();
+        console.log('Item added:', data);
+        return data;
+    } catch (error) {
+        console.error('Error adding item:', error);
+        alert('Error adding item: ' + error.message);
+    }
+}
+
+window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemText) {
+    await postPackingChecklist(itemText);
+};
 
 
 </script>
+
 
 
 <style>
 
 .container {
     display: flex;
+    flex-direction: column; 
     width: 100%;
     max-width: 1200px;
     margin: 0;
     padding: 20px;
     box-sizing: border-box;
-    gap: 20px;
 }
 
 .content-wrapper {
@@ -221,13 +225,13 @@ fetchWeatherData();
 }
 
 .main {
-    flex: 3;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    float: left;
+    width: 100%; 
+    margin-bottom: 20px; 
 }
 
 .main h1 {
@@ -251,67 +255,6 @@ fetchWeatherData();
     font-size: 18px;
     color: black;
 }
-
-.filters {
-    flex: 1;
-    background: #eaf4ff;
-    padding: 20px;
-    border-radius: 10px;
-    box-sizing: border-box;
-}
-
-.filters h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: black;
-}
-
-.filters button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #d8ecff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.filters button:hover {
-    background-color: #b5dbff;
-}
-
-.filters button:active {
-    background-color: blue;
-}
-
-.personal_checklist {
-    flex: 3;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.personal_checklist h3 {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.personal_checklist li {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 10px;
-    color: black;
-}
-
-.personal_checklist hr {
-    border: 2px solid black;
-}
-
 
 #weather-container {
     max-width: 1200px;
@@ -338,7 +281,7 @@ fetchWeatherData();
 .weather-card h2 {
     font-size: 2em;
     margin-bottom: 10px;
-    color: #ffe08a; /* Golden color for title */
+    color: #ffe08a;
 }
 
 .weather-card p {
@@ -352,7 +295,28 @@ fetchWeatherData();
     color: #ffd700;
 }
 
+.button_container {
+    width: 100%; 
+    margin-top: 20px; 
+}
 
+#packing_items_button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color:rgb(17, 145, 187); /* Light blue color */
+    color: white !important; /* Ensure text color is white */
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    box-sizing: border-box; 
+}
+
+#packing_items_button:hover {
+    background-color:rgba(17, 144, 187, 0.68); /* Slightly darker light blue when hovered */
+    transform: scale(1.05);
+}
 
 
 </style>
