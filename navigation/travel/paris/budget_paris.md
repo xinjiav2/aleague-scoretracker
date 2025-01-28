@@ -6,123 +6,9 @@ permalink: /travel/Paris/budget
 menu: nav/paris_hotbar.html
 ---
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #FDF5E6;
-        }
-        .header {
-            background: black;
-            color: #add8e6;
-            text-align: center;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .form-container {
-            margin: 20px 0;
-            padding: 15px;
-            border: 2px solid #add8e6;
-            border-radius: 8px;
-            background: black;
-            color: white;
-        }
-        .form-container h2 {
-            margin-bottom: 15px;
-        }
-        .form-container label {
-            display: block;
-            margin-bottom: 8px;
-        }
-        .form-container input,
-        .form-container select,
-        .form-container textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #add8e6;
-            border-radius: 5px;
-        }
-        .form-container button {
-            padding: 10px 20px;
-            background-color: #FFD700;
-            border: none;
-            color: black;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .form-container button:hover {
-            background-color: #C5B358;
-        }
-        .budget-summary {
-            margin: 20px 0;
-            padding: 15px;
-            border: 2px solid #add8e6;
-            border-radius: 8px;
-            background: black;
-            color: white;
-        }
-        .budget-summary h3 {
-            color: #add8e6;
-        }
-        .category {
-            margin: 20px 0;
-            padding: 15px;
-            border: 2px solid #add8e6;
-            border-radius: 8px;
-            background: black;
-            color: white;
-        }
-        .post-item {
-            border: 1px solid #add8e6;
-            border-radius: 15px;
-            background-color: #073461;
-            margin-bottom: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease-in-out;
-            color: white;
-        }
-        .post-item:hover {
-            transform: scale(1.02);
-        }
-        .post-item h3 {
-            margin-top: 0;
-            color: #add8e6;
-            border-bottom: 1px solid #add8e6;
-            padding-bottom: 5px;
-        }
-        .post-item p {
-            margin: 10px 0;
-            color: #E6E6FA;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #add8e6;
-        }
-        th {
-            background-color: #add8e6;
-            color: black;
-        }
-        td {
-            background-color: #073461;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/travel/budget.css"> 
 </head>
+
 <body>
     <div class="header">
         <h1>Trip Budget Planner</h1>
@@ -140,93 +26,29 @@ menu: nav/paris_hotbar.html
     </div>
     <div class="container">
         <div class="form-container">
-            <h2>See reviews on value-to-price choices:</h2>
-            <form id="selectionForm">
-                <label for="group_id">Group:</label>
-                <select id="group_id" name="group_id" required>
-                    <option value="">Select a group</option>
+            <h2>Manage Your Budget Entries</h2>
+            <form id="entryForm">
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <option value="Activities">Activities</option>
+                    <option value="Hotels">Hotels</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Food">Food</option>
+                    <option value="Other">Other</option>
                 </select>
-                <label for="channel_id">Channel:</label>
-                <select id="channel_id" name="channel_id" required>
-                    <option value="">Select a channel</option>
-                </select>
-                <button type="submit">Select</button>
+                <label for="expense">Expense (e.g., Museum visit):</label>
+                <input type="text" id="expense" name="expense" required placeholder="Describe your expense">
+                <label for="entryAmount">Amount (USD):</label>
+                <input type="number" id="entryAmount" name="entryAmount" required placeholder="Enter amount" step="0.01">
+                <button type="submit">Add Entry</button>
             </form>
-            <a href="chat" style="display: inline-block; margin-top: 20px;">
-                <button type="button">Join a Chatroom about these choices!</button>
-            </a>
-        </div>
-    </div>
-    <div class="container">
-        <div class="form-container">
-            <h2>Make a post:</h2>
-            <form id="postForm">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" required>
-                <label for="comment">Comment:</label>
-                <textarea id="comment" name="comment" required></textarea>
-                <button type="submit">Post</button>
-            </form>
-        </div>
-    </div>
-    <div class="container">
-        <div id="data" class="data">
-            <div class="left-side">
-                <p id="count"></p>
-            </div>
-            <div class="details" id="details">
-            </div>
         </div>
     </div>
     <div class="container">
         <div class="budget-summary" id="budgetSummary">
             <h3>Your Budget Summary</h3>
-            <p id="budgetStatus">Set your budget to see the summary.</p>
-            <table id="budgetTable" style="display:none;">
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Amount (USD)</th>
-                        <th>Percentage of Total Budget</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Activities</td>
-                        <td id="activitiesAmount">$0</td>
-                        <td id="activitiesPercentage">0%</td>
-                    </tr>
-                    <tr>
-                        <td>Hotels</td>
-                        <td id="hotelsAmount">$0</td>
-                        <td id="hotelsPercentage">0%</td>
-                    </tr>
-                    <tr>
-                        <td>Transportation</td>
-                        <td id="transportationAmount">$0</td>
-                        <td id="transportationPercentage">0%</td>
-                    </tr>
-                    <tr>
-                        <td>Food</td>
-                        <td id="foodAmount">$0</td>
-                        <td id="foodPercentage">0%</td>
-                    </tr>
-                    <tr>
-                        <td>Total</td>
-                        <td id="totalAmount">$0</td>
-                        <td>100%</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="container">
-        <div class="category">
-            <h2>Budget Tips</h2>
-            <div class="post-item">
-                <h3>Budget-Saving Tip</h3>
-                <p>Consider staying in budget hostels or using public transportation instead of taxis for savings!</p>
-            </div>
+            <table id="budgeting-table"></table>
         </div>
     </div>
     <div class="container">
@@ -266,28 +88,10 @@ menu: nav/paris_hotbar.html
         </div>
         <div id="conversionResult"></div>
     </div>
+</body>
 
-<script>
-    document.getElementById('budgetForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const budget = Number(document.getElementById('budget').value);
-        if (budget > 0) {
-            document.getElementById('budgetStatus').textContent = `Total Budget: $${budget}`;
-            document.getElementById('totalAmount').textContent = `$${budget}`;
-            const activities = budget * 0.30;
-            const hotels = budget * 0.40; 
-            const transportation = budget * 0.30; 
-            document.getElementById('activitiesAmount').textContent = `$${activities}`;
-            document.getElementById('activitiesPercentage').textContent = `${(activities / budget * 100)}%`;
-            document.getElementById('hotelsAmount').textContent = `$${hotels.toFixed(2)}`;
-            document.getElementById('hotelsPercentage').textContent = `${(hotels / budget * 100)}%`;
-            document.getElementById('transportationAmount').textContent = `$${transportation}`;
-            document.getElementById('transportationPercentage').textContent = `${(transportation / budget * 100)}%`;
-            document.getElementById('budgetTable').style.display = 'table';
-        } else {
-            alert("Please enter a valid positive number.");
-        }
-    });
+<script type="module">
+    import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
     document.getElementById('convertButton').addEventListener('click', function() {
         const have = document.getElementById('have').value.trim();
         const want = document.getElementById('want').value.trim();
@@ -319,182 +123,170 @@ menu: nav/paris_hotbar.html
     });
 </script>
 
-    
 <script type="module">
-    // Import server URI and standard fetch options
-    import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+    import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
-    /**
-     * Fetch groups for dropdown selection
-     * User picks from dropdown
-     */
-    async function fetchGroups() {
+    // Submit a new budgeting entry
+    async function submitBudgeting(expense, cost, category) {
         try {
-            const response = await fetch(`${pythonURI}/api/groups/filter`, {
+            const response = await fetch(`${pythonURI}/api/budgeting`, {
                 ...fetchOptions,
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ section_name: "Shared Interest" })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ expense, cost, category, user_id: 1 }),
             });
-            if (!response.ok) {
-                throw new Error('Failed to fetch groups: ' + response.statusText);
+
+            if (response.ok) {
+                createBudgetingTable();
+            } else {
+                console.error('Failed to submit budgeting entry:', await response.json());
             }
-            const groups = await response.json();
-            const groupSelect = document.getElementById('group_id');
-            groups.forEach(group => {
-                const option = document.createElement('option');
-                option.value = group.name; 
-                option.textContent = group.name;
-                groupSelect.appendChild(option);
-            });
         } catch (error) {
-            console.error('Error fetching groups:', error);
+            console.error("Error creating new budgeting entry:", error);
         }
     }
 
-    /**
-     * Fetch channels based on selected group
-     * User picks from dropdown
-     */
-    async function fetchChannels(groupName) {
+    // Update a budgeting entry
+    async function updateBudgeting(id, expense, cost, category) {
         try {
-            const response = await fetch(`${pythonURI}/api/channels/filter`, {
-                ...fetchOptions,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ group_name: groupName })
+            const response = await fetch(`${pythonURI}/api/budgeting`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, expense, cost, category, user_id: 1 }),
             });
-            if (!response.ok) {
-                throw new Error('Failed to fetch channels: ' + response.statusText);
+
+            if (response.ok) {
+                createBudgetingTable();
+            } else {
+                console.error('Failed to update budgeting entry:', await response.json());
             }
-            const channels = await response.json();
-            const channelSelect = document.getElementById('channel_id');
-            channelSelect.innerHTML = '<option value="">Select a channel</option>'; // Reset channels
-            channels.forEach(channel => {
-                const option = document.createElement('option');
-                option.value = channel.id;
-                option.textContent = channel.name;
-                channelSelect.appendChild(option);
-            });
         } catch (error) {
-            console.error('Error fetching channels:', error);
+            console.error("Error updating budgeting entry:", error);
         }
     }
 
-    /**
-      * Handle group selection change
-      * Channel Dropdown refresh to match group_id change
-      */
-    document.getElementById('group_id').addEventListener('change', function() {
-        const groupName = this.value;
-        if (groupName) {
-            fetchChannels(groupName);
+    // Delete a budgeting entry
+    async function deleteBudgeting(id) {
+        try {
+            const response = await fetch(`${pythonURI}/api/budgeting`, {
+                ...fetchOptions,
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id }),
+            });
+
+            if (response.ok) {
+                createBudgetingTable();
+            } else {
+                console.error('Failed to delete budgeting entry:', await response.json());
+            }
+        } catch (error) {
+            console.error("Error deleting budgeting entry:", error);
+        }
+    }
+
+    // Dynamically create the budgeting entries table
+    async function createBudgetingTable() {
+        const table = document.getElementById("budgeting-table");
+        table.innerHTML = ""; // Clear existing table content
+
+        try {
+            const response = await fetch(`${pythonURI}/api/budgeting`, fetchOptions);
+            const data = await response.json();
+
+            if (data.length === 0) {
+                table.innerHTML = "<tr><td colspan='4'>No budgeting entries available.</td></tr>";
+                return;
+            }
+
+            // Create table header
+            const header = document.createElement("thead");
+            header.innerHTML = `
+                <tr>
+                    <th>Expense</th>
+                    <th>Cost</th>
+                    <th>Category</th>
+                    <th>User ID</th>
+                    <th>Actions</th>
+                </tr>`;
+            table.appendChild(header);
+
+            // Create table body
+            const body = document.createElement("tbody");
+            data.forEach((entry, index) => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${entry.expense}</td>
+                    <td>${entry.cost}</td>
+                    <td>${entry.category}</td>
+                    <td>${entry.user_id}</td>
+                    <td>
+                        <button class="action-btn" id="update-btn-${index}">Update</button>
+                        <button class="action-btn" id="delete-btn-${index}">Delete</button>
+                    </td>
+                `;
+
+                body.appendChild(row);
+            });
+            table.appendChild(body);
+
+            // Bind event listeners dynamically after elements are added
+            data.forEach((entry, index) => {
+                const updateButton = document.getElementById(`update-btn-${index}`);
+                const deleteButton = document.getElementById(`delete-btn-${index}`);
+
+                // Ensure buttons exist before attaching event listeners
+                if (updateButton) {
+                    updateButton.addEventListener("click", () => handleUpdate(entry));
+                }
+                if (deleteButton) {
+                    deleteButton.addEventListener("click", () => handleDelete(entry));
+                }
+            });
+
+        } catch (error) {
+            console.error("Error fetching budgeting entries:", error);
+            table.innerHTML = "<tr><td colspan='4'>Failed to load budgeting entries.</td></tr>";
+        }
+    }
+
+    // Prompt the user to update a budgeting entry
+    async function handleUpdate(entry) {
+        const newExpense = prompt("Enter a new expense:");
+        const newCost = prompt("Enter a new cost:");
+        const newCategory = prompt("Enter a new category:");
+
+        if (newExpense && newCost && newCategory) {
+            await updateBudgeting(entry.id, newExpense, newCost, newCategory);
         } else {
-            document.getElementById('channel_id').innerHTML = '<option value="">Select a channel</option>'; // Reset channels
-        }
-    });
-
-    /**
-     * Handle form submission for selection
-     * Select Button: Computer fetches and displays posts
-     */
-    document.getElementById('selectionForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const groupId = document.getElementById('group_id').value;
-        const channelId = document.getElementById('channel_id').value;
-        if (groupId && channelId) {
-            fetchData(channelId);
-        } else {
-            alert('Please select both group and channel.');
-        }
-    });
-
-    /**
-     * Handle form submission for adding a post
-     * Add Form Button: Computer handles form submission with request
-     */
-    document.getElementById('postForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        const title = document.getElementById('title').value;
-        const comment = document.getElementById('comment').value;
-        const channelId = document.getElementById('channel_id').value;
-
-        const postData = {
-            title: title,
-            comment: comment,
-            channel_id: channelId
-        };
-
-        try {
-            const response = await fetch(`${pythonURI}/api/post`, {
-                ...fetchOptions,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(postData)
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to add post: ' + response.statusText);
-            }
-
-            const result = await response.json();
-            alert('Post added successfully!');
-            document.getElementById('postForm').reset();
-            fetchData(channelId);
-        } catch (error) {
-            console.error('Error adding post:', error);
-            alert('Error adding post: ' + error.message);
-        }
-    });
-
-    /**
-     * Fetch posts based on selected channel
-     * Handle response: Fetch and display posts
-     */
-    async function fetchData(channelId) {
-        try {
-            const response = await fetch(`${pythonURI}/api/posts/filter`, {
-                ...fetchOptions,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ channel_id: channelId })
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch posts: ' + response.statusText);
-            }
-            const postData = await response.json();
-
-            const postCount = postData.length || 0;
-
-            document.getElementById('count').innerHTML = `<h2>Count ${postCount}</h2>`;
-
-            const detailsDiv = document.getElementById('details');
-            detailsDiv.innerHTML = '';
-postData.forEach(postItem => {
-    const postElement = document.createElement('div');
-    postElement.className = 'post-item';
-    postElement.innerHTML = `
-        <h3>${postItem.title}</h3>
-        <p><strong>Channel:</strong> ${postItem.channel_name}</p>
-        <p><strong>User:</strong> ${postItem.user_name}</p>
-        <p>${postItem.comment}</p>
-    `;
-    detailsDiv.appendChild(postElement);
-});
-
-
-        } catch (error) {
-            console.error('Error fetching data:', error);
+            alert("Please enter valid data.");
         }
     }
-    fetchGroups();
+
+    // Handle delete budgeting entry
+    async function handleDelete(entry) {
+        const confirmDelete = confirm("Are you sure you want to delete this budgeting entry?");
+        if (confirmDelete) {
+            await deleteBudgeting(entry.id);
+        }
+    }
+
+    // Handle new budgeting entry creation
+    document.getElementById('entryForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const category = document.getElementById('category').value;
+        const expense = document.getElementById('expense').value;
+        const cost = parseFloat(document.getElementById('entryAmount').value);
+
+
+        if (expense && cost && category) {
+            await submitBudgeting(expense, cost, category);
+        } else {
+            alert("Please enter valid data.");
+        }
+    });
+
+    // Initialize the app
+    createBudgetingTable();
 </script>
