@@ -62,8 +62,8 @@ menu: nav/paris_hotbar.html
                 </div>
             </div>
         </div>
-        <div>
-        <a href="{{ site.baseurl }}/travel/paris/packing_checklist_paris" id="packing_items_button" class="button">Packing Items</a>
+        <div class="button_container">
+        <a href="{{ site.baseurl }}/travel/paris/packing_checklist_paris" id="packing_items_button" class="button">Personal Packing Checklist</a>
         </div>
     </div>
     <div id="weather-cards" class="weather-container">
@@ -210,12 +210,12 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
 
 .container {
     display: flex;
+    flex-direction: column; 
     width: 100%;
     max-width: 1200px;
     margin: 0;
     padding: 20px;
     box-sizing: border-box;
-    gap: 20px;
 }
 
 .content-wrapper {
@@ -225,13 +225,13 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
 }
 
 .main {
-    flex: 3;
     background: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    float: left;
+    width: 100%; 
+    margin-bottom: 20px; 
 }
 
 .main h1 {
@@ -281,7 +281,7 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
 .weather-card h2 {
     font-size: 2em;
     margin-bottom: 10px;
-    color: #ffe08a; /* Golden color for title */
+    color: #ffe08a;
 }
 
 .weather-card p {
@@ -295,23 +295,27 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
     color: #ffd700;
 }
 
+.button_container {
+    width: 100%; 
+    margin-top: 20px; 
+}
+
 #packing_items_button {
-    background-color: #007BFF; /* Blue button color */
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-decoration: none;
-    display: inline-block;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color:rgb(17, 145, 187); /* Light blue color */
+    color: white !important; /* Ensure text color is white */
+    font-size: 18px;
     text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    box-sizing: border-box; 
 }
 
 #packing_items_button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: scale(1.05); /* Slight zoom effect */
+    background-color:rgba(17, 144, 187, 0.68); /* Slightly darker light blue when hovered */
+    transform: scale(1.05);
 }
 
 
