@@ -125,6 +125,12 @@ menu: nav/paris_hotbar.html
     table tr:nth-child(even) {
         background-color: #f9f9f9;
     }
+    #flightResults {
+    background-color: #000; /* Set background color to black */
+    color: #fff; /* Set text color to white for better contrast */
+    padding: 20px;
+    border-radius: 8px;
+    }
 </style>
 
 <div class="header">
