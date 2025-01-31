@@ -74,7 +74,7 @@ h1 {
 .card p {
     margin: 10px 0;
     font-size: 1rem;
-    color: #333;
+    color: #FFFFFF;
 }
 
 .card a {
