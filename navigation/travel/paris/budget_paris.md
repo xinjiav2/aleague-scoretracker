@@ -100,7 +100,8 @@ menu: nav/paris_hotbar.html
             return;
         }
         // Make a request to the backend API (Flask)
-        fetch(`http://127.0.0.1:8887/api/convertcurrency?have=${have}&want=${want}&amount=${amount}`, {
+        fetch(`${pythonURI}/api/convertcurrency?have=${have}&want=${want}&amount=${amount}`, {
+            ...fetchOptions,
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
