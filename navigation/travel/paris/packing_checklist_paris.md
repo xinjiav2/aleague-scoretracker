@@ -16,13 +16,22 @@ menu: nav/paris_hotbar.html
 
 <script type="module">
 
+import {
+    pythonURI,
+    fetchOptions,
+} from "{{ site.baseurl }}/assets/js/api/config.js";
+
 document.addEventListener("DOMContentLoaded", (event) => {
     getPackingChecklists();
 });
 
 async function getPackingChecklists() {
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/packing_checklists`, {});
+        const response = await fetch(`${pythonURI}/api/packing_checklists`, {
+            ...fetchOptions,
+            method: 'GET',
+
+        });
 
         if (!response.ok) {
             throw new Error('Failed to fetch packing checklists: ' + response.statusText);
@@ -104,7 +113,7 @@ async function deletePackingChecklist(id) {
     }
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/packing_checklists`, {
+        const response = await fetch(`${pythonURI}/api/packing_checklists`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -132,7 +141,7 @@ async function putPackingChecklist(id, new_name) {
     }
     
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/packing_checklists`, {
+        const response = await fetch(`${pythonURI}/api/packing_checklists`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

@@ -175,8 +175,7 @@ async function postPackingChecklist(itemText) {
     };
     
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/packing_checklists`, {
-            //...fetchOptions,
+        const response = await fetch(`${pythonURI}/api/packing_checklists`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
