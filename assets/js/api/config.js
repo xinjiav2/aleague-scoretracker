@@ -25,6 +25,7 @@ export const fetchOptions = {
         'X-Origin': 'client' // New custom header to identify source
     },
 };
+
 // User Login Function 
 export function login(options) {
         // Modify the options to use the POST method and include the request body.

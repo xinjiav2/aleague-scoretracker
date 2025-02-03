@@ -131,19 +131,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchReviews() {
     try {
-        const response = await fetch("http://127.0.0.1:8887/api/food_review123_api");
-
+        const response = await fetch(`${pythonURI}/api/food_review123_api`);
         if (!response.ok) {
             throw new Error("Failed to fetch reviews: " + response.statusText);
         }
-
         const data = await response.json();
         let reviewCount = data.length || 0;
-
         document.getElementById('reviewCount').innerHTML = `<h2>You have ${reviewCount} food reviews!</h2>`;
-
         const body = document.getElementById('main-content');
-
         data.forEach(item => {
             createCard(body, item);
         });
@@ -202,7 +197,7 @@ window.addReview = async function addReview() {
     };
 
     try {
-        const response = await fetch("http://127.0.0.1:8887/api/food_review123_api", {
+        const response = await fetch(`${pythonURI}/api/food_review123_api`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -258,7 +253,7 @@ async function updateReview(id) {
     };
 
     try {
-        const response = await fetch("http://127.0.0.1:8887/api/food_review123_api", {
+        const response = await fetch(`${pythonURI}/api/food_review123_api`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -291,7 +286,7 @@ async function updateReview(id) {
 
 async function deleteReview(id) {
     try {
-        await fetch("http://127.0.0.1:8887/api/food_review123_api", {
+        await fetch(`${pythonURI}/api/food_review123_api`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
