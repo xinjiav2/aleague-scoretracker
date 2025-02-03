@@ -17,13 +17,15 @@ menu: nav/paris_hotbar.html
 
 <script type="module">
 
+import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+
 document.addEventListener("DOMContentLoaded", (event) => {
     fetchLikedHotels();
 });
 
 async function fetchLikedHotels() {
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {});
+        const response = await fetch(`${pythonURI}/api/hotel`, {...fetchOptions});
 
         if (!response.ok) {
             throw new Error('Failed to fetch hotels: ' + response.statusText);
@@ -113,11 +115,9 @@ async function putHotelData(id, newRating) {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {
+        const response = await fetch(`${pythonURI}/api/hotel`, {
+            ...fetchOptions,
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(putData)
         });
 
@@ -139,11 +139,9 @@ async function deleteHotel(id) {
     };
 
     try {
-        const response = await fetch(`http://127.0.0.1:8887/api/hotel`, {
+        const response = await fetch(`${pythonURI}/api/hotel`, {
+            ...fetchOptions,
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(deleteData)
         });
 

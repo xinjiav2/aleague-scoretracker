@@ -33,6 +33,7 @@ menu: nav/paris_hotbar.html
 
 
 <script type="module">
+import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
 
 document.addEventListener("DOMContentLoaded", (event) => {
   const goButton = document.getElementById("goButton");
@@ -136,11 +137,9 @@ async function postHotelData(hotelTitle, cityTitle, countryTitle, rating) {
   };
 
   try {
-    const response = await fetch('http://127.0.0.1:8887/api/hotel', {
+    const response = await fetch(`${pythonURI}/api/hotel`, {
+      ...fetchOptions,
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(postData)
     });
 
