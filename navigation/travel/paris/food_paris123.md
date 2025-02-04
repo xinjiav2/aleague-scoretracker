@@ -124,7 +124,8 @@ show_reading_time: false
   </main>
 </body>
 
-<script>
+<script type="module">
+import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 document.addEventListener("DOMContentLoaded", () => {
     fetchReviews();
 });
