@@ -11,10 +11,20 @@ description: This is our groups deployment blog.
 1. **AWS Account**: Get the active AWS account from Mr. Mortensen. [AWS](https://aws.amazon.com/).
 2. **IAM User**: Create an IAM user - Identity and Access Management, so that we have permissions we need.
 3. **AWS CLI**: Install and configure the AWS CLI on local machine. Follow the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
+4. **Test Server**: Ensure that we have a working frontend-to-backend test server (live review with Mr.Mort). If it does not work locally, there is no need to try it on deployment.
+![Deployment Diagram]({{ site.baseurl }}/images/cicd-pipeline-diagram.png)
+This is a general process that we will follow for deployment.
 
-### Test Server
+### Key Terms used in deployment
+- Amazon Web Services (AWS) Management Console: A web-based interface that allows users to manage and interact with AWS services, providing an intuitive way to configure resources, monitor performance, and access a wide range of cloud tools.
+- Amazon EC2 (Elastic Compute Cloud): A cloud service that offers scalable computing power, enabling users to run applications on virtual servers with flexible resource management.
+- Docker: A platform that simplifies the deployment of applications within lightweight containers, ensuring consistent environments across different stages of development and production.
+- Docker Compose: A tool for managing multi-container Docker applications, using a YAML file to configure services, networks, and volumes for the application.
+- Nginx: A high-performance web and reverse proxy server that efficiently directs incoming traffic to the appropriate backend services, improving load balancing and scalability.
+- Route 53: AWS's scalable DNS service that converts domain names into IP addresses, efficiently routing user requests to applications hosted on AWS or on-premises.
+- Certbot: A tool that automates the process of obtaining and renewing Let’s Encrypt SSL/TLS certificates, enabling HTTPS on websites managed manually.
+- Cockpit: A web-based server management tool that allows users to monitor and manage their Linux servers through a simple and user-friendly interface, providing features like system performance monitoring, logs, and container management.
 
-Ensure that we have a working frontend-to-backend test server. If it does not work locally, there is no need to try it on deployment.
 
 ### Subdomain
 
