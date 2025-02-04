@@ -67,7 +67,7 @@ Changed port to 8101
   version: '3'
   services:
       web:
-          image: flask2025
+          image: travel_backend
           build: .
           env_file:
               - .env
@@ -110,7 +110,7 @@ Changed port to 8101
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
       pythonURI = "http://127.0.0.1:8101"; 
   } else {
-      pythonURI = "https://flocker.nighthawkcodingsociety.com";
+      pythonURI = "https://travel_backend.nighthawkcodingsociety.com";
   }
   ```
 
@@ -139,10 +139,11 @@ Password hint is 3 Musketeers
 
 ## Server Setup
 
-1. **Clone backend repo**: `git clone https://github.com/Kiruthic-Selvakumar/travel_backend.git`
-2. **Navigate to repo**: `cd travel_backend`
-3. **Build site**: `docker-compose up -d --build`
-4. **Test site**: `curl localhost:8101`
+Clone backend repo: git clone https://github.com/Kiruthic-Selvakumar/travel_backend.git
+Navigate to repo: cd travel_backend
+# ./scripts/db_init.py
+Build site: docker-compose up -d --build
+Test site: curl localhost:8101
 
 ### Route 53 DNS
 
