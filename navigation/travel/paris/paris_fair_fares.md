@@ -177,7 +177,7 @@ menu: nav/paris_hotbar.html
         flightResults.innerHTML = '<p>Loading...</p>';
 
         try {
-            const response = await fetch(`http://127.0.0.1:8887/api/flight-api?origin=${origin}&destination=${destination}`);
+            const response = await fetch(`http://127.0.0.1:8101/api/flight-api?origin=${origin}&destination=${destination}`);
             
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -230,7 +230,7 @@ menu: nav/paris_hotbar.html
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:8887/api/flight', {
+            const response = await fetch('http://127.0.0.1:8101/api/flight', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -306,7 +306,7 @@ async function showNotesTable() {
 
     try {
         // Fetch notes from the server
-        const response = await fetch('http://127.0.0.1:8887/api/flight');
+        const response = await fetch('http://127.0.0.1:8101/api/flight');
 
         if (!response.ok) {
             throw new Error(`Failed to fetch flight data with notes. Status: ${response.status}`);
