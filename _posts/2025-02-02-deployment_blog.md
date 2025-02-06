@@ -31,7 +31,7 @@ This is a general process that we will follow for deployment.
 Setup DNS endpoint through AWS Route 53.
 
 ```yml
-Server: https://travel_backend.nighthawkcodingsociety.com/
+Server: https://intertravel.stu.nighthawkcodingsociety.com/
 Domain: nighthawkcodingsociety.com
 Subdomain: travel_backend
 ```
@@ -67,7 +67,7 @@ Changed port to 8101
   version: '3'
   services:
       web:
-          image: travel_backend
+          image: inter_travel
           build: .
           env_file:
               - .env
@@ -83,7 +83,7 @@ Changed port to 8101
   server {
       listen 80;
       listen [::]:80;
-      server_name travel_backend.nighthawkcodingsociety.com;
+      server_name https://intertravel.stu.nighthawkcodingsociety.com;
       location / {
           proxy_pass http://localhost:8101; (MINE)
           if ($request_method = OPTIONS) {
@@ -110,7 +110,7 @@ Changed port to 8101
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
       pythonURI = "http://127.0.0.1:8101"; 
   } else {
-      pythonURI = "https://travel_backend.nighthawkcodingsociety.com";
+      pythonURI = "https://intertravel.stu.nighthawkcodingsociety.com/";
   }
   ```
 
@@ -251,7 +251,7 @@ Go to AWS Route 53 and set up a DNS subdomain for the backend server.
     server {
         listen 80;
         listen [::]:80;
-        server_name travel_backend.nighthawkcodingsociety.com;
+        server_name https://intertravel.stu.nighthawkcodingsociety.com/;
         location / {
             proxy_pass http://localhost:8101;
             if ($request_method = OPTIONS) {
@@ -286,7 +286,7 @@ Go to AWS Route 53 and set up a DNS subdomain for the backend server.
     ```
     
 6.  **Test if Nginx is serving requests**:  
-    Open **[http://travel_backend.nighthawkcodingsociety.com](http://travel_backend.nighthawkcodingsociety.com/)** in our browser.
+    Open **[https://intertravel.stu.nighthawkcodingsociety.com](https://intertravel.stu.nighthawkcodingsociety.com/)** in our browser.
     
 
 ----------
@@ -308,7 +308,7 @@ Here are all the steps we will follow to install Certbot to deploy our site
     ```
     
 3.  **Follow the prompts**:
-    -   Select `travel_backend.nighthawkcodingsociety.com` from the list.
+    -   Select `https://intertravel.stu.nighthawkcodingsociety.com` from the list.
     -   Choose option `2` because it will redirect us from HTTP to HTTPS, which is more secure.
 4.  **Restart Nginx**:
     
@@ -317,7 +317,7 @@ Here are all the steps we will follow to install Certbot to deploy our site
     ```
     
 5.  **Test HTTPS access**:  
-    Open **[https://travel_backend.nighthawkcodingsociety.com](https://travel_backend.nighthawkcodingsociety.com/)** in our browser.
+    Open **[https://intertravel.stu.nighthawkcodingsociety.com](https://intertravel.stu.nighthawkcodingsociety.com/)** in our browser.
 
 ----------
 
