@@ -33,7 +33,7 @@ Setup DNS endpoint through AWS Route 53.
 ```yml
 Server: https://intertravel.stu.nighthawkcodingsociety.com/
 Domain: nighthawkcodingsociety.com
-Subdomain: travel_backend
+Subdomain: intertravel.stu
 ```
 
 ### Port (Backend)
