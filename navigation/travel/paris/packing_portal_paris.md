@@ -60,6 +60,18 @@ menu: nav/paris_hotbar.html
                     <input type="checkbox" id="packing-item-12" onclick="handleCheckboxClick(this, 'Snacks')">
                     <label for="packing-item-12">Snacks</label><br>
                 </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item-13" onclick="handleCheckboxClick(this, 'Backpack')">
+                    <label for="packing-item-12">Backpack</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item-14" onclick="handleCheckboxClick(this, 'Scarf')">
+                    <label for="packing-item-12">Scarf</label><br>
+                </div>
+                <div class="packing-item">
+                    <input type="checkbox" id="packing-item-15" onclick="handleCheckboxClick(this, 'Moisturizer')">
+                    <label for="packing-item-12">Moisturizer</label><br>
+                </div>
             </div>
         </div>
         <div class="button_container">
