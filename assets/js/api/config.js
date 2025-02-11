@@ -4,7 +4,7 @@ if (location.hostname === "localhost") {
 } else if (location.hostname === "127.0.0.1") {
         pythonURI = "http://127.0.0.1:8101"; //Changed port here to 8101 instead of 8887
 } else {
-        pythonURI =  "https://intertravel.stu.nighthawkcodingsociety.com/";
+        pythonURI =  "https://intertravel.stu.nighthawkcodingsociety.com:8101";
 }
 export var javaURI;
 if (location.hostname === "localhost") {
