@@ -41,10 +41,10 @@ Subdomain: intertravel.stu
 Select a unique port for the application. Update all locations:
 
 - **main.py**: Prepare the localhost test server port to run on the same port for consistency.
-Changed port to 8101
+Changed port to 8887
   ```python
   if __name__ == "__main__":
-      app.run(debug=True, host="0.0.0.0", port="8101")
+      app.run(debug=True, host="0.0.0.0", port="8887")
   ```
 
 - **Dockerfile**: Prepare this file to run a server as a virtual machine on the deployment host.
@@ -56,8 +56,8 @@ Changed port to 8101
   COPY . /
   RUN pip install --no-cache-dir -r requirements.txt
   RUN pip install gunicorn
-  ENV GUNICORN_CMD_ARGS="--workers=1 --bind=0.0.0.0:8101"
-  EXPOSE 8101
+  ENV GUNICORN_CMD_ARGS="--workers=1 --bind=0.0.0.0:8887"
+  EXPOSE 8887
   ENV FLASK_ENV=production
   CMD [ "gunicorn", "main:app" ]
   ```
@@ -72,7 +72,7 @@ Changed port to 8101
           env_file:
               - .env
           ports:
-              - "8101:8101"
+              - "8887:8887"
           volumes:
               - ./instance:/instance
           restart: unless-stopped
@@ -85,7 +85,7 @@ Changed port to 8101
       listen [::]:80;
       server_name https://intertravel.stu.nighthawkcodingsociety.com;
       location / {
-          proxy_pass http://localhost:8101; (MINE)
+          proxy_pass http://localhost:8887; (MINE)
           if ($request_method = OPTIONS) {
               add_header "Access-Control-Allow-Credentials" "true" always;
               add_header "Access-Control-Allow-Origin"  "https://nighthawkcoders.github.io" always;
@@ -100,15 +100,15 @@ Changed port to 8101
 
 ### Port (Frontend)
 
-Prepare the frontend to access our domain and ports to match our localhost, port 8101 (OURS OURS OURS OURS OURS), and domain settings.
+Prepare the frontend to access our domain and ports to match our localhost, port 8887 (OURS OURS OURS OURS OURS), and domain settings.
 
 - **assets/api/config.js**:
-Changed port to 8101
+Changed port to 8887
 
   ```javascript
   export var pythonURI;
   if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-      pythonURI = "http://127.0.0.1:8101"; 
+      pythonURI = "http://127.0.0.1:8887"; 
   } else {
       pythonURI = "https://intertravel.stu.nighthawkcodingsociety.com/";
   }
@@ -132,10 +132,10 @@ Password hint is 3 Musketeers
 
 ## Application Setup
 
-1. **Finding a Port**: Run `docker ps` to make sure port 8101 is open
-2. **On localhost setup Docker files using VSCode**: Make sure the Dockerfile and docker-compose.yml match port 8101 on AWS EC2.
+1. **Finding a Port**: Run `docker ps` to make sure port 8887 is open
+2. **On localhost setup Docker files using VSCode**: Make sure the Dockerfile and docker-compose.yml match port 8887 on AWS EC2.
 - Use docker-compose up in the repo folder
-- Access the server after it's done building in browser on localhost:8101
+- Access the server after it's done building in browser on localhost:8887
 
 ## Server Setup
 
@@ -143,7 +143,7 @@ Clone backend repo: git clone https://github.com/Kiruthic-Selvakumar/travel_back
 Navigate to repo: cd travel_backend
 # ./scripts/db_init.py
 Build site: docker-compose up -d --build
-Test site: curl localhost:8101
+Test site: curl localhost:8887
 
 ### Route 53 DNS
 
@@ -182,7 +182,7 @@ sudo certbot --nginx
 
 ### Troubleshooting checks on AWS EC2
 
-1. **Try to curl**: `curl localhost:8101`
+1. **Try to curl**: `curl localhost:8887`
 2. **Run docker-compose ps**
 3. **Run docker ps**
 
@@ -218,7 +218,7 @@ You will need to DM Mr. Mort if you shared Deployment blog and will be Deploymen
 - Curl provides text response of your requested page
 
 - Look for your application and port: ```docker ps```
-- Verify your application is working: ```curl localhost:8101```
+- Verify your application is working: ```curl localhost:8887```
 
 <h3>Note</h3>
 
@@ -253,7 +253,7 @@ Go to AWS Route 53 and set up a DNS subdomain for the backend server.
         listen [::]:80;
         server_name https://intertravel.stu.nighthawkcodingsociety.com/;
         location / {
-            proxy_pass http://localhost:8101;
+            proxy_pass http://localhost:8887;
             if ($request_method = OPTIONS) {
                 add_header "Access-Control-Allow-Credentials" "true" always;
                 add_header "Access-Control-Allow-Origin"  "https://nighthawkcoders.github.io" always;
