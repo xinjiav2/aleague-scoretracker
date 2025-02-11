@@ -13,13 +13,13 @@ show_reading_time: false
     async function fetchTeamInfo() {
         try {
             const responses = await Promise.all([
-                fetch('http://127.0.0.1:8887/api/people/derek'),
-                fetch('http://127.0.0.1:8887/api/people/kiruthic'),
-                fetch('http://127.0.0.1:8887/api/people/tarun'),
-                fetch('http://127.0.0.1:8887/api/people/aadi'),
-                fetch('http://127.0.0.1:8887/api/people/aaditya'),
-                fetch('http://127.0.0.1:8887/api/people/arhaan'),
-                fetch('http://127.0.0.1:8887/api/people/rohan')
+                fetch('http://127.0.0.1:8101/api/people/derek'),
+                fetch('http://127.0.0.1:8101/api/people/kiruthic'),
+                fetch('http://127.0.0.1:8101/api/people/tarun'),
+                fetch('http://127.0.0.1:8101/api/people/aadi'),
+                fetch('http://127.0.0.1:8101/api/people/aaditya'),
+                fetch('http://127.0.0.1:8101/api/people/arhaan'),
+                fetch('http://127.0.0.1:8101/api/people/rohan')
             ]);
             const data = await Promise.all(responses.map(response => response.json()));
             data.forEach(member => displayTeamInfo(member));

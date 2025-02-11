@@ -12,7 +12,7 @@ document.getElementById('ratingForm').addEventListener('submit', async function(
 
     async function submitVote(postId, rating) {
         try {
-            const response = await fetch(`http://127.0.0.1:8887/api/rate`, {
+            const response = await fetch(`http://127.0.0.1:8101/api/rate`, {
                 ...fetchOptions,
                 method: 'POST',
                 headers: { 'Content-': 'application/json' },

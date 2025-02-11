@@ -1,8 +1,8 @@
 export var pythonURI;
 if (location.hostname === "localhost") {
-        pythonURI = "http://localhost:8887";
+        pythonURI = "http://localhost:8101";
 } else if (location.hostname === "127.0.0.1") {
-        pythonURI = "http://127.0.0.1:8887"; //Changed port here to 8887 instead of 8887
+        pythonURI = "http://127.0.0.1:8101"; //Changed port here to 8101 instead of 8101
 } else {
         pythonURI =  "https://intertravel.stu.nighthawkcodingsociety.com";
 }

@@ -92,7 +92,7 @@ async function fetchWeatherData() {
     try {
 
         // fetch weather data for Paris using its latitude and longitude
-        const response = await fetch('http://127.0.0.1:8887/api/weather?lat=48.8566&lon=2.3522');
+        const response = await fetch('http://127.0.0.1:8101/api/weather?lat=48.8566&lon=2.3522');
 
 
         // check if response is ok

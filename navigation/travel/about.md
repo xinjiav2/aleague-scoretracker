@@ -14,13 +14,13 @@ show_reading_time: false
         try {
             // Fetch data from multiple endpoints (e.g., /api/derek, /api/john, /api/sarah)
             const responses = await Promise.all([
-                fetch('http://127.0.0.1:8887/api/people/derek'),
-                fetch('http://127.0.0.1:8887/api/people/kiruthic'),
-                fetch('http://127.0.0.1:8887/api/people/tarun'),
-                fetch('http://127.0.0.1:8887/api/people/aadi'),
-                fetch('http://127.0.0.1:8887/api/people/aaditya'),
-                fetch('http://127.0.0.1:8887/api/people/arhaan'),
-                fetch('http://127.0.0.1:8887/api/people/rohan')
+                fetch('http://127.0.0.1:8101/api/people/derek'),
+                fetch('http://127.0.0.1:8101/api/people/kiruthic'),
+                fetch('http://127.0.0.1:8101/api/people/tarun'),
+                fetch('http://127.0.0.1:8101/api/people/aadi'),
+                fetch('http://127.0.0.1:8101/api/people/aaditya'),
+                fetch('http://127.0.0.1:8101/api/people/arhaan'),
+                fetch('http://127.0.0.1:8101/api/people/rohan')
             ]);
     
             // Convert all the responses to JSON
