@@ -230,7 +230,8 @@ async function postFlightData(origin, destination, note) {
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:8101/api/flight', {
+            const response = await fetch(`${pythonURI}/api/flight`, {
+                ...fetchOptions,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -306,7 +307,7 @@ async function showNotesTable() {
 
     try {
         // Fetch notes from the server
-        const response = await fetch('http://127.0.0.1:8101/api/flight');
+        const response = await fetch(`${pythonURI}/api/flight`, {...fetchOptions});
 
         if (!response.ok) {
             throw new Error(`Failed to fetch flight data with notes. Status: ${response.status}`);
