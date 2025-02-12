@@ -83,7 +83,12 @@ menu: nav/paris_hotbar.html
 </body>
 
 
-<script>
+<script type="module">
+
+import {
+    pythonURI,
+    fetchOptions,
+} from "{{ site.baseurl }}/assets/js/api/config.js";
 
 // code for weather api
 
@@ -92,7 +97,7 @@ async function fetchWeatherData() {
     try {
 
         // fetch weather data for Paris using its latitude and longitude
-        const response = await fetch('http://127.0.0.1:8101/api/weather?lat=48.8566&lon=2.3522');
+        const response = await fetch(`${pythonURI}/api/weather?lat=48.8566&lon=2.3522`);
 
 
         // check if response is ok
@@ -287,6 +292,12 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
     background-color: rgba(22, 207, 244, 0.75);
     color: #fff;
     text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for smooth animation */
+}
+
+.weather-card:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
 }
 
 .weather-card h2 {
