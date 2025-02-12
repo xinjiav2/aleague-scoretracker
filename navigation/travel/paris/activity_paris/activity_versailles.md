@@ -190,7 +190,7 @@ menu: nav/paris_hotbar.html
 
                 row.innerHTML = `
                     <td>${rating.rating}</td>
-                    <td>${rating.user_id}</td>
+                    <td>${rating.username}</td>
                     <td>
                         <button class="action-btn" id="update-btn-${index}">Update</button>
                         <button class="action-btn" id="delete-btn-${index}">Delete</button>
