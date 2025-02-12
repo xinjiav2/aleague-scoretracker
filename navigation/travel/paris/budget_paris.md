@@ -137,7 +137,7 @@ menu: nav/paris_hotbar.html
             } else {
                 displayElement.textContent = "Budgeting Entries: ";
                 data.forEach(entry => {
-                    displayElement.innerHTML += `<br>Expense: ${entry.expense}, Cost: ${entry.cost}, Category: ${entry.category}, User ID: ${entry.user_id}`;
+                    displayElement.innerHTML += `<br>Expense: ${entry.expense}, Cost: ${entry.cost}, Category: ${entry.category}`;
                 });
             }
 
