@@ -269,7 +269,6 @@ menu: nav/paris_hotbar.html
                     <th>Expense</th>
                     <th>Cost</th>
                     <th>Category</th>
-                    <th>User ID</th>
                     <th>Actions</th>
                 </tr>`;
             table.appendChild(header);
@@ -283,7 +282,6 @@ menu: nav/paris_hotbar.html
                     <td>${entry.expense}</td>
                     <td>${entry.cost}</td>
                     <td>${entry.category}</td>
-                    <td>${entry.user_id}</td>
                     <td>
                         <button class="action-btn" id="update-btn-${index}">Update</button>
                         <button class="action-btn" id="delete-btn-${index}">Delete</button>
