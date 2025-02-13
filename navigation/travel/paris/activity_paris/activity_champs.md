@@ -5,8 +5,15 @@ permalink: /travel/Paris/activity/champs_elysees
 menu: nav/paris_hotbar.html
 ---
 
-<h2>Rating for Champs-Élysées</h2>
-<div id="rating-display">Loading rating...</div>
+
+<div id="rating-display">
+    <h2>Average Rating: 0.0</h2>
+</div>
+
+<div id="rating-bar-container">
+    <div id="rating-bar" class="rating-bar"></div>
+    <span id="rating-bar-text" class="rating-bar-text">0/10</span>
+</div>
 
 <h2>Ratings Table</h2>
 <table id="ratings-table" class="ratings-table">
@@ -63,6 +70,31 @@ menu: nav/paris_hotbar.html
     .create-rating-btn:hover {
         background-color: #218838;
     }
+    #rating-bar-container {
+        position: relative;
+        width: 100%;
+        background-color: #e0e0e0;
+        border-radius: 25px;
+        overflow: hidden;
+        height: 30px;
+        margin-top: 20px;
+    }
+
+    .rating-bar {
+        height: 100%;
+        background-color: #6a0dad; /* Purple color */
+        width: 0;
+        transition: width 0.5s ease-in-out;
+    }
+
+    .rating-bar-text {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        line-height: 30px;
+        color: white;
+        font-weight: bold;
+    }
 </style>
 
 <script type="module">
@@ -75,8 +107,17 @@ menu: nav/paris_hotbar.html
         try {
             const response = await fetch(`${pythonURI}/api/rate?post_id=${POST_ID}`, fetchOptions);
             const data = await response.json();
-            const averageRating = data.length > 0 ? data[0].rating : 0;
-            document.getElementById('rating-display').textContent = `Rating for Champs-Élysées: ${averageRating}`;
+
+            const totalRating = data.reduce((sum, rating) => sum + rating.rating, 0);
+            const averageRating = (totalRating / data.length).toFixed(2);
+            document.querySelector('#rating-display h2').textContent = `Average Rating for Champs-Élyséese: ${averageRating}`;
+
+            // Update the rating bar
+            const ratingBar = document.getElementById('rating-bar');
+            const ratingBarText = document.getElementById('rating-bar-text');
+            const ratingPercentage = (averageRating / 10) * 100;
+            ratingBar.style.width = `${ratingPercentage}%`;
+            ratingBarText.textContent = `${averageRating}/10`;
         } catch (error) {
             console.error("Error fetching rating:", error);
             document.getElementById('rating-display').textContent = "Failed to load rating.";
