@@ -6,36 +6,61 @@ menu: nav/paris_hotbar.html
 ---
 
 <div class="container">
-    <div class="card">
-        <a href="{{site.baseurl}}/travel/Paris/activity/eiffel_tower">
-            <img src="{{site.baseurl}}/images/eiffel_paris.jpg" alt="Eiffel Tower">
-            <p>Eiffel Tower</p>
-        </a>
-    </div>
-    <div class="card">
-        <a href="{{site.baseurl}}/travel/Paris/activity/louvre">
-            <img src="{{site.baseurl}}/images/louvre_paris.jpeg" alt="Louvre Museum" height="100" width="500">
-            <p>Louvre Museum</p>
-        </a>
-    </div>
-    <div class="card">
-        <a href="{{site.baseurl}}/travel/Paris/activity/notre_dame">
-            <img src="{{site.baseurl}}/images/notre_dame_paris.jpeg" alt="Notre-Dame Cathedral">
-            <p>Notre-Dame Cathedral</p>
-        </a>
-    </div>
-    <div class="card">
-        <a href="{{site.baseurl}}/travel/Paris/activity/palace_versailles">
-            <img src="{{site.baseurl}}/images/palace_versailles_paris.jpg" alt="Palace of Versailles">
-            <p>Palace of Versailles</p>
-        </a>
-    </div>
-    <div class="card">
-        <a href="{{site.baseurl}}/travel/Paris/activity/champs_elysees">
-            <img src="{{site.baseurl}}/images/champs-elysees.jpeg" alt="Champs-Élysées">
-            <p>Champs-Élysées</p>
-        </a>
-    </div>
+    <a href="{{site.baseurl}}/travel/Paris/activity/eiffel_tower" class="card" id="eiffel">
+        <img src="{{site.baseurl}}/images/eiffel_paris.jpg" alt="Eiffel Tower">
+        <p>Eiffel Tower</p>
+        <div class="rating-display">
+            <h2>Average Rating: 0.0</h2>
+        </div>
+        <div class="rating-bar-container">
+            <div class="rating-bar"></div>
+            <span class="rating-bar-text">0/10</span>
+        </div>
+    </a>
+    <a href="{{site.baseurl}}/travel/Paris/activity/louvre" class="card" id="louvre">
+        <img src="{{site.baseurl}}/images/louvre_paris.jpeg" alt="Louvre Museum" height="100" width="500">
+        <p>Louvre Museum</p>
+        <div class="rating-display">
+            <h2>Average Rating: 0.0</h2>
+        </div>
+        <div class="rating-bar-container">
+            <div class="rating-bar"></div>
+            <span class="rating-bar-text">0/10</span>
+        </div>
+    </a>
+    <a href="{{site.baseurl}}/travel/Paris/activity/notre_dame" class="card" id="notre_dame">
+        <img src="{{site.baseurl}}/images/notre_dame_paris.jpeg" alt="Notre-Dame Cathedral">
+        <p>Notre-Dame Cathedral</p>
+        <div class="rating-display">
+            <h2>Average Rating: 0.0</h2>
+        </div>
+        <div class="rating-bar-container">
+            <div class="rating-bar"></div>
+            <span class="rating-bar-text">0/10</span>
+        </div>
+    </a>
+    <a href="{{site.baseurl}}/travel/Paris/activity/palace_versailles" class="card" id="palace_versailles">
+        <img src="{{site.baseurl}}/images/palace_versailles_paris.jpg" alt="Palace of Versailles">
+        <p>Palace of Versailles</p>
+        <div class="rating-display">
+            <h2>Average Rating: 0.0</h2>
+        </div>
+        <div class="rating-bar-container">
+            <div class="rating-bar"></div>
+            <span class="rating-bar-text">0/10</span>
+        </div>
+    </a>
+    <a href="{{site.baseurl}}/travel/Paris/activity/champs_elysees" class="card" id="champs_elysees">
+        <img src="{{site.baseurl}}/images/champs-elysees.jpeg" alt="Champs-Élysées">
+        <p>Champs-Élysées</p>
+        <div class="rating-display">
+            <h2>Average Rating: 0.0</h2>
+        </div>
+        <div class="rating-bar-container">
+            <div class="rating-bar"></div>
+            <span class="rating-bar-text">0/10</span>
+        </div>
+    </a>
 </div>
 
 <style>
@@ -70,11 +95,11 @@ h1 {
     width: 100%;
     height: auto;
 }
-
 .card p {
     margin: 10px 0;
-    font-size: 1rem;
-    color: #FFFFFF;
+    font-size: 1.5rem; /* Larger text for the name of the attraction */
+    color: #FFFFFF; /* White color for the name of the attraction */
+    font-weight: bold;
 }
 
 .card a {
@@ -82,11 +107,68 @@ h1 {
     color: #007bff;
 }
 
-.card a:hover {
-    color: #0056b3;
+.rating-bar-container {
+    position: relative;
+    height: 20px;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.rating-bar {
+    height: 100%;
+    background-color: #800080; /* Purple color for the rating bar */
+    width: 0;
+    transition: width 0.5s;
+}
+
+.rating-bar-text {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000000; /* Default dark color for the text */
+    font-weight: bold;
+}
+
+.rating-display h2 {
+    font-size: 1rem; /* Smaller text for "Average Rating" */
 }
 </style>
 
+<script type="module">
+import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+
+async function fetchAndDisplayRating(postId, elementId) {
+    try {
+        const response = await fetch(`${pythonURI}/api/rate?post_id=${postId}`, fetchOptions);
+        const data = await response.json();
+
+        const totalRating = data.reduce((sum, rating) => sum + rating.rating, 0);
+        const averageRating = (totalRating / data.length).toFixed(2);
+        document.querySelector(`#${elementId} .rating-display h2`).textContent = `Average Rating: ${averageRating}`;
+
+        // Update the rating bar
+        const ratingBar = document.querySelector(`#${elementId} .rating-bar`);
+        const ratingBarText = document.querySelector(`#${elementId} .rating-bar-text`);
+        const ratingPercentage = (averageRating / 10) * 100;
+        ratingBar.style.width = `${ratingPercentage}%`;
+        ratingBarText.textContent = `${averageRating}/10`;
+    } catch (error) {
+        console.error("Error fetching rating:", error);
+        document.querySelector(`#${elementId} .rating-display`).textContent = "Failed to load rating.";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetchAndDisplayRating(1, 'eiffel');
+    fetchAndDisplayRating(2, 'louvre');
+    fetchAndDisplayRating(3, 'notre_dame');
+    fetchAndDisplayRating(4, 'palace_versailles');
+    fetchAndDisplayRating(5, 'champs_elysees');
+});
+</script>
 
 <h1>Have Questions?</h1>
 <div id="chat-window">
