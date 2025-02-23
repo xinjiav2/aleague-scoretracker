@@ -11,10 +11,12 @@ menu: nav/paris_hotbar.html
 
 ---
 
+<!-- Le Grenier à Pain -->
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
   <h3>🥐 Le Grenier à Pain - Perfect Croissants</h3>
 </div>
 <div style="display: none; padding: 10px;">
+  <p><strong>Average Rating:</strong> <span id="averageRatingLeGrenier">Loading...</span>/5</p>
   A must-visit for authentic French pastries. Try their:
   <ul>
     <li>Butter Croissants</li>
@@ -25,10 +27,13 @@ menu: nav/paris_hotbar.html
   <a href="/travel_frontend/travel/paris/food_paris123" style="color: #007bff; text-decoration: none;">Write a Review for Le Grenier à Pain</a>
 </div>
 
+
+<!-- L'Ambroisie -->
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
   <h3>🍷 L'Ambroisie - Haute Cuisine</h3>
 </div>
 <div style="display: none; padding: 10px;">
+  <p><strong>Average Rating:</strong> <span id="averageRatingLAmbroisie">Loading...</span>/5</p>
   This Michelin-starred restaurant is a symbol of French fine dining. Signature dishes include:
   <ul>
     <li>Foie Gras Ravioli</li>
@@ -36,13 +41,15 @@ menu: nav/paris_hotbar.html
     <li>Duck Breast with Cherry Reduction</li>
     <li>Rich Chocolate Tart</li>
   </ul>
-  <a href="/travel_frontend/travel/paris/food_paris/review" style="color: #007bff; text-decoration: none;">Write a Review for L'Ambroisie</a>
+  <a href="/travel_frontend/travel/paris/food_paris1" style="color: #007bff; text-decoration: none;">Write a Review for L'Ambroisie</a>
 </div>
 
+<!-- Chez Janou -->
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
   <h3>🧀 Chez Janou - Provençal Flavors</h3>
 </div>
 <div style="display: none; padding: 10px;">
+  <p><strong>Average Rating:</strong> <span id="averageRatingChezJanou">Loading...</span>/5</p>
   A charming bistro offering southern French specialties. Highlights include:
   <ul>
     <li>Ratatouille</li>
@@ -50,13 +57,15 @@ menu: nav/paris_hotbar.html
     <li>Beef Tartare</li>
     <li>Chocolate Mousse</li>
   </ul>
-  <a href="/travel/Paris/food_paris/review" style="color: #007bff; text-decoration: none;">Write a Review for Chez Janou</a>
+  <a href="/travel_frontend/travel/paris/food_paris12" style="color: #007bff; text-decoration: none;">Write a Review for Chez Janou</a>
 </div>
 
+<!-- L'As du Fallafel -->
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
   <h3>🥖 L'As du Fallafel - Street Food Delight</h3>
 </div>
 <div style="display: none; padding: 10px;">
+  <p><strong>Average Rating:</strong> <span id="averageRatingFallafel">Loading...</span>/5</p>
   Located in the Marais, this spot is famed for its vibrant street food. Must-try items include:
   <ul>
     <li>Falafel Sandwich</li>
@@ -64,13 +73,15 @@ menu: nav/paris_hotbar.html
     <li>Hummus with Pita</li>
     <li>Pickled Vegetables</li>
   </ul>
-  <a href="/travel/Paris/food_paris/review" style="color: #007bff; text-decoration: none;">Write a Review for L'As du Fallafel</a>
+  <a href="/travel_frontend/travel/paris/food_paris1234" style="color: #007bff; text-decoration: none;">Write a Review for L'As du Fallafel</a>
 </div>
 
+<!-- Café de Flore -->
 <div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
   <h3>☕ Café de Flore - Classic Parisian Cafe</h3>
 </div>
 <div style="display: none; padding: 10px;">
+  <p><strong>Average Rating:</strong> <span id="averageRatingFlore">Loading...</span>/5</p>
   An iconic cafe known for its historic charm and simple yet delightful menu. Enjoy:
   <ul>
     <li>Croque-Monsieur</li>
@@ -78,7 +89,91 @@ menu: nav/paris_hotbar.html
     <li>Macarons</li>
     <li>Rich Hot Chocolate</li>
   </ul>
-  <a href="/travel/Paris/food_paris/review" style="color: #007bff; text-decoration: none;">Write a Review for Café de Flore</a>
+  <a href="/travel_frontend/travel/paris/food_paris12345" style="color: #007bff; text-decoration: none;">Write a Review for Café de Flore</a>
 </div>
 
+<script type="module">
+import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetchAverageRatingFallafel();
+    fetchAverageRatingFlore();
+    fetchAverageRatingChezJanou();
+    fetchAverageRatingLAmbroisie();
+    fetchAverageRatingLeGrenier();
+});
+
+async function fetchAverageRatingFallafel() {
+    try {
+        const response = await fetch(`${pythonURI}/api/food_review_1234_api`);
+        if (!response.ok) throw new Error("Failed to fetch reviews: " + response.statusText);
+        
+        const data = await response.json();
+        updateAverageRating(data, 'averageRatingFallafel');
+    } catch (error) {
+        console.error("Error fetching average rating for Fallafel:", error);
+    }
+}
+
+async function fetchAverageRatingFlore() {
+    try {
+        const response = await fetch(`${pythonURI}/api/food_review_12345_api`);
+        if (!response.ok) throw new Error("Failed to fetch reviews: " + response.statusText);
+        
+        const data = await response.json();
+        updateAverageRating(data, 'averageRatingFlore');
+    } catch (error) {
+        console.error("Error fetching average rating for Flore:", error);
+    }
+}
+
+async function fetchAverageRatingChezJanou() {
+    try {
+        const response = await fetch(`${pythonURI}/api/food_review_12_api`);
+        if (!response.ok) throw new Error("Failed to fetch reviews: " + response.statusText);
+        
+        const data = await response.json();
+        updateAverageRating(data, 'averageRatingChezJanou');
+    } catch (error) {
+        console.error("Error fetching average rating for Chez Janou:", error);
+    }
+}
+
+async function fetchAverageRatingLAmbroisie() {
+    try {
+        const response = await fetch(`${pythonURI}/api/food_review_1_api`);
+        if (!response.ok) throw new Error("Failed to fetch reviews: " + response.statusText);
+        
+        const data = await response.json();
+        updateAverageRating(data, 'averageRatingLAmbroisie');
+    } catch (error) {
+        console.error("Error fetching average rating for LAmbroisie:", error);
+    }
+}
+
+async function fetchAverageRatingLeGrenier() {
+    try {
+        const response = await fetch(`${pythonURI}/api/food_review123_api`);
+        if (!response.ok) throw new Error("Failed to fetch reviews: " + response.statusText);
+        
+        const data = await response.json();
+        updateAverageRating(data, 'averageRatingLeGrenier');
+    } catch (error) {
+        console.error("Error fetching average rating for LeGrenier:", error);
+    }
+}
+
+function updateAverageRating(data, elementId) {
+    if (!Array.isArray(data) || data.length === 0) {
+        document.getElementById(elementId).textContent = "No reviews yet";
+        return;
+    }
+
+    let validRatings = data
+        .map(review => Number(review.rating))
+        .filter(rating => !isNaN(rating) && rating >= 0 && rating <= 5);
+
+    document.getElementById(elementId).textContent = 
+        validRatings.length > 0 ? (validRatings.reduce((sum, rating) => sum + rating, 0) / validRatings.length).toFixed(1) : "No valid ratings";
+}
+</script>

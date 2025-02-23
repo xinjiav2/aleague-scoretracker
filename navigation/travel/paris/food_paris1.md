@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Le Grenier à Pain
-permalink: /travel/paris/food_paris123
+title: L'Ambroisie - Haute Cuisine
+permalink: /travel/paris/food_paris1
 menu: nav/paris_hotbar.html
 search_exclude: true
 show_reading_time: false
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchReviews() {
     try {
-        const response = await fetch(`${pythonURI}/api/food_review123_api`);
+        const response = await fetch(`${pythonURI}/api/food_review_1_api`);
         if (!response.ok) {
             throw new Error("Failed to fetch reviews: " + response.statusText);
         }
@@ -198,7 +198,7 @@ window.addReview = async function addReview() {
     };
 
     try {
-        const response = await fetch(`${pythonURI}/api/food_review123_api`, {
+        const response = await fetch(`${pythonURI}/api/food_review_1_api`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -254,7 +254,7 @@ async function updateReview(id) {
     };
 
     try {
-        const response = await fetch(`${pythonURI}/api/food_review123_api`, {
+        const response = await fetch(`${pythonURI}/api/food_review_1_api`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -287,7 +287,7 @@ async function updateReview(id) {
 
 async function deleteReview(id) {
     try {
-        await fetch(`${pythonURI}/api/food_review123_api`, {
+        await fetch(`${pythonURI}/api/food_review_1_api`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
