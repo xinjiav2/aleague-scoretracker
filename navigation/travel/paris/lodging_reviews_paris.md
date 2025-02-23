@@ -46,10 +46,6 @@ async function fetchLikedHotels() {
             card.innerHTML = `
                 <h2>${item.hotel}</h2>
                 <p>${item.city}, ${item.country}</p>
-                <br>
-                <p>Rating added by <span class='user_id'>${item.user_id}</span></p>
-                <p class='note'>"${item.note}"</p>
-                <br>
             `;
 
             const starsContainer = document.createElement("div");
@@ -73,6 +69,16 @@ async function fetchLikedHotels() {
             updateStars(starsContainer, selectedRating);
 
             card.appendChild(starsContainer);
+
+            const userOpinion = document.createElement("div");
+            userOpinion.innerHTML = `
+                <br>
+                <p>Rating added by <span class='user_id'>${item.user_id}</span></p>
+                <p class='note'>"${item.note}"</p>
+                <br>
+            `;
+
+            card.appendChild(userOpinion);
 
             const removeButton = document.createElement("button");
             removeButton.className = "remove-button";
