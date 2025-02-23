@@ -127,6 +127,11 @@ header {
 
 }
 
+.user_id {
+    font-weight: bold;
+    
+}
+
 .card:hover {
     transform: scale(1.02);
 }

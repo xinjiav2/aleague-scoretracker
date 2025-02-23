@@ -45,7 +45,7 @@ async function fetchLikedHotels() {
             card.innerHTML = `
                 <h2>${item.hotel}</h2>
                 <p>${item.city}, ${item.country}</p>
-                <p>Rating added by ${item.user_id}</p>
+                <p>Rating added by <span class='user_id'>${item.user_id}</span></p>
             `;
 
             const starsContainer = document.createElement("div");
