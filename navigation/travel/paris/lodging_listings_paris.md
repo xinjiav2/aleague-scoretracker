@@ -25,7 +25,7 @@ menu: nav/paris_hotbar.html
           <input type="text" id="place" placeholder="Search for a city..." />
           <button id="goButton">Go</button>
         </div>
-        <a href="{{ site.baseurl }}/travel/paris/lodging_liked_paris">Liked Hotels</a>
+        <a href="{{ site.baseurl }}/travel/paris/lodging_reviews_paris">Rated Hotels</a>
       </header>
     </main>
   </div>
@@ -102,10 +102,10 @@ async function FindHotels() {
   
       const saveButton = document.createElement("button");
       saveButton.className = "save-button";
-      saveButton.textContent = "Save";
+      saveButton.textContent = "Add review";
       saveButton.onclick = () => {
         postHotelData(hotelTitle, cityTitle, countryTitle, selectedRating);
-        saveButton.textContent = "Saved!";
+        saveButton.textContent = "Review added!";
       };
       card.appendChild(saveButton);
 
@@ -129,12 +129,14 @@ function updateStars(container, rating) {
 
 async function postHotelData(hotelTitle, cityTitle, countryTitle, rating) {
 
+  const note = prompt("Add a note about this hotel:");
+
   const postData = {
-    // username: g.current_user,
     hotel: hotelTitle,
     city: cityTitle,
     country: countryTitle,
-    rating: rating
+    rating: rating,
+    note: note
   };
 
   try {

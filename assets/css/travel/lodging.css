@@ -129,7 +129,10 @@ header {
 
 .user_id {
     font-weight: bold;
-    
+}
+
+.note {
+    font-style:italic;
 }
 
 .card:hover {

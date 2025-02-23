@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Lodging Listings - Liked Hotels
+title: Lodging Listings - Reviews
 search_exclude: true
-permalink: /travel/paris/lodging_liked_paris
+permalink: /travel/paris/lodging_reviews_paris
 menu: nav/paris_hotbar.html
 ---
 <head>
@@ -12,6 +12,7 @@ menu: nav/paris_hotbar.html
 <body>
     <main class="main-content" id="main-content">
         <div id="hotelCount"></div>
+        <br>
     </main>
 </body>
 
@@ -34,7 +35,7 @@ async function fetchLikedHotels() {
         const data = await response.json();
         var hotelCount = data.length || 0;
 
-        document.getElementById('hotelCount').innerHTML = `<h2>You have liked ${hotelCount} hotels!</h2>`;
+        document.getElementById('hotelCount').innerHTML = `<h2>There are ${hotelCount} reviews of hotels!</h2>`;
 
         const body = document.getElementById('main-content');
 
@@ -45,7 +46,10 @@ async function fetchLikedHotels() {
             card.innerHTML = `
                 <h2>${item.hotel}</h2>
                 <p>${item.city}, ${item.country}</p>
+                <br>
                 <p>Rating added by <span class='user_id'>${item.user_id}</span></p>
+                <p class='note'>"${item.note}"</p>
+                <br>
             `;
 
             const starsContainer = document.createElement("div");
