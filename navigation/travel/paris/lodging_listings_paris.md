@@ -130,6 +130,7 @@ function updateStars(container, rating) {
 async function postHotelData(hotelTitle, cityTitle, countryTitle, rating) {
 
   const postData = {
+    // username: g.current_user,
     hotel: hotelTitle,
     city: cityTitle,
     country: countryTitle,
