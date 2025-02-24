@@ -9,128 +9,134 @@ menu: nav/paris_hotbar.html
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f4f4f9;
-        color: #000;
-    }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #FDF5E6;
+    color: white;
+}
 
-    .header {
-        background: linear-gradient(to right, #001F3F, #004080);
-        color: #000;
-        text-align: center;
-        padding: 20px;
-        border-radius: 8px;
-    }
+.header {
+    background: black;
+    color: #add8e6;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+}
 
-    .container {
-        max-width: 1200px;
-        margin: 20px auto;
-        padding: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
-    }
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
 
-    .section {
-        flex: 1 1 calc(45% - 20px);
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        min-width: 300px;
-        color: #000;
-    }
+.section {
+    flex: 1 1 calc(45% - 20px);
+    background-color: black;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    min-width: 300px;
+    color: white;
+    border: 2px solid #add8e6;
+}
 
-    .section h2 {
-        color: #000;
-        border-bottom: 2px solid #0073e6;
-        padding-bottom: 10px;
-    }
+.section h2 {
+    color: #add8e6;
+    border-bottom: 2px solid #FFD700;
+    padding-bottom: 10px;
+}
 
-    .section label {
-        display: block;
-        margin-bottom: 10px;
-        color: #000;
-    }
+.section label {
+    display: block;
+    margin-bottom: 10px;
+    color: white;
+}
 
-    .section input,
-    .section select,
-    .section button {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        color: #000;
-    }
+.section input,
+.section select,
+.section button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #add8e6;
+    border-radius: 5px;
+    color: white;
+    background: black;
+}
 
-    .section button {
-        background-color: #0073e6;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
+.section button {
+    background-color: #FFD700;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
 
-    .section button:hover {
-        background-color: #005bb5;
-    }
+.section button:hover {
+    background-color: #C5B358;
+}
 
-    .info-card {
-        background-color: #f1f9ff;
-        border: 1px solid #0073e6;
-        border-radius: 8px;
-        padding: 20px;
-        margin: 10px 0;
-        color: #000;
-        max-height: 300px;
-        overflow-y: auto;
-    }
+.info-card {
+    background-color: black;
+    border: 2px solid #add8e6;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px 0;
+    color: white;
+    max-height: 300px;
+    overflow-y: auto;
+}
 
-    .info-card h3 {
-        color: #000;
-    }
+.info-card h3 {
+    color: #add8e6;
+}
 
-    .footer {
-        text-align: center;
-        padding: 10px;
-        background-color: #001F3F;
-        color: #000;
-        border-top: 5px solid #004080;
-    }
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: black;
+    color: #add8e6;
+    border-top: 5px solid #FFD700;
+}
 
-    /* Table styles */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: black;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+}
 
-    table th, table td {
-        padding: 10px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #add8e6;
+}
 
-    table th {
-        background-color: #0073e6;
-        color: white;
-    }
+table th {
+    background-color: #add8e6;
+    color: black;
+}
 
-    table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-    #flightResults {
-        background-color: #000; /* Set background color to black */
-        color: #fff; /* Set text color to white for better contrast */
-        padding: 20px;
-        border-radius: 8px;
-    }
+table tr:nth-child(even) {
+    background-color: #073461;
+}
+
+#flightResults {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #add8e6;
+}
+
 </style>
 
 <div class="header">
