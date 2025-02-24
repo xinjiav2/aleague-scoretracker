@@ -185,20 +185,25 @@ import {
 
 
 async function postPackingChecklist(itemText) {
-    console.log("post test:", itemText);
+    // console.log("post test:", itemText);
     const postData = {
-        user: "toby",
         item: itemText
     };
     
     try {
         const response = await fetch(`${pythonURI}/api/packing_checklists`, {
+            ...fetchOptions,
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(postData)
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            body: JSON.stringify(postData),
         });
+
+        const responseText = await response.text();
+        console.log("Response Status:", response.status);
+        console.log("Response Body:", responseText);
+
 
         if (!response.ok) {
             throw new Error('Failed to add item: ' + response.statusText);
