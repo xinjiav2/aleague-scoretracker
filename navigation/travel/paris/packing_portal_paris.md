@@ -194,15 +194,11 @@ async function postPackingChecklist(itemText) {
         const response = await fetch(`${pythonURI}/api/packing_checklists`, {
             ...fetchOptions,
             method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/json'
-            // },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(postData),
         });
-
-        const responseText = await response.text();
-        console.log("Response Status:", response.status);
-        console.log("Response Body:", responseText);
 
 
         if (!response.ok) {

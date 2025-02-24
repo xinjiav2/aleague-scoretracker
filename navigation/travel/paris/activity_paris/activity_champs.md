@@ -23,78 +23,98 @@ menu: nav/paris_hotbar.html
 <button id="createNewRatingBtn" class="create-rating-btn">Create New Rating</button>
 
 <style>
-    .ratings-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
 
-    .ratings-table th,
-    .ratings-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
+.ratings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: black;
+    color: white;
+}
 
-    .ratings-table th {
-        background-color: #f2f2f2;
-        color: #000;
-    }
+.ratings-table th,
+.ratings-table td {
+    border: 1px solid #add8e6;
+    padding: 10px;
+    text-align: center;
+}
 
-    .edit-rating-input {
-        width: 50px;
-        text-align: center;
-    }
+.ratings-table th {
+    background-color: black;
+    color: #add8e6;
+    border-bottom: 2px solid #add8e6;
+}
 
-    .action-btn {
-        background-color: #007bff;
-        color: white;
-        padding: 5px 10px;
-        border: none;
-        cursor: pointer;
-    }
+.ratings-table td {
+    background-color: black;
+    color: white;
+}
 
-    .action-btn:hover {
-        background-color: #0056b3;
-    }
+.edit-rating-input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #add8e6;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: black;
+    color: white;
+}
 
-    .create-rating-btn {
-        background-color: #28a745;
-        color: white;
-        padding: 10px;
-        border: none;
-        cursor: pointer;
-        margin-top: 20px;
-    }
+.action-btn {
+    background-color: #FFD700;
+    color: black;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-    .create-rating-btn:hover {
-        background-color: #218838;
-    }
-    #rating-bar-container {
-        position: relative;
-        width: 100%;
-        background-color: #e0e0e0;
-        border-radius: 25px;
-        overflow: hidden;
-        height: 30px;
-        margin-top: 20px;
-    }
+.action-btn:hover {
+    background-color: #C5B358;
+}
 
-    .rating-bar {
-        height: 100%;
-        background-color: #6a0dad; /* Purple color */
-        width: 0;
-        transition: width 0.5s ease-in-out;
-    }
+.create-rating-btn {
+    background-color: #FFD700;
+    color: black;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 5px;
+}
 
-    .rating-bar-text {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        line-height: 30px;
-        color: white;
-        font-weight: bold;
-    }
+.create-rating-btn:hover {
+    background-color: #C5B358;
+}
+
+#rating-bar-container {
+    position: relative;
+    width: 100%;
+    background-color: black;
+    border-radius: 25px;
+    overflow: hidden;
+    height: 30px;
+    margin-top: 20px;
+    border: 2px solid #add8e6;
+}
+
+.rating-bar {
+    height: 100%;
+    background-color: #add8e6;
+    width: 0;
+    transition: width 0.5s ease-in-out;
+}
+
+.rating-bar-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 30px;
+    color: black;
+    font-weight: bold;
+}
+
+
 </style>
 
 <script type="module">

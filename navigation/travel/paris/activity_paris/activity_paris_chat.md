@@ -18,19 +18,21 @@ menu: nav/paris_hotbar.html
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
-    background-color: #f4f4f9;
+    background-color: #FDF5E6;
+    color: white;
 }
 
 h1 {
     text-align: center;
     margin-bottom: 20px;
+    color: #add8e6;
 }
 
 #chat-window {
-    border: 1px solid #ccc;
+    border: 2px solid #add8e6;
     border-radius: 8px;
     padding: 10px;
-    background: white;
+    background: black;
     max-height: 400px;
     overflow-y: auto;
     margin-bottom: 20px;
@@ -40,9 +42,10 @@ h1 {
     margin: 10px 0;
     padding: 8px;
     border-radius: 8px;
-    background-color: #2196f3; /* Brighter blue */
-    color: white; /* White text */
+    background-color: #073461; /* Dark blue to match the post-item style */
+    color: white;
     max-width: 70%;
+    border: 1px solid #add8e6;
 }
 
 #chat-form {
@@ -53,22 +56,25 @@ h1 {
 #chat-input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #add8e6;
     border-radius: 8px;
+    background-color: black;
+    color: white;
 }
 
 button {
     padding: 10px;
     border: none;
     border-radius: 8px;
-    background-color: #007bff;
-    color: white;
+    background-color: #FFD700;
+    color: black;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #C5B358;
 }
+
 </style>
 
 <script type="module">

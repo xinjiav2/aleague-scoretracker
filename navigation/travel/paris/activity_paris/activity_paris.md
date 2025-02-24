@@ -183,19 +183,21 @@ document.addEventListener("DOMContentLoaded", function() {
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
-    background-color: #f4f4f9;
+    background-color: #FDF5E6;
 }
 
 h1 {
     text-align: center;
+    color: #add8e6;
     margin-bottom: 20px;
 }
 
 #chat-window {
-    border: 1px solid #ccc;
+    border: 2px solid #add8e6;
     border-radius: 8px;
     padding: 10px;
-    background: white;
+    background: black;
+    color: white;
     max-height: 400px;
     overflow-y: auto;
     margin-bottom: 20px;
@@ -205,9 +207,10 @@ h1 {
     margin: 10px 0;
     padding: 8px;
     border-radius: 8px;
-    background-color: #2196f3; /* Brighter blue */
-    color: white; /* White text */
+    background-color: #073461; /* Darker blue to match the theme */
+    color: white;
     max-width: 70%;
+    border: 1px solid #add8e6;
 }
 
 #chat-form {
@@ -218,22 +221,25 @@ h1 {
 #chat-input {
     flex: 1;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #add8e6;
     border-radius: 8px;
+    background: black;
+    color: white;
 }
 
 button {
     padding: 10px;
     border: none;
     border-radius: 8px;
-    background-color: #007bff;
-    color: white;
+    background-color: #FFD700;
+    color: black;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #C5B358;
 }
+
 </style>
 
 <script type="module">
