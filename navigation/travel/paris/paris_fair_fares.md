@@ -318,7 +318,7 @@ async function showNotesTable() {
 
         if (flights && flights.length > 0) {
             const table = document.createElement('table');
-            table.innerHTML = `<tr><th>Origin</th><th>Destination</th><th>Notes</th><th>Actions</th></tr>`;
+            table.innerHTML = `<tr><th>Origin</th><th>Destination</th><th>Note</th><th>Actions</th></tr>`;
 
             flights.forEach(flight => {
                 table.appendChild(buildTableRow(flight));
@@ -340,7 +340,7 @@ function buildTableRow(flight) {
     row.innerHTML = `
         <td>${sanitize(flight.origin)}</td>
         <td>${sanitize(flight.destination)}</td>
-        <td>${sanitize(flight.notes || '')}</td>
+        <td>${sanitize(flight.note || '')}</td>
         <td>
             <button class="edit-note-button" data-id="${sanitize(flight.id)}">Edit Note</button>
             <button class="delete-note-button" data-id="${sanitize(flight.id)}">Delete</button>
