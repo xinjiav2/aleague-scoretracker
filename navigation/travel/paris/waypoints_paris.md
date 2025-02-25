@@ -215,35 +215,69 @@ menu: nav/paris_hotbar.html
         return;
       }
 
-data.forEach((place, index) => {
-  // Add table row
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${index + 1}</td>
-    <td>${place.display_name.split(",")[0]}</td>
-    <td>${place.display_name}</td>
-    <td>
-      <button class="like-button" data-title="${place.display_name}">Check In</button>
-    </td>
-  `;
-  resultsTableBody.appendChild(row);
+      data.forEach((place, index) => {
+        // Add table row
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${place.display_name.split(",")[0]}</td>
+          <td>${place.display_name}</td>
+          <td>
+            <div id="rating-display-${index}"></div>
+            <button class="like-button" data-title="${place.display_name}">Check In</button>
+          </td>
+        `;
+        resultsTableBody.appendChild(row);
 
-  // Add marker to the map
-  const marker = L.marker([place.lat, place.lon]).addTo(map);
-  marker.bindPopup(`<b>${place.display_name}</b>`);
-});
+        // Fetch and display the last rating for this location
+        fetch(`${pythonURI}/api/waypoints/rating?address=${encodeURIComponent(place.display_name)}`, {
+          ...fetchOptions,
+          method: 'GET'
+        })
+        .then(response => {
+          if (!response.ok) {
+            if (response.status === 404) {
+              return { rating: null };
+            }
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          const ratingDisplay = document.getElementById(`rating-display-${index}`);
+          if (data.rating) {
+            ratingDisplay.innerHTML = `
+              <div class="ratings">
+                ${[1, 2, 3, 4, 5].map(star => 
+                  `<span class="rating-star-readonly ${star <= data.rating ? (star <= 2 ? "red" : star <= 4 ? "yellow" : "green") : ""}"
+                  >★</span>`
+                ).join('')}
+              </div>
+              <small>Last Rating</small>
+            `;
+          } else {
+            ratingDisplay.innerHTML = '<small>No ratings yet</small>';
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching rating:', error);
+        });
 
-// Add event listeners for like buttons
-document.querySelectorAll(".like-button").forEach((button) => {
-  button.addEventListener("click", () => {
-    if (button.textContent === "Check In"){
-        const title = button.getAttribute("data-title");
-        checkinCareLocation(title);
-        button.textContent = "Checked In"; // Update button icon
-    }
-  });
-});
+        // Add marker to the map
+        const marker = L.marker([place.lat, place.lon]).addTo(map);
+        marker.bindPopup(`<b>${place.display_name}</b>`);
+      });
 
+      // Add event listeners for like buttons
+      document.querySelectorAll(".like-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.textContent === "Check In") {
+            const title = button.getAttribute("data-title");
+            checkinCareLocation(title);
+            button.textContent = "Checked In";
+          }
+        });
+      });
 
       // Adjust map view to fit all markers
       const markers = data.map((place) => [place.lat, place.lon]);
@@ -295,15 +329,57 @@ document.querySelectorAll(".like-button").forEach((button) => {
 
   }
 
-  function updateRating(waypointId, rating) {
+  async function updateRating(waypointId, rating) {
+    try {
+        // Update the rating in the database
+        await updateCareCenterData(waypointId, rating);
 
-    updateCareCenterData(waypointId, rating);
-    alert(`Rating changed to: ${rating}`);
-    getCareCenterData(currentUserID);
+        // Get the address from the care center table row
+        const ratedRow = document.querySelector(`tr[data-waypointid="${waypointId}"]`);
+        const address = ratedRow.querySelector('td:nth-child(4)').textContent;
 
+        // Update the rating stars in the care center table
+        const ratingStars = ratedRow.querySelectorAll('.rating-star');
+        ratingStars.forEach((star, index) => {
+            const starRating = index + 1;
+            if (starRating <= rating) {
+                star.classList.add('active');
+                if (starRating <= 2) star.classList.add('red');
+                else if (starRating <= 4) star.classList.add('yellow');
+                else star.classList.add('green');
+            } else {
+                star.classList.remove('active', 'red', 'yellow', 'green');
+            }
+        });
+
+        // Update the rating in the search results table immediately
+        const resultsTableBody = document.querySelector("#resultsTable tbody");
+        const searchRows = resultsTableBody.querySelectorAll('tr');
+        
+        for (let row of searchRows) {
+            const searchAddress = row.querySelector('td:nth-child(3)').textContent;
+            if (searchAddress === address) {
+                const ratingDisplay = row.querySelector('div[id^="rating-display-"]');
+                if (ratingDisplay) {
+                    ratingDisplay.innerHTML = `
+                        <div class="ratings">
+                            ${[1, 2, 3, 4, 5].map(star => 
+                                `<span class="rating-star-readonly ${star <= rating ? (star <= 2 ? "red" : star <= 4 ? "yellow" : "green") : ""}"
+                                >★</span>`
+                            ).join('')}
+                        </div>
+                        <small>Last Rating</small>
+                    `;
+                }
+                break;
+            }
+        }
+
+    } catch (error) {
+        console.error('Error updating rating:', error);
+        alert('Failed to update rating. Please try again.');
+    }
   }
-
-
 
   async function postCareCenterData(injury, location, address) {
 
@@ -360,6 +436,7 @@ async function getCareCenterData(currentUserID) {
 
         data.forEach((waypoint, index) => {
             const row = document.createElement("tr");
+            row.setAttribute('data-waypointid', waypoint.id);
             row.innerHTML = `
                 <td>${index + 1}</td>
                 <td>${waypoint.injury}</td>
@@ -390,20 +467,20 @@ async function getCareCenterData(currentUserID) {
             carecenterTable.appendChild(row);
         });
 
-        // Add event listeners to "Check Out" buttons
-        document.querySelectorAll(".checkout-button").forEach((button) => {
-            button.addEventListener("click", () => {
-                const waypointId = button.getAttribute("data-waypointid");
-                checkoutCareLocation(waypointId);
-            });
-        });
-
         // Add event listeners to rating stars
         document.querySelectorAll(".rating-star").forEach((star) => {
             star.addEventListener("click", async (event) => {
                 const selectedRating = event.target.getAttribute("data-rating");
                 const waypointId = event.target.getAttribute("data-waypointid");
-                updateRating(waypointId, selectedRating);
+                await updateRating(waypointId, selectedRating);
+            });
+        });
+
+        // Add event listeners to "Check Out" buttons
+        document.querySelectorAll(".checkout-button").forEach((button) => {
+            button.addEventListener("click", () => {
+                const waypointId = button.getAttribute("data-waypointid");
+                checkoutCareLocation(waypointId);
             });
         });
     } catch (error) {
