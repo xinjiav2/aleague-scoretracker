@@ -83,6 +83,22 @@ show_reading_time: false
       background-color: #c0392b;
     }
 
+    .edit-button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-left: 10px;
+    }
+
+    .edit-button:hover {
+      background-color: #2980b9;
+    }
+
     .form-container {
       margin-bottom: 20px;
     }
@@ -126,9 +142,15 @@ show_reading_time: false
 
 <script type="module">
 import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+
+// Placeholder for logged-in user (Replace with real authentication logic)
+const currentUser = "exampleUser"; // This should be set dynamically based on session/auth
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchReviews();
 });
+
+
 
 async function fetchReviews() {
     try {
@@ -156,6 +178,7 @@ function createCard(container, item) {
         <h2>${item.food}</h2>
         <p>${item.review}</p>
         <p><strong>Rating:</strong> <span class="rating">${item.rating}</span>/5</p>
+        <p><strong>User:</strong> ${item.user_id}</p>
     `;
 
     // Remove Button
@@ -171,7 +194,7 @@ function createCard(container, item) {
 
     // Edit Button
     const editButton = document.createElement("button");
-    editButton.className = "remove-button";
+    editButton.className = "edit-button";
     editButton.textContent = "Edit";
     editButton.onclick = () => {
         editReview(item.id, item.food, item.review, item.rating);
@@ -191,25 +214,16 @@ window.addReview = async function addReview() {
         return;
     }
 
-    const postData = {
-        food: food,
-        review: review,
-        rating: rating,
-    };
 
     try {
         const response = await fetch(`${pythonURI}/api/food_review_12_api`, {
+            ...fetchOptions,
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(postData),
+            body: JSON.stringify({food: food, review: review, rating: rating})
         });
-
-        if (!response.ok) {
-            throw new Error("Failed to add review: " + response.statusText);
-        }
-
         const data = await response.json();
         const body = document.getElementById("main-content");
         createCard(body, data);
@@ -251,6 +265,7 @@ async function updateReview(id) {
         food: food,
         review: review,
         rating: rating,
+        user: currentUser // Ensure the update request includes the user
     };
 
     try {
@@ -287,13 +302,17 @@ async function updateReview(id) {
 
 async function deleteReview(id) {
     try {
-        await fetch(`${pythonURI}/api/food_review_12_api`, {
+        const response = await fetch(`${pythonURI}/api/food_review_12_api`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id }),
+            body: JSON.stringify({ id, user: currentUser }), // Ensure request includes user info
         });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete review: " + response.statusText);
+        }
     } catch (error) {
         console.error("Error deleting review:", error);
     }

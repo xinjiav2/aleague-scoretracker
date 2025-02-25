@@ -24,7 +24,7 @@ menu: nav/paris_hotbar.html
     <li>Baguettes</li>
     <li>Seasonal Fruit Tarts</li>
   </ul>
-  <a href="/travel_frontend/travel/paris/food_paris123" style="color: #007bff; text-decoration: none;">Write a Review for Le Grenier à Pain</a>
+  <a href="/travel_frontend/travel/paris/food_paris12345" style="color: #007bff; text-decoration: none;">Write a Review for Le Grenier à Pain</a>
 </div>
 
 
