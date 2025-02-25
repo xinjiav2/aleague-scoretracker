@@ -188,7 +188,7 @@ function createCard(container, item) {
         <h2>${item.food}</h2>
         <p>${item.review}</p>
         <p><strong>Rating:</strong> <span class="rating">${item.rating}</span>/5</p>
-        <p><strong>User:</strong> ${item.username}</p>
+        <p><strong>User:</strong> ${item.user_id}</p>
     `;
 
     // Remove Button
