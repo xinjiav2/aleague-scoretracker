@@ -80,17 +80,18 @@ async function fetchLikedHotels() {
 
             card.appendChild(userOpinion);
 
-            const removeButton = document.createElement("button");
-            removeButton.className = "remove-button";
-            removeButton.textContent = "Remove";
-            removeButton.onclick = () => {
-                deleteHotel(item.id);
-                hotelCount -= 1;
-                document.getElementById('hotelCount').innerHTML = `<h2>You have liked ${hotelCount} hotels!</h2>`;
-                card.remove();
-            };
-            card.appendChild(removeButton);
-
+            if (item.is_admin) {
+                const removeButton = document.createElement("button");
+                removeButton.className = "remove-button";
+                removeButton.textContent = "Remove";
+                removeButton.onclick = () => {
+                    deleteHotel(item.id);
+                    hotelCount -= 1;
+                    document.getElementById('hotelCount').innerHTML = `<h2>There are ${hotelCount} reviews of hotels!</h2>`;
+                    card.remove();
+                };
+                card.appendChild(removeButton);
+            }
             body.appendChild(card);
 
         });
