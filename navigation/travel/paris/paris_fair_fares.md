@@ -216,7 +216,7 @@ table tr:nth-child(even) {
                         const noteText = button.closest('.flight-card').querySelector('.note-text').value;
                         if (noteText) {
                             await postFlightData(origin, destination, noteText);
-                            showNotesTable(); // Refresh the notes table after saving
+                            // showNotesTable(); // Refresh the notes table after saving
                         }
                     });
                 });
