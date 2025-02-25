@@ -230,22 +230,25 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
     flex-direction: column; 
     width: 100%;
     max-width: 1200px;
-    margin: 0;
+    margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* White text */
 }
 
 .content-wrapper {
     display: flex;
-    flex: 3 1 600px;
+    flex: 3 1 0;
     gap: 20px;
 }
 
 .main {
-    background: #fff;
+    background: #1e1e1e; /* Dark card background */
     padding: 20px;
+    border: 2px solid #add8e6;
     border-radius: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 12px rgba(0, 162, 255, 0.2); /* Soft glow */
     box-sizing: border-box;
     width: 100%; 
     margin-bottom: 20px; 
@@ -255,7 +258,7 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
     text-align: center;
     margin-bottom: 20px;
     font-size: 24px;
-    color: black;
+    color: #add8e6;
 }
 
 .packing-items {
@@ -266,11 +269,13 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
 
 .packing-item {
     padding: 15px;
-    background: #f1f1f1;
+    background: #1a1a1a; /* Darker tile */
+    border: 1px solid #add8e6;
     border-radius: 5px;
     text-align: center;
     font-size: 18px;
-    color: black;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 162, 255, 0.15);
 }
 
 #weather-container {
@@ -281,30 +286,32 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 162, 255, 0.3);
+    color: #ffffff;
+    background-color: rgba(0, 162, 255, 0.15); /* Soft transparent background */
 }
 
 .weather-card {
-    border: 1px solid #fff;
+    border: 1px solid #add8e6;
     border-radius: 8px;
     padding: 20px;
     margin: 20px 0;
-    background-color: rgba(22, 207, 244, 0.75);
-    color: #fff;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #add8e6;
     text-align: left;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition for smooth animation */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
 }
 
 .weather-card:hover {
-    transform: scale(1.05); /* Slight zoom effect */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 162, 255, 0.5);
 }
 
 .weather-card h2 {
     font-size: 2em;
     margin-bottom: 10px;
-    color: #ffe08a;
+    color: #00a2ff;
 }
 
 .weather-card p {
@@ -315,7 +322,7 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
 
 .weather-card strong {
     font-weight: bold;
-    color: #ffd700;
+    color: #00c8ff;
 }
 
 .button_container {
@@ -327,19 +334,26 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
     display: block;
     width: 100%;
     padding: 15px;
-    background-color:rgb(17, 145, 187); /* Light blue color */
-    color: white !important; /* Ensure text color is white */
+    background-color:rgb(0, 0, 0); /* Primary blue */
+    color: #add8e6 !important; /* Ensure text color is white */
     font-size: 18px;
     text-align: center;
     text-decoration: none;
+    border: 2px solid #add8e6;
     border-radius: 5px;
-    box-sizing: border-box; 
+    box-shadow: 0 2px 8px rgba(0, 162, 255, 0.3);
+    box-sizing: border-box;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 #packing_items_button:hover {
-    background-color:rgba(17, 144, 187, 0.68); /* Slightly darker light blue when hovered */
+    background-color: rgba(0, 0, 0, 0.8);
     transform: scale(1.05);
+    color: #add8e6 !important;
+    border-color: #add8e6; /* Keep the border color the same on hover */
 }
+
+
 
 
 </style>
