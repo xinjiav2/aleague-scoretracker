@@ -123,25 +123,35 @@ menu: nav/paris_hotbar.html
 
 <script type="module">
     import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
-    let totalBudget = 0; // This will store the total budget entered by the user
 
-    // Fetch and display all budgeting entries and update the remaining budget
+    let totalBudget = 0;
+    let USER_ID = null;
+
+    async function getCurrentUserId() {
+        try {
+            const response = await fetch(`${pythonURI}/api/id`, fetchOptions);
+            if (!response.ok) throw new Error("Failed to fetch user ID");
+
+            const userData = await response.json();
+            USER_ID = userData.id; 
+            createBudgetingTable(); // Fetch entries after getting user ID
+        } catch (error) {
+            console.error("Error fetching user ID:", error);
+        }
+    }
+
+    getCurrentUserId();
+
     async function fetchAndDisplayBudgeting() {
         try {
-            const response = await fetch(`${pythonURI}/api/budgeting`, fetchOptions);
+            const response = await fetch(`${pythonURI}/api/budgeting?user_id=${USER_ID}`, fetchOptions);
             const data = await response.json();
-
             const displayElement = document.getElementById('budgeting-display');
-            if (data.length === 0) {
-                displayElement.textContent = "No budgeting entries available.";
-            } else {
-                displayElement.textContent = "Budgeting Entries: ";
-                data.forEach(entry => {
-                    displayElement.innerHTML += `<br>Expense: ${entry.expense}, Cost: ${entry.cost}, Category: ${entry.category}`;
-                });
-            }
 
-            // Update the remaining budget
+            displayElement.innerHTML = data.length === 0 
+                ? "No budgeting entries available."
+                : data.map(entry => `<br>Expense: ${entry.expense}, Cost: ${entry.cost}, Category: ${entry.category}`).join('');
+
             updateRemainingBudget();
         } catch (error) {
             console.error("Error fetching budgeting entries:", error);
@@ -149,56 +159,43 @@ menu: nav/paris_hotbar.html
         }
     }
 
-    // Update the remaining budget display
     async function updateRemainingBudget() {
         try {
-            const response = await fetch(`${pythonURI}/api/budgeting`, fetchOptions);
+            const response = await fetch(`${pythonURI}/api/budgeting?user_id=${USER_ID}`, fetchOptions);
             const data = await response.json();
-
-            // Calculate the total cost from all entries
             const totalCost = data.reduce((sum, entry) => sum + parseFloat(entry.cost), 0);
-
-            // Calculate the remaining budget
             const remainingBudget = totalBudget - totalCost;
 
-            // Display the remaining budget
             document.getElementById("remaining-budget").textContent = `$${remainingBudget.toFixed(2)}`;
         } catch (error) {
             console.error("Error calculating remaining budget:", error);
-            document.getElementById("remaining-budget").textContent = "Error calculating remaining budget.";
         }
     }
 
-    // Handle budget form submission (setting the total budget)
     document.getElementById('budgetForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const budgetInput = document.getElementById('budget').value;
-        totalBudget = parseFloat(budgetInput);
-
-        if (totalBudget > 0) {
-            // Display the total budget
+        const budgetInput = parseFloat(document.getElementById('budget').value);
+        if (budgetInput > 0) {
+            totalBudget = budgetInput;
             document.getElementById('budgetStatus').textContent = `Your total budget is $${totalBudget.toFixed(2)}`;
-
-            // Recalculate and update remaining budget
             updateRemainingBudget();
         } else {
             alert("Please enter a valid total budget.");
         }
     });
 
-    // Submit a new budgeting entry
     async function submitBudgeting(expense, cost, category) {
         try {
             const response = await fetch(`${pythonURI}/api/budgeting`, {
                 ...fetchOptions,
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ expense, cost, category, user_id: 1 }),
+                body: JSON.stringify({ expense, cost, category, user_id: USER_ID }),
             });
 
             if (response.ok) {
-                createBudgetingTable(); // Refresh the table after adding a new entry
-                updateRemainingBudget(); // Update the remaining budget
+                createBudgetingTable();
+                updateRemainingBudget();
             } else {
                 console.error('Failed to submit budgeting entry:', await response.json());
             }
@@ -207,18 +204,18 @@ menu: nav/paris_hotbar.html
         }
     }
 
-    // Update a budgeting entry
     async function updateBudgeting(id, expense, cost, category) {
         try {
             const response = await fetch(`${pythonURI}/api/budgeting`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, expense, cost, category, user_id: 1 }),
+                body: JSON.stringify({ id, expense, cost, category, user_id: USER_ID }),
+                credentials: 'include',
             });
 
             if (response.ok) {
-                createBudgetingTable(); // Refresh the table after updating an entry
-                updateRemainingBudget(); // Update the remaining budget
+                createBudgetingTable();
+                updateRemainingBudget();
             } else {
                 console.error('Failed to update budgeting entry:', await response.json());
             }
@@ -227,7 +224,6 @@ menu: nav/paris_hotbar.html
         }
     }
 
-    // Delete a budgeting entry
     async function deleteBudgeting(id) {
         try {
             const response = await fetch(`${pythonURI}/api/budgeting`, {
@@ -238,8 +234,8 @@ menu: nav/paris_hotbar.html
             });
 
             if (response.ok) {
-                createBudgetingTable(); // Refresh the table after deleting an entry
-                updateRemainingBudget(); // Update the remaining budget
+                createBudgetingTable();
+                updateRemainingBudget();
             } else {
                 console.error('Failed to delete budgeting entry:', await response.json());
             }
@@ -248,7 +244,6 @@ menu: nav/paris_hotbar.html
         }
     }
 
-    // Dynamically create the budgeting entries table
     async function createBudgetingTable() {
         const table = document.getElementById("budgeting-table");
         table.innerHTML = ""; // Clear existing table content
@@ -310,12 +305,31 @@ menu: nav/paris_hotbar.html
         }
     }
 
-    // Handle new budgeting entry creation
+    async function handleUpdate(entry) {
+        const newExpense = prompt("Enter a new expense:");
+        const newCost = prompt("Enter a new cost:");
+        const newCategory = prompt("Enter a new category:");
+
+        if (newExpense && newCost && newCategory) {
+            await updateBudgeting(entry.id, newExpense, newCost, newCategory);
+        } else {
+            alert("Please enter valid data.");
+        }
+    }
+
+    // Handle delete budgeting entry
+    async function handleDelete(entry) {
+        const confirmDelete = confirm("Are you sure you want to delete this budgeting entry?");
+        if (confirmDelete) {
+            await deleteBudgeting(entry.id);
+        }
+    }
+
     document.getElementById('entryForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const category = document.getElementById('category').value;
         const expense = document.getElementById('expense').value;
         const cost = parseFloat(document.getElementById('entryAmount').value);
+        const category = document.getElementById('category').value;
 
         if (expense && cost && category) {
             await submitBudgeting(expense, cost, category);
@@ -323,26 +337,4 @@ menu: nav/paris_hotbar.html
             alert("Please enter valid data.");
         }
     });
-        // Prompt the user to update a budgeting entry
-        async function handleUpdate(entry) {
-            const newExpense = prompt("Enter a new expense:");
-            const newCost = prompt("Enter a new cost:");
-            const newCategory = prompt("Enter a new category:");
-
-            if (newExpense && newCost && newCategory) {
-                await updateBudgeting(entry.id, newExpense, newCost, newCategory);
-            } else {
-                alert("Please enter valid data.");
-            }
-        }
-
-        // Handle delete budgeting entry
-        async function handleDelete(entry) {
-            const confirmDelete = confirm("Are you sure you want to delete this budgeting entry?");
-            if (confirmDelete) {
-                await deleteBudgeting(entry.id);
-            }
-        }
-    // Initialize the app
-    createBudgetingTable();
 </script>

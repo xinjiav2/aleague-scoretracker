@@ -4,47 +4,40 @@
     padding: 20px;
     max-width: 800px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 255, 0.2);
-    /* Blue shadow for main container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    background-color: #1c1c1c; /* Dark background */
+    border: 2px solid #add8e6; /* Light blue border */
 }
+
 
 
 h1 {
     font-size: 2em;
-    color: #333;
-    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
-    /* Blue shadow for heading */
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
 }
 
 
 .guess-box label {
     font-size: 1.5em;
-    /* Make the font size larger */
-    color: #333333;
-    /* Dark grey color */
-    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
-    /* Blue shadow for label */
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
 }
 
 
 .explanation-box label {
     font-size: 1.5em;
-    /* Make the font size larger */
-    color: #333333;
-    /* Dark grey color */
-    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
-    /* Blue shadow for label */
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
 }
 
 
 .submit-button {
     font-size: 1.5em;
-    /* Make the font size larger */
-    color: #333333;
-    /* Dark grey color */
-    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
-    /* Blue shadow for label */
+    color: #ffffff; /* White color */
+    background-color: #FFD700; /* Gold background */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
 }
 
 .waypoints-image-section,
@@ -53,52 +46,41 @@ h1 {
 #leaderboard-section {
     margin-top: 20px;
     padding: 15px;
-    background-color: #fff;
+    background-color: #1c1c1c; /* Dark background */
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 255, 0.2);
-    /* Blue shadow for sections */
+    box-shadow: 0 4px 6px rgba(173, 216, 230, 0.2); /* Light blue shadow */
+    border: 2px solid #add8e6; /* Light blue border */
 }
 
 
 .waypoints-image-box {
     display: inline-block;
-    box-shadow: 0 4px 8px rgba(0, 0, 255, 0.3);
-    /* Blue shadow for image box */
+    box-shadow: 0 4px 8px rgba(173, 216, 230, 0.3); /* Light blue shadow */
 }
+
 
 .feedback-button label {
     font-size: 1.5em;
-    /* Make the font size larger */
-    color: #333333;
-    /* Dark grey color */
-    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
-    /* Blue shadow for label */
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
 }
 
 
 .feedback-button {
     font-size: 1.5em;
-    /* Increase font size */
-    color: #333333;
-    /* Dark grey text color */
-    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
-    /* Blue shadow for text */
-    background-color: #007bff;
-    /* Button background color (optional) */
+    color: #ffffff; /* White color */
+    background-color: #FFD700; /* Gold background */
     padding: 10px 20px;
-    /* Add padding for better appearance */
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 255, 0.3);
-    /* Blue shadow around button */
+    box-shadow: 0 4px 6px rgba(173, 216, 230, 0.3); /* Light blue shadow */
     transition: box-shadow 0.3s ease;
 }
 
 
 .feedback-button:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 255, 0.4);
-    /* Stronger shadow on hover */
+    box-shadow: 0 6px 12px rgba(173, 216, 230, 0.4); /* Stronger shadow on hover */
 }
 
 .waypoints-image {
@@ -106,40 +88,33 @@ h1 {
     border-radius: 8px;
 }
 
+
 .submit-button label {
     font-size: 1.5em;
-    /* Make the font size larger */
-    color: #333333;
-    /* Dark grey color */
-    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
-    /* Blue shadow for label */
+    color: #add8e6; /* Light blue color */
+    text-shadow: 1px 1px 5px rgba(173, 216, 230, 0.4); /* Light blue shadow */
 }
 
 .submit-button {
-    font-size: 1.5em;
-    /* Increase font size */
-    color: #333333;
-    /* Dark grey text color */
-    text-shadow: 1px 1px 5px rgba(0, 0, 255, 0.4);
-    /* Blue shadow for text */
-    background-color: #007bff;
-    /* Button background color (optional) */
-    padding: 10px 20px;
-    /* Add padding for better appearance */
+    width: 100%;
+    background-color: #FFD700; /* Gold background */
+    color: #ffffff; /* White color */
+    font-size: 18px;
+    padding: 12px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 255, 0.3);
-    /* Blue shadow around button */
-    transition: box-shadow 0.3s ease;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0px 4px 10px rgba(173, 216, 230, 0.5); /* Light blue shadow */
 }
 
 
 .submit-button:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 255, 0.4);
-    /* Stronger shadow on hover */
+    background-color: #C5B358; /* Darker gold on hover */
+    transform: scale(1.03);
+    box-shadow: 0px; 
 }
-
 
 .modal {
     display: none;
@@ -253,8 +228,9 @@ h1 {
     flex-direction: column;
     max-width: 800px;
     width: 100%;
-    background-color: #2C3E50;
+    background-color: #050505;
     padding: 20px;
+    border: 2px solid #add8e6;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: #ECF0F1;
@@ -618,31 +594,8 @@ body {
 .search-result {
     margin-top: 10px;
     font-weight: bold;
-    color: #333;
-}
-
-/* Full-Page Background with Strong Glowing Effect */
-body {
-    background: linear-gradient(135deg, #1254f0, hsla(277, 87%, 54%, 0.632), #0ee070, #5a67d8);
-    background-size: 400% 400%;
-    animation: glowingBackground 20s ease infinite;
-    font-family: Arial, sans-serif;
-    color: #fff;
-}
-
-/* Glowing Animation for Background */
-@keyframes glowingBackground {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+    border: 2px solid #add8e6;
+    color: #0d0d0d;
 }
 
 /* Dropdown Styling */

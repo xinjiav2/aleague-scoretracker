@@ -12,101 +12,127 @@ show_reading_time: false
 <head>
   <style>
     /* Custom CSS */
+
     body, h1, h2, h3, p, ul, li {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
+        font-family: Arial, sans-serif;
+        background-color: #FDF5E6;
+        color: white;
+        line-height: 1.6;
     }
 
     .main-content {
-      padding: 20px;
-      max-width: 800px;
-      margin: 0 auto;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
     }
 
     #reviewCount {
-      text-align: center;
-      margin-bottom: 20px;
+        text-align: center;
+        margin-bottom: 20px;
     }
 
     #reviewCount h2 {
-      font-size: 1.5rem;
-      color: #444;
+        font-size: 1.5rem;
+        color: #add8e6;
     }
 
     .card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
+        background-color: black;
+        border: 2px solid #add8e6;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 162, 255, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .card:hover {
-      transform: scale(1.02);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: scale(1.02);
+        box-shadow: 0 4px 8px rgba(0, 162, 255, 0.3);
     }
 
     .card h2 {
-      font-size: 1.2rem;
-      color: #222;
-      margin-bottom: 10px;
+        font-size: 1.2rem;
+        color: #add8e6;
+        margin-bottom: 10px;
     }
 
     .card p {
-      font-size: 0.9rem;
-      color: #666;
-      margin-bottom: 16px;
+        font-size: 0.9rem;
+        color: #E6E6FA;
+        margin-bottom: 16px;
     }
 
     .remove-button {
-      background-color: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 8px 12px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background-color 0.2s;
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
     }
 
     .remove-button:hover {
-      background-color: #c0392b;
+        background-color: #c0392b;
+    }
+
+    .edit-button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        margin-left: 10px;
+    }
+
+    .edit-button:hover {
+        background-color: #2980b9;
     }
 
     .form-container {
-      margin-bottom: 20px;
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 2px solid #add8e6;
+        border-radius: 8px;
+        background: black;
+        color: white;
     }
 
     .form-container input, .form-container textarea, .form-container button {
-      display: block;
-      width: 100%;
-      margin: 8px 0;
-      padding: 10px;
-      font-size: 1rem;
+        display: block;
+        width: 100%;
+        margin: 8px 0;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #add8e6;
+        border-radius: 5px;
     }
 
     .form-container button {
-      background-color: #2ecc71;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s;
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s;
     }
 
     .form-container button:hover {
-      background-color: #27ae60;
+        background-color: #27ae60;
     }
+
+
   </style>
 </head>
 
@@ -126,9 +152,15 @@ show_reading_time: false
 
 <script type="module">
 import { pythonURI, fetchOptions } from '{{site.baseurl}}/assets/js/api/config.js';
+
+// Placeholder for logged-in user (Replace with real authentication logic)
+const currentUser = "exampleUser"; // This should be set dynamically based on session/auth
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchReviews();
 });
+
+
 
 async function fetchReviews() {
     try {
@@ -156,6 +188,7 @@ function createCard(container, item) {
         <h2>${item.food}</h2>
         <p>${item.review}</p>
         <p><strong>Rating:</strong> <span class="rating">${item.rating}</span>/5</p>
+        <p><strong>User:</strong> ${item.user_id}</p>
     `;
 
     // Remove Button
@@ -171,7 +204,7 @@ function createCard(container, item) {
 
     // Edit Button
     const editButton = document.createElement("button");
-    editButton.className = "remove-button";
+    editButton.className = "edit-button";
     editButton.textContent = "Edit";
     editButton.onclick = () => {
         editReview(item.id, item.food, item.review, item.rating);
@@ -191,25 +224,16 @@ window.addReview = async function addReview() {
         return;
     }
 
-    const postData = {
-        food: food,
-        review: review,
-        rating: rating,
-    };
 
     try {
         const response = await fetch(`${pythonURI}/api/food_review_1234_api`, {
+            ...fetchOptions,
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(postData),
+            body: JSON.stringify({food: food, review: review, rating: rating})
         });
-
-        if (!response.ok) {
-            throw new Error("Failed to add review: " + response.statusText);
-        }
-
         const data = await response.json();
         const body = document.getElementById("main-content");
         createCard(body, data);
@@ -251,6 +275,7 @@ async function updateReview(id) {
         food: food,
         review: review,
         rating: rating,
+        user: currentUser // Ensure the update request includes the user
     };
 
     try {
@@ -287,13 +312,17 @@ async function updateReview(id) {
 
 async function deleteReview(id) {
     try {
-        await fetch(`${pythonURI}/api/food_review_1234_api`, {
+        const response = await fetch(`${pythonURI}/api/food_review_1234_api`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id }),
+            body: JSON.stringify({ id, user: currentUser }), // Ensure request includes user info
         });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete review: " + response.statusText);
+        }
     } catch (error) {
         console.error("Error deleting review:", error);
     }

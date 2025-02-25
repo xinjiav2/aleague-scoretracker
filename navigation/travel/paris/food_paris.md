@@ -12,7 +12,7 @@ menu: nav/paris_hotbar.html
 ---
 
 <!-- Le Grenier à Pain -->
-<div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
+<div style="background-color: black; color: #add8e6; padding: 15px; border: 2px solid #add8e6; border-radius: 8px; margin-bottom: 10px; cursor: pointer; text-align: center; transition: background-color 0.3s ease, transform 0.2s ease;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';" onmouseover="this.style.backgroundColor='#1a1a1a'; this.style.transform='scale(1.02)';" onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';">
   <h3>🥐 Le Grenier à Pain - Perfect Croissants</h3>
 </div>
 <div style="display: none; padding: 10px;">
@@ -24,12 +24,12 @@ menu: nav/paris_hotbar.html
     <li>Baguettes</li>
     <li>Seasonal Fruit Tarts</li>
   </ul>
-  <a href="/travel_frontend/travel/paris/food_paris123" style="color: #007bff; text-decoration: none;">Write a Review for Le Grenier à Pain</a>
+  <a href="/travel_frontend/travel/paris/food_paris12345" style="color: #007bff; text-decoration: none;">Write a Review for Le Grenier à Pain</a>
 </div>
 
 
 <!-- L'Ambroisie -->
-<div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
+<div style="background-color: black; color: #add8e6; padding: 15px; border: 2px solid #add8e6; border-radius: 8px; margin-bottom: 10px; cursor: pointer; text-align: center; transition: background-color 0.3s ease, transform 0.2s ease;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';" onmouseover="this.style.backgroundColor='#1a1a1a'; this.style.transform='scale(1.02)';" onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';">
   <h3>🍷 L'Ambroisie - Haute Cuisine</h3>
 </div>
 <div style="display: none; padding: 10px;">
@@ -45,7 +45,7 @@ menu: nav/paris_hotbar.html
 </div>
 
 <!-- Chez Janou -->
-<div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
+<div style="background-color: black; color: #add8e6; padding: 15px; border: 2px solid #add8e6; border-radius: 8px; margin-bottom: 10px; cursor: pointer; text-align: center; transition: background-color 0.3s ease, transform 0.2s ease;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';" onmouseover="this.style.backgroundColor='#1a1a1a'; this.style.transform='scale(1.02)';" onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';">
   <h3>🧀 Chez Janou - Provençal Flavors</h3>
 </div>
 <div style="display: none; padding: 10px;">
@@ -61,7 +61,7 @@ menu: nav/paris_hotbar.html
 </div>
 
 <!-- L'As du Fallafel -->
-<div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
+<div style="background-color: black; color: #add8e6; padding: 15px; border: 2px solid #add8e6; border-radius: 8px; margin-bottom: 10px; cursor: pointer; text-align: center; transition: background-color 0.3s ease, transform 0.2s ease;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';" onmouseover="this.style.backgroundColor='#1a1a1a'; this.style.transform='scale(1.02)';" onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';">
   <h3>🥖 L'As du Fallafel - Street Food Delight</h3>
 </div>
 <div style="display: none; padding: 10px;">
@@ -77,7 +77,7 @@ menu: nav/paris_hotbar.html
 </div>
 
 <!-- Café de Flore -->
-<div style="background-color:#ffffff; color:#000000; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';">
+<div style="background-color: black; color: #add8e6; padding: 15px; border: 2px solid #add8e6; border-radius: 8px; margin-bottom: 10px; cursor: pointer; text-align: center; transition: background-color 0.3s ease, transform 0.2s ease;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none';" onmouseover="this.style.backgroundColor='#1a1a1a'; this.style.transform='scale(1.02)';" onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';">
   <h3>☕ Café de Flore - Classic Parisian Cafe</h3>
 </div>
 <div style="display: none; padding: 10px;">
