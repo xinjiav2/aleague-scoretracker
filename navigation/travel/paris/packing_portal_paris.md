@@ -246,7 +246,7 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
 .main {
     background: #1e1e1e; /* Dark card background */
     padding: 20px;
-    border: 2px solid #add8e6;
+    border: 1px solid #add8e6;
     border-radius: 10px;
     box-shadow: 0px 4px 12px rgba(0, 162, 255, 0.2); /* Soft glow */
     box-sizing: border-box;
@@ -264,13 +264,13 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
 .packing-items {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
+    gap: 11px;
 }
 
 .packing-item {
     padding: 15px;
-    background: #1a1a1a; /* Darker tile */
-    border: 1px solid #add8e6;
+    background:rgb(0, 0, 0); /* Darker tile */
+    /* border: 0.5px solid #add8e6; */
     border-radius: 5px;
     text-align: center;
     font-size: 18px;
