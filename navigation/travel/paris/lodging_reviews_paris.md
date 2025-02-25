@@ -80,7 +80,7 @@ async function fetchLikedHotels() {
 
             card.appendChild(userOpinion);
 
-            if (item.is_admin) {
+            if (item.is_admin || item.current_user == item.user_id) {
                 const removeButton = document.createElement("button");
                 removeButton.className = "remove-button";
                 removeButton.textContent = "Remove";
