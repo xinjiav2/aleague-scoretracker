@@ -6,7 +6,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    background-color: #f9f9f9;
+    background-color: #ffffff;
 }
 
 .container {
@@ -32,12 +32,14 @@ header {
     width: 60%;
     padding: 8px;
     margin-right: 5px;
-    border: 1px solid #767676;
+    border: 1px solid #add8e6;
 }
 
 .search-bar button {
     padding: 8px 15px;
-    border: 1px solid #767676;
+    border: 1px solid #add8e6;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 .vertical-line {
@@ -47,7 +49,7 @@ header {
     border-bottom: none;
     border-width: 1px;
     border-style: dashed;
-    border-color: #444;
+    border-color: #add8e6;
 }
 
 .filters {
@@ -56,7 +58,7 @@ header {
     gap: 10px;
     margin: 10px 0;
     padding: 10px 0;
-    background-color: #222;
+    background-color: #f8f8f8;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -64,15 +66,16 @@ header {
 .filter,
 .apply {
     padding: 10px 15px;
-    background-color: #121212;
-    border: 1px solid #ddd;
+    background-color: #eaeaea;
+    border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
+    color: #333;
 }
 
 .filter:hover,
 .apply:hover {
-    background-color: #e7e7e7;
+    background-color: #dcdcdc;
 }
 
 .listings {
@@ -83,8 +86,8 @@ header {
 
 .listing {
     padding: 15px;
-    background-color: #222;
-    color: #fff;
+    background-color: #060606;
+    color: #333;
     border-radius: 5px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -114,25 +117,26 @@ header {
 }
 
 .card {
-    border-style:solid;
-    border-color: white;
+    border-style: solid;
+    border-color: #add8e6;
     border-radius: 10px;
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
     width: 80%;
     padding-left: 5px;
-    background: linear-gradient(145deg, #1c9b7b, #2c96ac);
+    background: linear-gradient(145deg, #020202, #020202);
     transition: transform .2s;
-
 }
 
 .user_id {
     font-weight: bold;
+    color: #222;
 }
 
 .note {
-    font-style:italic;
+    font-style: italic;
+    color: #555;
 }
 
 .card:hover {
@@ -143,9 +147,12 @@ header {
     cursor: pointer;
     font-size: 20px;
 }
+
 .save-button, .remove-button {
     margin-bottom: 10px;
     border-style: solid;
     border-radius: 5px;
-    border-color:#444;
+    border-color: #bbb;
+    background-color: #f4f4f4;
+    color: #333;
 }
