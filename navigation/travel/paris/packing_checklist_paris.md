@@ -103,7 +103,7 @@ async function getPackingChecklists() {
 
             // Create a section header with the user's name
             const userHeader = document.createElement('h3');
-            userHeader.textContent = `User: ${userGroup.user_name}`;
+            userHeader.textContent = `User: ${userGroup.user_name.replace(/^User\s+/i, '')}`;
             userHeader.className = 'user-section-header';
 
             userSection.appendChild(userHeader);
@@ -288,6 +288,11 @@ button:hover {
     border: 2px solid #add8e6;
     border-radius: 10px;
     background-color:rgb(0, 0, 0);
+}
+
+.user-section:hover {
+    transition: transform 0.7s ease, box-shadow 0.7s ease;
+    transform: scale(1.05);
 }
 
 .user-section-header {
