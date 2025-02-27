@@ -354,6 +354,4 @@ window.handleCheckboxClick = async function handleCheckboxClick(checkbox, itemTe
 }
 
 
-
-
 </style>

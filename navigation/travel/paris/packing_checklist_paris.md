@@ -11,7 +11,6 @@ menu: nav/paris_hotbar.html
     <h3>Personal Packing List</h3>
     <hr>
     <ul id="checklist_area"></ul>
-    <!-- button to save items -->
 </div>
 
 <script type="module">
@@ -24,6 +23,36 @@ import {
 document.addEventListener("DOMContentLoaded", (event) => {
     getPackingChecklists();
 });
+
+function enableEditing(item, listItem, nameSpan, editButton) {
+    // Ensure nameSpan is still in the DOM before replacing it
+    if (!listItem.contains(nameSpan)) return;
+
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.value = nameSpan.textContent;
+    inputField.className = 'edit-input';
+
+    // Replace nameSpan with inputField
+    listItem.replaceChild(inputField, nameSpan);
+
+    editButton.textContent = 'Save';
+    editButton.onclick = async () => {
+        const newName = inputField.value;
+
+        await putPackingChecklist(item.id, newName);
+
+        // Ensure inputField is still in the DOM before replacing it back
+        if (!listItem.contains(inputField)) return;
+
+        nameSpan.textContent = newName;
+        listItem.replaceChild(nameSpan, inputField);
+
+        editButton.textContent = 'Edit';
+        editButton.onclick = () => enableEditing(item, listItem, nameSpan, editButton);
+    };
+}
+
 
 async function getPackingChecklists() {
     try {
@@ -44,66 +73,82 @@ async function getPackingChecklists() {
 
         checklistArea.innerHTML = '';
 
-        data.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.className = 'checklist-item';
+        let currentUser = data.length > 0 ? data[0].current_user : null;
+        let isAdmin = data.length > 0 ? data[0].is_admin : false;
 
-            const name_span = document.createElement('span');
-            name_span.textContent = item.item;
-            
-            const editButton = document.createElement('button');
-            editButton.className = 'edit-button';
-            editButton.textContent = 'Edit';
-            editButton.addEventListener('click', () => {
-                enableEditing(item, listItem, name_span, editButton);
-            });
-            
-            const removeButton = document.createElement('button');
-            removeButton.className = 'remove-button';
-            removeButton.textContent = 'Remove';
-            removeButton.addEventListener('click', () => {
-                deletePackingChecklist(item.id);
-                listItem.remove();
-            });
+        console.log("Current user:", currentUser);
+        console.log("Is admin:", isAdmin);
 
-            listItem.appendChild(name_span);
-            listItem.appendChild(editButton);
-            listItem.appendChild(removeButton);
 
-            checklistArea.appendChild(listItem);
+        // Filter items based on user role
+        const filteredData = isAdmin ? data : data.filter(item => item.user_id === currentUser);
+
+        // Group items by user
+        const groupedItems = {};
+        filteredData.forEach(item => {
+            if (!groupedItems[item.user_id]) {
+                groupedItems[item.user_id] = {
+                    user_name: item.user_name || `User ${item.user_id}`, // Ensure we display something
+                    items: []
+                };
+            }
+            groupedItems[item.user_id].items.push(item);
         });
 
+        // Create sections for each user
+        Object.values(groupedItems).forEach(userGroup => {
+            // Create a section container
+            const userSection = document.createElement('div');
+            userSection.className = 'user-section';
+
+            // Create a section header with the user's name
+            const userHeader = document.createElement('h3');
+            userHeader.textContent = `User: ${userGroup.user_name}`;
+            userHeader.className = 'user-section-header';
+
+            userSection.appendChild(userHeader);
+
+            // Create a list for the user's items
+            const userList = document.createElement('ul');
+            userList.className = 'user-checklist';
+
+            userGroup.items.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.className = 'checklist-item';
+
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = item.item;
+
+                const editButton = document.createElement('button');
+                editButton.className = 'edit-button';
+                editButton.textContent = 'Edit';
+                editButton.addEventListener('click', () => {
+                    enableEditing(item, listItem, nameSpan, editButton);
+                });
+
+                const removeButton = document.createElement('button');
+                removeButton.className = 'remove-button';
+                removeButton.textContent = 'Remove';
+                removeButton.addEventListener('click', () => {
+                    deletePackingChecklist(item.id);
+                    listItem.remove();
+                });
+
+                listItem.appendChild(nameSpan);
+                listItem.appendChild(editButton);
+                listItem.appendChild(removeButton);
+                userList.appendChild(listItem);
+            });
+
+            userSection.appendChild(userList);
+            checklistArea.appendChild(userSection);
+        });
 
     } catch (error) {
         console.error('Error fetching packing checklists:', error);
         alert('Error fetching packing checklists: ' + error.message);
     }
-}
-
-
-function enableEditing(item, listItem, name_span, editButton) {
-    
-    const inputField = document.createElement('input');
-    inputField.type = 'text';
-    inputField.value = name_span.textContent;
-    inputField.className = 'edit-input';
-    
-    listItem.replaceChild(inputField, name_span);
-    
-    editButton.textContent = 'Save';
-    editButton.onclick = async () => {
-        const new_name = inputField.value;
-        
-        await putPackingChecklist(item.id, new_name);
-
-        name_span.textContent = new_name;
-
-        listItem.replaceChild(name_span, inputField);
-
-        editButton.textContent = 'Edit';
-        editButton.onclick = () => enableEditing(item, listItem, name_span, editButton);
-    };
-}
+};
 
 
 async function deletePackingChecklist(id) {
@@ -168,19 +213,13 @@ async function putPackingChecklist(id, new_name) {
 
 <style>
 
-.personal_checklist {
-    flex: 3;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-}
+
 
 .personal_checklist h3 {
     font-size: 24px;
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
+    color: #add8e6;
 }
 
 .personal_checklist li {
@@ -191,7 +230,7 @@ async function putPackingChecklist(id, new_name) {
 }
 
 .personal_checklist hr {
-    border: 2px solid black;
+    border: 2px solid #add8e6;
 }
 
 .checklist-item {
@@ -200,9 +239,10 @@ async function putPackingChecklist(id, new_name) {
     justify-content: space-between; /* Spread content evenly */
     padding: 10px; /* Add some spacing around each item */
     margin-bottom: 10px; /* Space between list items */
-    border: 1px solid #ddd; /* Light border around the item */
+    /* border: 2px solid #add8e6; Light border around the item */
     border-radius: 5px; /* Rounded corners */
-    background-color: #f9f9f9; /* Light background color */
+    background-color:rgb(0, 0, 0); /* Light background color */
+    color: #add8e6 !important;
 }
 
 /* Styling the buttons */
@@ -217,14 +257,16 @@ button {
 
 /* Specific styling for the Edit button */
 .edit-button {
-    background-color: #4CAF50; /* Green background */
-    color: white; /* White text */
+    background-color:rgb(0, 0, 0) !important; /* Green background */
+    color: #add8e6 !important; /* White text */
+    border: 1px solid #add8e6;
 }
 
 /* Specific styling for the Remove button */
 .remove-button {
-    background-color: #f44336; /* Red background */
-    color: white; /* White text */
+    background-color:rgb(0, 0, 0) !important; /* Red background */
+    color: #add8e6 !important; /* White text */
+    border: 1px solid #add8e6;
 }
 
 /* Add hover effects for buttons */
@@ -239,5 +281,23 @@ button:hover {
     border-radius: 5px;
     font-size: 14px;
 }
+
+.user-section {
+    margin-top: 20px;
+    padding-right: 10px;
+    border: 2px solid #add8e6;
+    border-radius: 10px;
+    background-color:rgb(0, 0, 0);
+}
+
+.user-section-header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #add8e6 !important;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
 
 </style>
