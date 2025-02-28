@@ -703,3 +703,23 @@ button:hover {
 .rating-star.green {
     color: green;
 }
+
+.raw-rating-star-readonly {
+    color: gray; /* Default */
+}
+  
+.raw-rating-star-readonly.active {
+    color: gold; /* General active color */
+}
+  
+.raw-rating-star-readonly.red {
+    color: red; /* 1-2 stars */
+}
+  
+.raw-rating-star-readonly.yellow {
+    color: orange; /* 3-4 stars */
+}
+  
+.raw-rating-star-readonly.green {
+    color: green; /* 5 stars */
+}

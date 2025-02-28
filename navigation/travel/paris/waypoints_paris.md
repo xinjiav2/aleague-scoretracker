@@ -31,6 +31,7 @@ menu: nav/paris_hotbar.html
                 <th>#</th>
                 <th>Place Name</th>
                 <th>Address</th>
+                <th>Rating</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -223,7 +224,9 @@ menu: nav/paris_hotbar.html
           <td>${place.display_name.split(",")[0]}</td>
           <td>${place.display_name}</td>
           <td>
-            <div id="rating-display-${index}"></div>
+            <div id="raw-rating-display-${index}"></div>
+          </td>
+          <td>
             <button class="like-button" data-title="${place.display_name}">Check In</button>
           </td>
         `;
@@ -244,12 +247,12 @@ menu: nav/paris_hotbar.html
           return response.json();
         })
         .then(data => {
-          const ratingDisplay = document.getElementById(`rating-display-${index}`);
+          const ratingDisplay = document.getElementById(`raw-rating-display-${index}`);
           if (data.rating) {
             ratingDisplay.innerHTML = `
               <div class="ratings">
                 ${[1, 2, 3, 4, 5].map(star => 
-                  `<span class="rating-star-readonly ${star <= data.rating ? (star <= 2 ? "red" : star <= 4 ? "yellow" : "green") : ""}"
+                  `<span class="raw-rating-star-readonly ${star <= data.rating ? (star <= 2 ? "red" : star <= 4 ? "yellow" : "green") : ""}"
                   >★</span>`
                 ).join('')}
               </div>
