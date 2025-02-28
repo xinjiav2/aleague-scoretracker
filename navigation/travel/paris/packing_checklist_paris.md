@@ -119,6 +119,10 @@ async function getPackingChecklists() {
                 const nameSpan = document.createElement('span');
                 nameSpan.textContent = item.item;
 
+                // Create a container for buttons
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'button-container';
+
                 const editButton = document.createElement('button');
                 editButton.className = 'edit-button';
                 editButton.textContent = 'Edit';
@@ -134,11 +138,16 @@ async function getPackingChecklists() {
                     listItem.remove();
                 });
 
+                // Append buttons to the button container
+                buttonContainer.appendChild(editButton);
+                buttonContainer.appendChild(removeButton);
+
+                // Append everything to the checklist item
                 listItem.appendChild(nameSpan);
-                listItem.appendChild(editButton);
-                listItem.appendChild(removeButton);
+                listItem.appendChild(buttonContainer);
                 userList.appendChild(listItem);
             });
+
 
             userSection.appendChild(userList);
             checklistArea.appendChild(userSection);
@@ -234,44 +243,47 @@ async function putPackingChecklist(id, new_name) {
 }
 
 .checklist-item {
-    display: flex; /* Align items horizontally */
-    align-items: center; /* Vertically align content */
-    justify-content: space-between; /* Spread content evenly */
-    padding: 10px; /* Add some spacing around each item */
-    margin-bottom: 10px; /* Space between list items */
-    /* border: 2px solid #add8e6; Light border around the item */
-    border-radius: 5px; /* Rounded corners */
-    background-color:rgb(0, 0, 0); /* Light background color */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: rgb(0, 0, 0);
     color: #add8e6 !important;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px; /* Ensures a 10px gap between Edit and Remove buttons */
 }
 
 /* Styling the buttons */
 button {
-    padding: 5px 10px; /* Add padding to make buttons larger */
-    margin-left: 10px; /* Add space between buttons and item text */
-    border: none; /* Remove default button border */
-    border-radius: 5px; /* Rounded corners for buttons */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    font-size: 14px; /* Set button text size */
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 /* Specific styling for the Edit button */
 .edit-button {
-    background-color:rgb(0, 0, 0) !important; /* Green background */
-    color: #add8e6 !important; /* White text */
+    background-color: rgb(0, 0, 0) !important;
+    color: #add8e6 !important;
     border: 1px solid #add8e6;
 }
 
 /* Specific styling for the Remove button */
 .remove-button {
-    background-color:rgb(0, 0, 0) !important; /* Red background */
-    color: #add8e6 !important; /* White text */
+    background-color: rgb(0, 0, 0) !important;
+    color: #add8e6 !important;
     border: 1px solid #add8e6;
 }
 
 /* Add hover effects for buttons */
 button:hover {
-    opacity: 0.9; /* Slightly dim the button on hover */
+    opacity: 0.9;
 }
 
 .edit-input {
