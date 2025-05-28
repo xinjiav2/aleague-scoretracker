@@ -10,8 +10,9 @@ permalink: /aleague/
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vote Kiruthic for VP</title>
+  
   <title>Academic League Scoretracker</title>
+  <title>Vote Kiruthic for VP</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     
@@ -872,7 +873,8 @@ permalink: /aleague/
 <body>
   <div class="container">
     <div class="header">
-      <h1 class="title">Academic League</h1>
+      <h1 class="title">Academic League by Kiruthic</h1>
+      <h1 class="title">Vote Kiruthic For VP</h1>
       <p class="subtitle">Advanced Competition Scoretracker</p>
     </div>
     
