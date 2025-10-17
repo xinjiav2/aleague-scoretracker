@@ -874,8 +874,8 @@ menu: nav/home.html
 <body>
   <div class="container">
     <div class="header">
-      <h1 class="title">Academic League by Kiruthic</h1>
-      <h1 class="title">Vote Kiruthic For VP</h1>
+      <h1 class="title">Academic League; Reimagined</h1>
+      <h1 class="title"></h1>
       <p class="subtitle">Advanced Competition Scoretracker</p>
     </div>
     
