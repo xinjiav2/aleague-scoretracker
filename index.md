@@ -908,13 +908,13 @@ menu: nav/home.html
       
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
         <button class="start-button" onclick="startMatch()">
-          🚀 Initialize Match
+           Initialize Match
         </button>
         <button class="start-button" onclick="loadSavedMatch()" style="background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));">
-          📂 Load Saved
+           Load Saved
         </button>
         <button class="start-button" onclick="clearSavedData()" style="background: linear-gradient(135deg, #ff6b6b, #ff8c42); min-width: 150px;">
-          🗑️ Clear Data
+           Clear Data
         </button>
       </div>
     </div>
