@@ -1,6 +1,6 @@
 # Configuration, override port with usage: make PORT=4200
 PORT ?= 4887
-REPO_NAME ?= travel_frontend
+REPO_NAME ?= aleague-scoretracker
 LOG_FILE = /tmp/jekyll$(PORT).log
 
 SHELL = /bin/bash -c

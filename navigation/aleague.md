@@ -951,9 +951,8 @@ permalink: /aleague/
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <script>
     const playerList = [
-      "Swarith Vaddi", "Brandon Chu", "Jason Gao", "Ankit Pulivendula", "Aditi Bandaru", "Tristan Eleazar", "Steven Zhu", "Jacob Wu",
-      "Advik Garg", "Aryan Shrimali", "Anish Degalmadikar", "Saaras Kodali", "Liam Vinson", "Srijan Atti", "Preston Foster", "Aashray Rajagopalan", "Vasanth Rajasekaran", "Kiruthic Selvakumar", "Derek Kang", "Dylan Zhang", "Kasra Kermani", "Bryan Chen", "Adhav Selvan", "Nikhil Maturi",
-      "Rishab Shyamal", "Meryl Chen", "Michelle Yu", "Santhosh Karthik", "Zhengji Li", "Caleb Park", "Advait Deshpande", "Skandan Sundar", "Akhil Kulkarni"
+      'Jacob Wu', 'Srijan Atti', 'Saaras Kodali', 'Amy Yuan', 'Ryan Gonzalez', 'Preston Foster', "Advik Garg", "Aryan Shrimali", "Anish Degalmadikar",  "Liam Vinson",  "Aashray Rajagopalan", "Vasanth Rajasekaran", "Kiruthic Selvakumar", "Derek Kang", "Dylan Zhang", "Kasra Kermani", "Bryan Chen", "Adhav Selvan", "Nikhil Maturi",
+      "Rishab Shyamal", "Meryl Chen", "Michelle Yu", 'Nathan Do', 'Hamin Park', 'Ian Huang', "Santhosh Karthik", "Zhengji Li", 'Sahith Bobba', "Caleb Park", "Advait Deshpande", "Skandan Sundar", "Akhil Kulkarni", 'Roxana Khamooshian', 'Aarav Wadhwani', 'Oliver Zhang', 'Rigved Reddy Gaddam', 'Narumi Yoshida', 'Aaron Tambiah', 'Ribhav Deep', 'Ryan Gui', 'Isaac Tsai', 'Aarav Sriramagiri', 'Pracheth (Kirby one)', 'Aarav (Also the kirby one)', 'ssprinkle1'
     ];
 
     const categories = ["Math", "Science", "History", "Literature", "Art", "Geography", "Current Events"];

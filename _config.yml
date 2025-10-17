@@ -2,8 +2,8 @@ title: Travel
 description: "Social Media for Del Norte High School"
 owner_name: Kiruthic Selvakumar
 github_username: Kiruthic-Selvakumar
-github_repo: "travel_frontend" 
-baseurl: "/travel_frontend"
+github_repo: "aleague-scoretracker" 
+baseurl: "/aleague-scoretracker"
 future: true
 remote_theme: jekyll/minima
 minima:
