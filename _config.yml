@@ -1,5 +1,5 @@
 title: Scoretracker
-description: "Social Media for Del Norte High School"
+description: "Aleague Scoretracker for Del Norte High School"
 owner_name: Kiruthic Selvakumar
 github_username: Kiruthic-Selvakumar
 github_repo: "aleague-scoretracker" 
@@ -19,6 +19,6 @@ header_pages:
   # - navigation/travel/hong_kong/hong_kong.md
   # - navigation/travel/new_york/new_york.md
   # - navigation/travel/mumbai/mumbai.md
-  - navigation/travel/paris/paris.md
+  # - navigation/travel/paris/paris.md
   # - navigation/travel/london/london.md
-  - navigation/blog.md
+  # - navigation/blog.md
