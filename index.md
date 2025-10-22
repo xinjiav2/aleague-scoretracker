@@ -953,7 +953,7 @@ menu: nav/home.html
   <script>
     const playerList = [
       'Jacob Wu', 'Srijan Atti', 'Saaras Kodali', 'Amy Yuan', 'Ryan Gonzalez', 'Preston Foster', "Advik Garg", "Aryan Shrimali", "Anish Degalmadikar",  "Liam Vinson",  "Aashray Rajagopalan", "Vasanth Rajasekaran", "Kiruthic Selvakumar", "Derek Kang", "Dylan Zhang", "Kasra Kermani", "Bryan Chen", "Adhav Selvan", "Nikhil Maturi",
-      "Rishab Shyamal", "Meryl Chen", "Michelle Yu", 'Nathan Do', 'Hamin Park', 'Ian Huang', "Santhosh Karthik", "Zhengji Li", 'Sahith Bobba', "Caleb Park", "Advait Deshpande", "Skandan Sundar", "Akhil Kulkarni", 'Roxana Khamooshian', 'Aarav Wadhwani', 'Oliver Zhang', 'Rigved Reddy Gaddam', 'Narumi Yoshida', 'Aaron Tambiah', 'Ribhav Deep', 'Ryan Gui', 'Isaac Tsai', 'Aarav Sriramagiri', 'Pracheth (Kirby one)', 'Kaylen Tong'
+      "Rishab Shyamal", "Meryl Chen", "Michelle Yu", 'Nathan Do', 'Hamin Park', 'Ian Huang', "Santhosh Karthik", "Zhengji Li", 'Sahith Bobba', "Caleb Park", "Advait Deshpande", "Skandan Sundar", "Akhil Kulkarni", 'Roxana Khamooshian', 'Aarav Wadhwani', 'Oliver Zhang', 'Rigved Reddy Gaddam', 'Narumi Yoshida', 'Aaron Tambiah', 'Ribhav Deep', 'Ryan Gui', 'Isaac Tsai', 'Aarav Sriramagiri', 'Pracheth Vitthaladevuni', 'Kaylen Tong', 'Vincent Pan', 'Zipei Qin', 'Aiden Shim', 'Nicholas Chi', 'Ribhav Deep'
     ];
 
     const categories = ["Math", "Science", "History", "Literature", "Art", "Geography", "Current Events"];
