@@ -956,7 +956,7 @@ menu: nav/home.html
       "Rishab Shyamal", "Meryl Chen", "Michelle Yu", 'Nathan Do', 'Hamin Park', 'Ian Huang', "Santhosh Karthik", "Zhengji Li", 'Sahith Bobba', "Caleb Park", "Advait Deshpande", "Skandan Sundar", "Akhil Kulkarni", 'Roxana Khamooshian', 'Aarav Wadhwani', 'Oliver Zhang', 'Rigved Reddy Gaddam', 'Narumi Yoshida', 'Aaron Tambiah', 'Ribhav Deep', 'Ryan Gui', 'Isaac Tsai', 'Aarav Sriramagiri', 'Pracheth (Kirby one)', 'Kaylen Tong'
     ];
 
-    const categories = ["Math", "Science", "History", "Literature", "Art", "Geography", "Current Events"];
+    const categories = ["Math", "Science", "History", "Literature", "Art", "Geography", "Current Events", "Math", "RMPSS"];
     
     let state = {
       teamA: "",
@@ -977,6 +977,8 @@ menu: nav/home.html
       "Art": "#ffd93d",
       "Geography": "#ff8c42",
       "Current Events": "#a78bfa"
+      "Math": "#4dd1b4ff"
+      "RMPSS": "#ffffff"
     };
     
     const StorageManager = {
